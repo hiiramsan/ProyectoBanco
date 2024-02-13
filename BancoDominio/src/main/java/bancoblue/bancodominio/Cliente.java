@@ -17,4 +17,8 @@ public class Cliente {
     private String contraseña;
     private int edad;
     
+    public Cliente() {
+    
+    }
+    
 }
