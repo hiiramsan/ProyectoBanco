@@ -18,15 +18,15 @@ public class RetiroSinCuenta extends Transaccion {
         super();
     }
 
-    public RetiroSinCuenta(int id_transaccion, String fecha_hora, int monto, String folio_operacion, String contraseña, String estado) {
-        super(id_transaccion, fecha_hora, monto, "RetiroSinCuenta");
+    public RetiroSinCuenta(int id_transaccion, String fecha_hora, int monto, int cuenta_origen, String folio_operacion, String contraseña, String estado) {
+        super(id_transaccion, fecha_hora, monto, "RetiroSinCuenta",cuenta_origen);
         this.folio_operacion = folio_operacion;
         this.contraseña = contraseña;
         this.estado = estado;
     }
 
-    public RetiroSinCuenta(String fecha_hora, int monto, String folio_operacion, String contraseña, String estado) {
-        super(fecha_hora, monto, "RetiroSinCuenta");
+    public RetiroSinCuenta(String fecha_hora, int monto, int cuenta_origen, String folio_operacion, String contraseña, String estado) {
+        super(fecha_hora, monto, "RetiroSinCuenta",cuenta_origen);
         this.folio_operacion = folio_operacion;
         this.contraseña = contraseña;
         this.estado = estado;

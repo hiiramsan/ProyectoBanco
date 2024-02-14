@@ -14,21 +14,24 @@ public class Transaccion {
     private String fecha_hora;
     private int monto;
     private String tipo_transaccion;
+    private int cuenta_origen;
 
     public Transaccion() {
     }
 
-    public Transaccion(int id_transaccion, String fecha_hora, int monto, String tipo_transaccion) {
+    public Transaccion(int id_transaccion, String fecha_hora, int monto, String tipo_transaccion, int cuenta_origen) {
         this.id_transaccion = id_transaccion;
         this.fecha_hora = fecha_hora;
         this.monto = monto;
         this.tipo_transaccion = tipo_transaccion;
+        this.cuenta_origen = cuenta_origen;
     }
 
-    public Transaccion(String fecha_hora, int monto, String tipo_transaccion) {
+    public Transaccion(String fecha_hora, int monto, String tipo_transaccion, int cuenta_origen) {
         this.fecha_hora = fecha_hora;
         this.monto = monto;
         this.tipo_transaccion = tipo_transaccion;
+        this.cuenta_origen = cuenta_origen;
     }
 
     public int getId_transaccion() {
@@ -63,4 +66,13 @@ public class Transaccion {
         this.tipo_transaccion = tipo_transaccion;
     }
 
+    public int getCuenta_origen() {
+        return cuenta_origen;
+    }
+
+    public void setCuenta_origen(int cuenta_origen) {
+        this.cuenta_origen = cuenta_origen;
+    }
+
+  
 }
