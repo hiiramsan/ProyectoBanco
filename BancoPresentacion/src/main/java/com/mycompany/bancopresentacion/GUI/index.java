@@ -48,6 +48,8 @@ public class index extends javax.swing.JFrame {
         loginBtn.setForeground(new java.awt.Color(255, 255, 255));
         loginBtn.setText("Iniciar sesion");
         loginBtn.setBorder(null);
+        loginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginBtn.setFocusable(false);
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBtnActionPerformed(evt);
@@ -65,6 +67,8 @@ public class index extends javax.swing.JFrame {
         registrateBtn.setForeground(new java.awt.Color(255, 255, 255));
         registrateBtn.setText("Registrate");
         registrateBtn.setBorder(null);
+        registrateBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        registrateBtn.setFocusable(false);
         registrateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registrateBtnActionPerformed(evt);
@@ -126,6 +130,7 @@ public class index extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void registrateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrateBtnActionPerformed
