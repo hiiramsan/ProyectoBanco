@@ -6,7 +6,7 @@ package bancoblue.bancodominio.excepciones;
 
 /**
  *
- * @author lv1821
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class DominioException extends Exception{
     
