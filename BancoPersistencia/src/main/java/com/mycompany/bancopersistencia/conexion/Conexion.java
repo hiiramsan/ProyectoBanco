@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Carlos, Chema
+ * @author Carlos
  */
 public class Conexion implements IConexion {
     final String cadenaConexion;
