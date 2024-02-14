@@ -4,10 +4,16 @@
  */
 package com.mycompany.bancopersistencia.daos;
 
+import bancoblue.bancodominio.Cliente;
+import com.mycompany.bancopersistencia.dtos.ClienteDTO;
+import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+
 /**
  *
  * @author PC
  */
 public interface IClienteDAO {
+    
+    public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException;
     
 }
