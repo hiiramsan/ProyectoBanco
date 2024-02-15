@@ -20,15 +20,19 @@ import java.util.logging.Logger;
  * @author PC
  */
 public class ClienteDAO implements IClienteDAO {
- final IConexion conexion;
+    final IConexion conexion;
     private static final Logger LOG = Logger.getLogger(ClienteDAO.class.getName());
+    
+    
     public ClienteDAO(IConexion conexion) {
         this.conexion = conexion;
     }
+    
+    
     @Override
     public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException {
        // 1. Crear la sentencia SQL que vamos a mandar a la BD
-        String sentenciaSQL = "INSERT INTO CLIENTES (nombre, apellido_materno, apellido_paterno, fechaNacimiento,contraseña, codigoPostal, calle, numeroExterior, colonia, ciudad) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String sentenciaSQL = "INSERT INTO CLIENTE (nombre, apellido_materno, apellido_paterno, fechaNacimiento,contraseña, codigoPostal, calle, numeroExterior, colonia, ciudad) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         // 2. Vamos a insertar o intentar hacer la inserción en la tabla
         try (
@@ -74,7 +78,7 @@ public class ClienteDAO implements IClienteDAO {
                     cliente.getColonia(),
                     cliente.getNumero()
                     
-                    
+
             );
             // regresamos el cliente
             return clienteNuevo;
