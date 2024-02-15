@@ -102,7 +102,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="67" max="32767" attributes="0"/>
-                              <Component id="jButton1" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="crearBtn" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
@@ -117,7 +117,7 @@
                                                   <Component id="jLabel9" alignment="0" min="-2" pref="74" max="-2" attributes="0"/>
                                                   <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jTextField5" min="-2" pref="122" max="-2" attributes="0"/>
+                                                  <Component id="apellidoPaternoTxt" min="-2" pref="122" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" attributes="0">
@@ -128,7 +128,7 @@
                                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
                                                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jTextField6" min="-2" pref="120" max="-2" attributes="0"/>
+                                                          <Component id="apellidoMaternoTxt" min="-2" pref="120" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                               </Group>
@@ -139,13 +139,13 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jTextField1" min="-2" pref="260" max="-2" attributes="0"/>
+                                          <Component id="nombreTxt" min="-2" pref="260" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jPasswordField1" min="-2" pref="134" max="-2" attributes="0"/>
+                                              <Component id="contraTxt" min="-2" pref="134" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jPasswordField2" min="-2" pref="134" max="-2" attributes="0"/>
+                                              <Component id="confirmarContraTxt" min="-2" pref="134" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="fechaSelector" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
+                                          <Component id="fechaSelected" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
@@ -159,12 +159,12 @@
                                           <Component id="jLabel13" min="-2" pref="48" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Component id="jTextField8" min="-2" pref="82" max="-2" attributes="0"/>
+                                          <Component id="codigoPostalTxt" min="-2" pref="82" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="jTextField9" min="-2" pref="116" max="-2" attributes="0"/>
+                                          <Component id="ciudadTxt" min="-2" pref="116" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextField10" min="-2" pref="116" max="-2" attributes="0"/>
+                                      <Component id="coloniaTxt" min="-2" pref="116" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
@@ -173,9 +173,9 @@
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jTextField11" min="-2" pref="116" max="-2" attributes="0"/>
+                                      <Component id="calleTxt" min="-2" pref="116" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jTextField12" min="-2" pref="82" max="-2" attributes="0"/>
+                                      <Component id="numeroTxt" min="-2" pref="82" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -202,9 +202,9 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField1" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jTextField8" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jTextField9" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="nombreTxt" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="codigoPostalTxt" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="ciudadTxt" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -214,9 +214,9 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField5" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jTextField6" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jTextField10" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="apellidoPaternoTxt" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="apellidoMaternoTxt" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="coloniaTxt" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -227,10 +227,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField11" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                              <Component id="jTextField12" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="calleTxt" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="numeroTxt" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="fechaSelector" min="-2" max="-2" attributes="0"/>
+                          <Component id="fechaSelected" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
@@ -241,10 +241,10 @@
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton1" min="-2" pref="38" max="-2" attributes="0"/>
+                          <Component id="crearBtn" min="-2" pref="38" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jPasswordField1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jPasswordField2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="contraTxt" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="confirmarContraTxt" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
@@ -261,7 +261,7 @@
                 <Property name="text" type="java.lang.String" value="Crea tu cuenta"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="crearBtn">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="b8" green="81" red="35" type="rgb"/>
@@ -278,7 +278,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crearBtnActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -297,7 +297,7 @@
                 <Property name="text" type="java.lang.String" value="Nombre"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="nombreTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -323,7 +323,7 @@
                 <Property name="text" type="java.lang.String" value="Fecha Nacimiento"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField5">
+            <Component class="javax.swing.JTextField" name="apellidoPaternoTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -334,7 +334,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField6">
+            <Component class="javax.swing.JTextField" name="apellidoMaternoTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -345,7 +345,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="apellidoMaternoTxtActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
@@ -364,7 +364,7 @@
                 <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JPasswordField" name="jPasswordField1">
+            <Component class="javax.swing.JPasswordField" name="contraTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -396,7 +396,7 @@
                 <Property name="text" type="java.lang.String" value="Codigo Postal"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField8">
+            <Component class="javax.swing.JTextField" name="codigoPostalTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -412,7 +412,7 @@
                 <Property name="text" type="java.lang.String" value="Ciudad"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField9">
+            <Component class="javax.swing.JTextField" name="ciudadTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -428,7 +428,7 @@
                 <Property name="text" type="java.lang.String" value="Colonia"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField10">
+            <Component class="javax.swing.JTextField" name="coloniaTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -444,7 +444,7 @@
                 <Property name="text" type="java.lang.String" value="Calle"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField11">
+            <Component class="javax.swing.JTextField" name="calleTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -460,7 +460,7 @@
                 <Property name="text" type="java.lang.String" value="Num Ext"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField12">
+            <Component class="javax.swing.JTextField" name="numeroTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -471,7 +471,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JPasswordField" name="jPasswordField2">
+            <Component class="javax.swing.JPasswordField" name="confirmarContraTxt">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -482,9 +482,9 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="fechaSelector">
+            <Component class="com.toedter.calendar.JDateChooser" name="fechaSelected">
               <Properties>
-                <Property name="dateFormatString" type="java.lang.String" value="y-mm-dd"/>
+                <Property name="dateFormatString" type="java.lang.String" value="y-MM-dd"/>
               </Properties>
             </Component>
           </SubComponents>
