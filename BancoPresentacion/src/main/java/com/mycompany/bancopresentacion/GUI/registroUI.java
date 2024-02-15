@@ -322,6 +322,12 @@ public class registroUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void crearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBtnActionPerformed
+        
+        if (!validarCampos()) {
+        JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+        return; // Sale del método si los campos no están llenos
+    }
+        
         String nombre = nombreTxt.getText();
         String apellidoPaterno = apellidoPaternoTxt.getText();
         String apellidoMaterno = apellidoMaternoTxt.getText();
@@ -331,7 +337,7 @@ public class registroUI extends javax.swing.JFrame {
         String calle = calleTxt.getText();
         String numero = numeroTxt.getText();
         String contra = contraTxt.getText();
-        String corfirmarContra = confirmarContraTxt.getText();
+        String confirmarContra = confirmarContraTxt.getText();
         Date fecha = fechaSelected.getDate();
         String fechaNacimiento = (fecha != null) ? new SimpleDateFormat("yyyy-MM-dd").format(fecha) : "Fecha no seleccionada";
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -347,7 +353,7 @@ public class registroUI extends javax.swing.JFrame {
             Cuenta cuentaAgregada = controladorNegocio.agregarCuenta(cuenta);
 
             if (clienteAgregado != null) {
-                JOptionPane.showMessageDialog(null, "Cliente registrado correctamente.");
+                JOptionPane.showMessageDialog(null, "El cliente y su cuenta inicial ha sido registrado correctamente.");
                 limpiarCampos();
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo registrar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -357,51 +363,26 @@ public class registroUI extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al agregar el cliente o al agregar la cuenta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-
-        /*
-        try {
-            actiAgregado = cn.agregarActivista(nombre, apellidoP, apellidoM, telefono, fechaInicio);
-            LOG.log(Level.INFO, actiAgregado.toString());
-        } catch (DominioException ex) {
-            Logger.getLogger(ActivistasForm.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("algo paso alv");
-        }
-         */
-
     }//GEN-LAST:event_crearBtnActionPerformed
 
     public boolean validarCampos() {
-        // Obtenemos el texto de cada campo
-        String nombre = nombreTxt.getText();
-        String apellidoPaterno = apellidoPaternoTxt.getText();
-        String apellidoMaterno = apellidoMaternoTxt.getText();
-        String codigoPostal = codigoPostalTxt.getText();
-        String ciudad = ciudadTxt.getText();
-        String colonia = coloniaTxt.getText();
-        String calle = calleTxt.getText();
-        String numero = numeroTxt.getText();
-        String contra = contraTxt.getText();
-        String confirmarContra = confirmarContraTxt.getText();
-        Date fecha = fechaSelected.getDate();
-
-        // Validamos que ningún campo esté vacío o en blanco
-        if (nombre.isEmpty()
-                || apellidoPaterno.isEmpty()
-                || apellidoMaterno.isEmpty()
-                || codigoPostal.isEmpty()
-                || ciudad.isEmpty()
-                || colonia.isEmpty()
-                || calle.isEmpty()
-                || numero.isEmpty()
-                || contra.isEmpty()
-                || confirmarContra.isEmpty()
-                || fecha == null) {
-            // Si algún campo está vacío, retorna falso
-            return false;
-        }
-        // Si todos los campos tienen algún valor, retorna verdadero
-        return true;
+       // Validamos que ningún campo esté vacío o contenga solo espacios en blanco
+    if (nombreTxt.getText().isBlank() || 
+        apellidoPaternoTxt.getText().isBlank() || 
+        apellidoMaternoTxt.getText().isBlank() || 
+        codigoPostalTxt.getText().isBlank() || 
+        ciudadTxt.getText().isBlank() || 
+        coloniaTxt.getText().isBlank() || 
+        calleTxt.getText().isBlank() || 
+        numeroTxt.getText().isBlank() || 
+        contraTxt.getText().isBlank() || 
+        confirmarContraTxt.getText().isBlank() || 
+        fechaSelected == null) {
+        // Si algún campo está vacío o solo contiene espacios en blanco, retorna falso
+        return false;
+    }
+    // Si todos los campos tienen algún valor, retorna verdadero
+    return true;
     }
 
     public void limpiarCampos() {
