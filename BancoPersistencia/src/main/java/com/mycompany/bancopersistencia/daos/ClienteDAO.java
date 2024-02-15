@@ -28,9 +28,9 @@ public class ClienteDAO implements IClienteDAO {
     @Override
     public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException {
        // 1. Crear la sentencia SQL que vamos a mandar a la BD
-        String sentenciaSQL = "INSERT INTO CLIENTES (nombre, apellido_materno, apellido_paterno, fechaNacimiento,contraseña,edad) VALUES (?,?,?,?,?,?)";
+        String sentenciaSQL = "INSERT INTO CLIENTES (nombre, apellido_materno, apellido_paterno, fechaNacimiento,contraseña, codigoPostal, calle, numeroExterior, colonia, ciudad) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-// 2. Vamos a insertar o intentar hacer la inserción en la tabla
+        // 2. Vamos a insertar o intentar hacer la inserción en la tabla
         try (
                 // recursos
                 Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
@@ -44,7 +44,12 @@ public class ClienteDAO implements IClienteDAO {
             comandoSQL.setString(3, cliente.getApellidoM());
             comandoSQL.setString(4, cliente.getFechaNacimiento());
             comandoSQL.setString(5, cliente.getContraseña());
-            comandoSQL.setInt(6, cliente.getEdad());
+            comandoSQL.setString(6, cliente.getCodigoPostal());
+            comandoSQL.setString(7, cliente.getCalle());
+            comandoSQL.setString(8, cliente.getNumero());
+            comandoSQL.setString(9, cliente.getColonia());
+            comandoSQL.setString(10, cliente.getCiudad());
+
 
             // 4. Ejecutamos el comando o lo enviamos a la BD
             int registrosModificados = comandoSQL.executeUpdate();
@@ -63,7 +68,13 @@ public class ClienteDAO implements IClienteDAO {
                     cliente.getApellidoM(),
                     cliente.getFechaNacimiento(),
                     cliente.getContraseña(),
-                    cliente.getEdad()
+                    cliente.getCodigoPostal(),
+                    cliente.getCiudad(),
+                    cliente.getCalle(),
+                    cliente.getColonia(),
+                    cliente.getNumero()
+                    
+                    
             );
             // regresamos el cliente
             return clienteNuevo;

@@ -4,6 +4,10 @@
  */
 package com.mycompany.bancopresentacion.GUI;
 
+import bancoblue.bancodominio.Cliente;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author carlo
@@ -320,10 +324,20 @@ public class registroUI extends javax.swing.JFrame {
         String numero = numeroTxt.getText();
         String contra = contraTxt.getText();
         String corfirmarContra = confirmarContraTxt.getText();
+        Date fecha = fechaSelected.getDate();
+        String fechaNacimiento = (fecha != null) ? new SimpleDateFormat("yyyy-MM-dd").format(fecha) : "Fecha no seleccionada";
         
+        Cliente clienteAgregado;
         
-        
-        
+       /*
+        try {
+            actiAgregado = cn.agregarActivista(nombre, apellidoP, apellidoM, telefono, fechaInicio);
+            LOG.log(Level.INFO, actiAgregado.toString());
+        } catch (DominioException ex) {
+            Logger.getLogger(ActivistasForm.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("algo paso alv");
+        }
+        */
         
     }//GEN-LAST:event_crearBtnActionPerformed
 
