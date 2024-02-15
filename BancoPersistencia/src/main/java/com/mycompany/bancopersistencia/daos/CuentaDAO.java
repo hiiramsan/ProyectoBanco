@@ -31,7 +31,7 @@ public class CuentaDAO implements ICuentaDAO {
     @Override
     public Cuenta agregarCuenta(CuentaDTO cuenta) throws PersistenciaException {
         // 1. Crear la sentencia SQL que vamos a mandar a la BD
-        String sentenciaSQL = "INSERT INTO CUENTA (fecha_apertura, saldo,id_cliente) VALUES (?,?,?)";
+        String sentenciaSQL = "INSERT INTO CUENTAS (fecha_apertura, saldo,id_cliente,estado) VALUES (?,?,?,?)";
 
         // 2. Vamos a insertar o intentar hacer la inserción en la tabla
         try (
@@ -45,6 +45,7 @@ public class CuentaDAO implements ICuentaDAO {
             comandoSQL.setString(1, cuenta.getFecha_apertura());
             comandoSQL.setInt(2, cuenta.getSaldo());
             comandoSQL.setInt(3, cuenta.getId_cliente());
+            comandoSQL.setString(4,cuenta.getEstado());
 
             // 4. Ejecutamos el comando o lo enviamos a la BD
             int registrosModificados = comandoSQL.executeUpdate();
@@ -60,7 +61,8 @@ public class CuentaDAO implements ICuentaDAO {
                     registroGenerado.getInt(1),
                     cuenta.getFecha_apertura(),
                     cuenta.getSaldo(),
-                    cuenta.getId_cliente()
+                    cuenta.getId_cliente(),
+                    cuenta.getEstado()
             );
             // regresamos la cuenta
             return cuentaNueva;

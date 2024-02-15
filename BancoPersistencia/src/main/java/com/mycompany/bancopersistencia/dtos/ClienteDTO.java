@@ -13,6 +13,7 @@ public class ClienteDTO {
     private String apellidoP;
     private String apellidoM;
     private String fechaNacimiento;
+    private String usuario;
     private String contraseña;
     private String codigoPostal;
     private String ciudad;
@@ -21,17 +22,26 @@ public class ClienteDTO {
     private String numero;
     
 
-    public ClienteDTO(String nombre, String apellidoP, String apellidoM, String fechaNacimiento, String contraseña, String codigoPostal, String ciudad, String calle, String colonia, String numero) {
+    public ClienteDTO(String nombre, String apellidoP, String apellidoM, String fechaNacimiento,String usuario, String contraseña, String codigoPostal, String ciudad, String calle, String colonia, String numero) {
         this.nombre = nombre;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
         this.fechaNacimiento = fechaNacimiento;
+        this.usuario = usuario;
         this.contraseña = contraseña;
         this.codigoPostal = codigoPostal;
         this.ciudad = ciudad;
         this.calle = calle;
         this.colonia = colonia;
         this.numero = numero;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
     
     public String getCodigoPostal() {

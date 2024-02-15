@@ -12,11 +12,21 @@ public class CuentaDTO {
     private String fecha_apertura;
     private int saldo;
     private int id_cliente;
+    private String estado;
 
-    public CuentaDTO(String fecha_apertura, int saldo, int id_cliente) {
+    public CuentaDTO(String fecha_apertura, int saldo, int id_cliente,String estado) {
         this.fecha_apertura = fecha_apertura;
         this.saldo = saldo;
         this.id_cliente = id_cliente;
+        this.estado = estado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getFecha_apertura() {

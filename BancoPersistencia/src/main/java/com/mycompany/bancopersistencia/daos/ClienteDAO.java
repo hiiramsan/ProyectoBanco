@@ -32,7 +32,7 @@ public class ClienteDAO implements IClienteDAO {
     @Override
     public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException {
        // 1. Crear la sentencia SQL que vamos a mandar a la BD
-        String sentenciaSQL = "INSERT INTO CLIENTE (nombre, apellido_paterno, apellido_materno, fechaNacimiento,contraseña, codigoPostal, calle, numeroExterior, colonia, ciudad) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String sentenciaSQL = "INSERT INTO CLIENTES (nombre, apellido_paterno, apellido_materno, fechaNacimiento,usuario,contraseña, codigoPostal, calle, numeroExterior, colonia, ciudad) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         // 2. Vamos a insertar o intentar hacer la inserción en la tabla
         try (
@@ -47,12 +47,13 @@ public class ClienteDAO implements IClienteDAO {
             comandoSQL.setString(2, cliente.getApellidoP());
             comandoSQL.setString(3, cliente.getApellidoM());
             comandoSQL.setString(4, cliente.getFechaNacimiento());
-            comandoSQL.setString(5, cliente.getContraseña());
-            comandoSQL.setString(6, cliente.getCodigoPostal());
-            comandoSQL.setString(7, cliente.getCalle());
-            comandoSQL.setString(8, cliente.getNumero());
-            comandoSQL.setString(9, cliente.getColonia());
-            comandoSQL.setString(10, cliente.getCiudad());
+            comandoSQL.setString(5, cliente.getUsuario());
+            comandoSQL.setString(6, cliente.getContraseña());
+            comandoSQL.setString(7, cliente.getCodigoPostal());
+            comandoSQL.setString(8, cliente.getCalle());
+            comandoSQL.setString(9, cliente.getNumero());
+            comandoSQL.setString(10, cliente.getColonia());
+            comandoSQL.setString(11, cliente.getCiudad());
 
 
             // 4. Ejecutamos el comando o lo enviamos a la BD
@@ -71,6 +72,7 @@ public class ClienteDAO implements IClienteDAO {
                     cliente.getApellidoP(),
                     cliente.getApellidoM(),
                     cliente.getFechaNacimiento(),
+                    cliente.getUsuario(),
                     cliente.getContraseña(),
                     cliente.getCodigoPostal(),
                     cliente.getCiudad(),
