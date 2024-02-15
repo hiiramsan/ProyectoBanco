@@ -77,8 +77,6 @@ public class ClienteDAO implements IClienteDAO {
                     cliente.getCalle(),
                     cliente.getColonia(),
                     cliente.getNumero()
-                    
-
             );
             // regresamos el cliente
             return clienteNuevo;
