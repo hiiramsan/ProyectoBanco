@@ -28,7 +28,7 @@ public class ControladorPersistencia {
     IClienteDAO clienteDAO = new ClienteDAO(conexionBD);
     ICuentaDAO cuentaDAO = new CuentaDAO(conexionBD);
     
-    public Cliente agregarCuenta(ClienteDTO cliente) throws PersistenciaException {
+    public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException {
         Cliente clienteAgregado = this.clienteDAO.agregarCliente(cliente);
         return clienteAgregado;
     }

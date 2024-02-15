@@ -1,7 +1,6 @@
 bancoblue\bancodominio\Transferencia.class
-bancoblue\bancodominio\Direccion.class
-bancoblue\bancodominio\Cuenta.class
-bancoblue\bancodominio\excepciones\DominioException.class
 bancoblue\bancodominio\RetiroSinCuenta.class
+bancoblue\bancodominio\Cuenta.class
 bancoblue\bancodominio\Transaccion.class
 bancoblue\bancodominio\Cliente.class
+bancoblue\bancodominio\excepciones\DominioException.class
