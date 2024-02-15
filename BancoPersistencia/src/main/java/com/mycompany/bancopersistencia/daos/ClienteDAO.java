@@ -32,7 +32,7 @@ public class ClienteDAO implements IClienteDAO {
     @Override
     public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException {
        // 1. Crear la sentencia SQL que vamos a mandar a la BD
-        String sentenciaSQL = "INSERT INTO CLIENTE (nombre, apellido_materno, apellido_paterno, fechaNacimiento,contraseña, codigoPostal, calle, numeroExterior, colonia, ciudad) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String sentenciaSQL = "INSERT INTO CLIENTE (nombre, apellido_paterno, apellido_materno, fechaNacimiento,contraseña, codigoPostal, calle, numeroExterior, colonia, ciudad) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         // 2. Vamos a insertar o intentar hacer la inserción en la tabla
         try (
