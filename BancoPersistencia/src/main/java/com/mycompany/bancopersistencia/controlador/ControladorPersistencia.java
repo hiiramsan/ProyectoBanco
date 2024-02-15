@@ -23,7 +23,7 @@ import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 public class ControladorPersistencia {
     String cadenaConexion = "jdbc:mysql://localhost:3306/banco";
     String usuario = "root";
-    String contrasenia = "Itson";
+    String contrasenia = "chemahermoso123";
     IConexion conexionBD = new Conexion(cadenaConexion, usuario, contrasenia);
     IClienteDAO clienteDAO = new ClienteDAO(conexionBD);
     ICuentaDAO cuentaDAO = new CuentaDAO(conexionBD);
