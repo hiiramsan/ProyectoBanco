@@ -1,8 +1,0 @@
-com\mycompany\bdominio\RetiroSinCuenta.class
-com\mycompany\bdominio\Cliente.class
-com\mycompany\bdominio\Cuenta.class
-com\mycompany\bdominio\excepciones\DominioException.class
-com\mycompany\bdominio\Transaccion.class
-com\mycompany\bdominio\Transferencia.class
-com\mycompany\bdominio\Direccion.class
-com\mycompany\bdominio\BDominio.class

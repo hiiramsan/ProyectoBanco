@@ -374,6 +374,8 @@ public class registroUI extends javax.swing.JFrame {
             if (clienteAgregado != null) {
                 JOptionPane.showMessageDialog(null, "El cliente y su cuenta inicial ha sido registrado correctamente.");
                 limpiarCampos();
+                clienteUI cUI = new clienteUI();
+                cUI.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo registrar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
             }
