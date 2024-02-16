@@ -173,10 +173,12 @@ public class loginUI extends javax.swing.JFrame {
         String contra = new String(contraTxt.getPassword());
         
         try {
+            
             boolean inicioSesionExitoso = cn.iniciarSesion(usuario, contra);
             
             if (inicioSesionExitoso) {
-                    clienteUI cUI = new clienteUI(usuario);
+                //System.out.println("intentando con: "+ usuario);
+                    clienteUI cUI = new clienteUI();
                     cUI.setVisible(true);
                     dispose();
                 } else {

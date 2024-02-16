@@ -25,14 +25,9 @@ public class clienteUI extends javax.swing.JFrame {
      */
     public clienteUI() {
         initComponents();
-        actualizarCuentas();
         
     }
-
-    public clienteUI(String usuario) {
-        this.usuario = usuario;
-        
-    }
+      
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -220,12 +215,18 @@ public class clienteUI extends javax.swing.JFrame {
     private javax.swing.JLabel nombreCliente;
     // End of variables declaration//GEN-END:variables
 
-    private void actualizarCuentas() {
-        try {
-            String idCliente = cn.obtenerIdCliente(usuario);
-            System.out.println(idCliente);
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    private void actualizarCuentas() {
+//        try {
+//            if(usuario != null) {
+//                String idCliente = cn.obtenerIdCliente(usuario);
+//                System.out.println(usuario);
+//                System.out.println(idCliente);
+//            } else {
+//                System.out.println("usuario null");
+//            }
+//            
+//        } catch (PersistenciaException ex) {
+//            Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }
