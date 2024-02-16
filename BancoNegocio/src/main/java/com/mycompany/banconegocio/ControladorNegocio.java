@@ -33,4 +33,8 @@ public class ControladorNegocio {
    public boolean iniciarSesion(String usuario, String contra) throws PersistenciaException {
        return controladorPersistencia.iniciarSesion(usuario, contra);
    }
+   
+   public String obtenerIdCliente(String usuario) throws PersistenciaException {
+       return controladorPersistencia.obtenerIdCliente(usuario);
+   }
 } 

@@ -73,6 +73,7 @@ public class loginUI extends javax.swing.JFrame {
         iniciarBtn.setForeground(new java.awt.Color(255, 255, 255));
         iniciarBtn.setText("Iniciar");
         iniciarBtn.setBorder(null);
+        iniciarBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         iniciarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 iniciarBtnActionPerformed(evt);
@@ -175,7 +176,7 @@ public class loginUI extends javax.swing.JFrame {
             boolean inicioSesionExitoso = cn.iniciarSesion(usuario, contra);
             
             if (inicioSesionExitoso) {
-                    clienteUI cUI = new clienteUI();
+                    clienteUI cUI = new clienteUI(usuario);
                     cUI.setVisible(true);
                     dispose();
                 } else {

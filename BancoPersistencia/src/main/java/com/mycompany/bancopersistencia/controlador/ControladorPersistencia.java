@@ -15,6 +15,7 @@ import com.mycompany.bancopersistencia.daos.ICuentaDAO;
 import com.mycompany.bancopersistencia.dtos.ClienteDTO;
 import com.mycompany.bancopersistencia.dtos.CuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import java.util.List;
 
 /**
  *
@@ -46,5 +47,13 @@ public class ControladorPersistencia {
     public boolean iniciarSesion(String usuario, String contra) throws PersistenciaException {
         Boolean usuarioIniciado = this.clienteDAO.iniciarSesion(usuario, contra);
         return usuarioIniciado;
+    }
+    
+    public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException {
+        return this.clienteDAO.obtenerCuentas(id_cliente);
+    }
+    
+    public String obtenerIdCliente(String usuario) throws PersistenciaException {
+        return this.clienteDAO.obtenerIdCliente(usuario);
     }
 }
