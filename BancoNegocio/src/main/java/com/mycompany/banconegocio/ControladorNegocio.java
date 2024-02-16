@@ -10,6 +10,7 @@ import com.mycompany.bancopersistencia.controlador.ControladorPersistencia;
 import com.mycompany.bancopersistencia.dtos.ClienteDTO;
 import com.mycompany.bancopersistencia.dtos.CuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import java.util.List;
 
 /**
  *
@@ -36,5 +37,9 @@ public class ControladorNegocio {
    
    public String obtenerIdCliente(String usuario) throws PersistenciaException {
        return controladorPersistencia.obtenerIdCliente(usuario);
+   }
+   
+   public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException {
+       return controladorPersistencia.obtenerCuentas(id_cliente);
    }
 } 

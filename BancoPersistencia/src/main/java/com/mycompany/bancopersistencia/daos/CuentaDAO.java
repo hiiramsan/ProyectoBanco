@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -73,4 +75,36 @@ public class CuentaDAO implements ICuentaDAO {
         }
     }
 
+    public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException {
+        List<String> listaCuentas = new ArrayList<>();
+        String sentenciaSQL = "select num_cuenta, saldo from Cuentas where id_cliente = ?";
+        try (
+                // recursos
+                Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
+                // Crear el statement o el comando donde ejecutamos la sentencia
+                 PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+                ) {
+
+            comandoSQL.setString(1, id_cliente);
+
+            ResultSet resultado = comandoSQL.executeQuery();
+
+            listaCuentas.clear();
+            while (resultado.next()) {
+                String cuenta = resultado.getString("num_cuenta");
+                int saldo = resultado.getInt("saldo");
+                
+                String cuentaConSaldo = String.format("#%s     Saldo: %d", cuenta, saldo);
+                listaCuentas.add(cuentaConSaldo);
+            }
+
+            return listaCuentas;
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Error", e);
+            throw new PersistenciaException("Error", e);
+        }
+
+    }
+    
+    
 }

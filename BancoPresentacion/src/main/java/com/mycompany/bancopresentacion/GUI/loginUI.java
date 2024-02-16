@@ -177,7 +177,7 @@ public class loginUI extends javax.swing.JFrame {
             boolean inicioSesionExitoso = cn.iniciarSesion(usuario, contra);
             
             if (inicioSesionExitoso) {
-                //System.out.println("intentando con: "+ usuario);
+                    Sesion.setUsuario(usuario);
                     clienteUI cUI = new clienteUI();
                     cUI.setVisible(true);
                     dispose();

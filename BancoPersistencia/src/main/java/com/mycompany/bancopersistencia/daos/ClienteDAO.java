@@ -156,33 +156,6 @@ public class ClienteDAO implements IClienteDAO {
         }
     }
 
-    public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException {
-        List<String> listaCuentas = new ArrayList<>();
-        String sentenciaSQL = "select * from Cuentas where id_cliente = ?";
-        try (
-                // recursos
-                Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
-                // Crear el statement o el comando donde ejecutamos la sentencia
-                 PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
-                ) {
-
-            comandoSQL.setString(1, id_cliente);
-
-            ResultSet resultado = comandoSQL.executeQuery();
-
-            while (resultado.next()) {
-                String cuenta = resultado.getString("cuenta");
-                listaCuentas.add(cuenta);
-            }
-
-            return listaCuentas;
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, "Error", e);
-            throw new PersistenciaException("Error", e);
-        }
-
-    }
-
     public String obtenerIdCliente(String usuario) throws PersistenciaException {
         String sentenciaSQL = "SELECT id_cliente FROM Clientes WHERE usuario = ?";
         String idCliente = null;  // Variable para almacenar el resultado

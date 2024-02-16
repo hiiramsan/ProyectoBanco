@@ -50,7 +50,7 @@ public class ControladorPersistencia {
     }
     
     public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException {
-        return this.clienteDAO.obtenerCuentas(id_cliente);
+        return this.cuentaDAO.obtenerCuentas(id_cliente);
     }
     
     public String obtenerIdCliente(String usuario) throws PersistenciaException {

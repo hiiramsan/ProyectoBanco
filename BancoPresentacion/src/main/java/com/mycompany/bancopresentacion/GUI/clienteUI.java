@@ -18,16 +18,19 @@ public class clienteUI extends javax.swing.JFrame {
 
     ControladorNegocio cn = new ControladorNegocio();
     
-    private String usuario;
+    
+    String usuario = Sesion.getUsuario();
+
 
     /**
      * Creates new form clienteUI
      */
     public clienteUI() {
         initComponents();
-        
+        System.out.println("Interfaz programada para el usuario "+ usuario);
+        actualizarCuentas();
     }
-      
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,6 +113,8 @@ public class clienteUI extends javax.swing.JFrame {
             }
         });
 
+        cuentasComboBox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cuentasComboBox.setForeground(new java.awt.Color(0, 102, 255));
         cuentasComboBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -215,18 +220,36 @@ public class clienteUI extends javax.swing.JFrame {
     private javax.swing.JLabel nombreCliente;
     // End of variables declaration//GEN-END:variables
 
-//    private void actualizarCuentas() {
-//        try {
-//            if(usuario != null) {
-//                String idCliente = cn.obtenerIdCliente(usuario);
-//                System.out.println(usuario);
-//                System.out.println(idCliente);
-//            } else {
-//                System.out.println("usuario null");
-//            }
-//            
-//        } catch (PersistenciaException ex) {
-//            Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    private void actualizarCuentas() {
+        try {
+            if(usuario != null) {
+                String idCliente = cn.obtenerIdCliente(usuario);
+                actualiarListaCuentas(idCliente);
+                
+            } else {
+                System.out.println("usuario null");
+            }
+            
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void actualiarListaCuentas(String id_cliente) {
+        List<String> cuentas;
+        try {
+            cuentas = cn.obtenerCuentas(id_cliente);
+            
+            cuentasComboBox.removeAllItems();
+            
+            if(cuentas != null && !cuentas.isEmpty()) {
+                for(String cuenta : cuentas) {
+                    cuentasComboBox.addItem(cuenta);
+                }
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }

@@ -22,8 +22,6 @@ public interface IClienteDAO {
     
     public boolean iniciarSesion(String usuario, String contra) throws PersistenciaException;
     
-    public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException;
-    
     public String obtenerIdCliente(String usuario) throws PersistenciaException;
     
 }
