@@ -100,80 +100,72 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel3" min="-2" pref="54" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" min="-2" pref="54" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="apellidoPaternoTxt" min="-2" pref="122" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                  <Component id="apellidoMaternoTxt" min="-2" pref="120" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="nombreTxt" min="-2" pref="260" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="usuarioTxt" min="-2" pref="122" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="21" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="apellidoPaternoTxt" min="-2" pref="122" max="-2" attributes="0"/>
+                                          <Component id="jLabel9" min="-2" pref="74" max="-2" attributes="0"/>
+                                          <Component id="contraTxt" min="-2" pref="134" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                          <Component id="apellidoMaternoTxt" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <Component id="confirmarContraTxt" min="-2" pref="134" max="-2" attributes="0"/>
+                                          <Component id="jLabel10" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="calleTxt" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                                          <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="coloniaTxt" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                                          <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="codigoPostalTxt" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
+                                          <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="nombreTxt" min="-2" pref="260" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="usuarioTxt" min="-2" pref="122" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace pref="21" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel9" min="-2" pref="74" max="-2" attributes="0"/>
-                                                  <Component id="contraTxt" min="-2" pref="134" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="confirmarContraTxt" min="-2" pref="134" max="-2" attributes="0"/>
-                                                  <Component id="jLabel10" min="-2" pref="120" max="-2" attributes="0"/>
-                                                  <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="calleTxt" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
-                                                  <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="coloniaTxt" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
-                                                  <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="codigoPostalTxt" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
-                                                  <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Component id="fechaSelected" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                  <Component id="contraAviso" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                                          <Component id="numeroTxt" min="-2" pref="82" max="-2" attributes="0"/>
-                                          <Component id="ciudadTxt" min="-2" pref="116" max="-2" attributes="0"/>
-                                          <Component id="jLabel13" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                                      <Component id="crearBtn" min="-2" pref="100" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="fechaSelected" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="contraAviso" min="-2" pref="209" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="262" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
+                                  <Component id="numeroTxt" min="-2" pref="82" max="-2" attributes="0"/>
+                                  <Component id="ciudadTxt" min="-2" pref="116" max="-2" attributes="0"/>
+                                  <Component id="jLabel13" min="-2" pref="48" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="crearBtn" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

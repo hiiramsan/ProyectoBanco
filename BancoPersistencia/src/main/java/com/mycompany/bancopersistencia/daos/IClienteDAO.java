@@ -17,4 +17,7 @@ public interface IClienteDAO {
     
     public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException;
     
+    public boolean validarUsuario(String usuario) throws PersistenciaException;
+    
+    public boolean iniciarSesion(String usuario, String contra) throws PersistenciaException;
 }

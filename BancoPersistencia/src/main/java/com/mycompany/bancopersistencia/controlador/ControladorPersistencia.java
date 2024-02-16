@@ -37,4 +37,14 @@ public class ControladorPersistencia {
         Cuenta cuentaAgregada = this.cuentaDAO.agregarCuenta(cuenta);
         return cuentaAgregada;
     }
+    
+    public boolean validarUsuario(String usuario) throws PersistenciaException {
+        Boolean usuarioValido = this.clienteDAO.validarUsuario(usuario);
+        return usuarioValido;
+    }
+    
+    public boolean iniciarSesion(String usuario, String contra) throws PersistenciaException {
+        Boolean usuarioIniciado = this.clienteDAO.iniciarSesion(usuario, contra);
+        return usuarioIniciado;
+    }
 }

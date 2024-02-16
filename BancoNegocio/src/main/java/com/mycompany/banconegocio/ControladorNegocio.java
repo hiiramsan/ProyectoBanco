@@ -25,4 +25,12 @@ public class ControladorNegocio {
    public Cuenta agregarCuenta(CuentaDTO cuenta) throws PersistenciaException  {
        return controladorPersistencia.agregarCuenta(cuenta);
    }
-}
+   
+   public boolean validarCuenta(String usuario) throws PersistenciaException {
+       return controladorPersistencia.validarUsuario(usuario);
+   }
+   
+   public boolean iniciarSesion(String usuario, String contra) throws PersistenciaException {
+       return controladorPersistencia.iniciarSesion(usuario, contra);
+   }
+} 

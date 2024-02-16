@@ -4,12 +4,18 @@
  */
 package com.mycompany.bancopresentacion.GUI;
 
+import com.mycompany.banconegocio.ControladorNegocio;
+import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author carlo
  */
 public class loginUI extends javax.swing.JFrame {
-
+    ControladorNegocio cn = new ControladorNegocio();
     /**
      * Creates new form loginUI
      */
@@ -31,10 +37,11 @@ public class loginUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        numClienteTxt = new javax.swing.JTextField();
+        usuarioTxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         iniciarBtn = new javax.swing.JButton();
         contraTxt = new javax.swing.JPasswordField();
+        avisoCredenciales = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,10 +62,10 @@ public class loginUI extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI", 1, 24)); // NOI18N
         jLabel2.setText("Iniciar sesion");
 
-        jLabel3.setText("Numero de cliente");
+        jLabel3.setText("Usuario");
 
-        numClienteTxt.setForeground(new java.awt.Color(22, 66, 91));
-        numClienteTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
+        usuarioTxt.setForeground(new java.awt.Color(22, 66, 91));
+        usuarioTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
 
         jLabel4.setText("Contraseña");
 
@@ -74,6 +81,8 @@ public class loginUI extends javax.swing.JFrame {
 
         contraTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
 
+        avisoCredenciales.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -86,8 +95,11 @@ public class loginUI extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(numClienteTxt)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(avisoCredenciales, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(usuarioTxt)
                             .addComponent(jLabel4)
                             .addComponent(contraTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -101,9 +113,11 @@ public class loginUI extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(avisoCredenciales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(numClienteTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usuarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,7 +168,22 @@ public class loginUI extends javax.swing.JFrame {
 
     private void iniciarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarBtnActionPerformed
         // TODO add your handling code here:
+        String usuario = usuarioTxt.getText();
+        String contra = new String(contraTxt.getPassword());
         
+        try {
+            boolean inicioSesionExitoso = cn.iniciarSesion(usuario, contra);
+            
+            if (inicioSesionExitoso) {
+                    clienteUI cUI = new clienteUI();
+                    cUI.setVisible(true);
+                    dispose();
+                } else {
+                    avisoCredenciales.setText("Usuario o contraseña incorrecta");
+                }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(loginUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_iniciarBtnActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -167,6 +196,7 @@ public class loginUI extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel avisoCredenciales;
     private javax.swing.JPasswordField contraTxt;
     private javax.swing.JButton iniciarBtn;
     private javax.swing.JLabel jLabel2;
@@ -175,6 +205,6 @@ public class loginUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField numClienteTxt;
+    private javax.swing.JTextField usuarioTxt;
     // End of variables declaration//GEN-END:variables
 }

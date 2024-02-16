@@ -89,4 +89,76 @@ public class ClienteDAO implements IClienteDAO {
         }
     }
     
+    public boolean validarUsuario(String usuario) throws PersistenciaException {
+        String sentenciaSQL = "SELECT * FROM Clientes WHERE usuario = ?";
+        
+        try (
+                // recursos
+                Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
+                // Crear el statement o el comando donde ejecutamos la sentencia
+                 PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+                ) {
+
+            comandoSQL.setString(1, usuario);
+            
+            // obtener el conjunto de resultados que tiene o contiene las llaves generadas durante el registro o inserción
+            ResultSet registroGenerado = comandoSQL.executeQuery();
+
+            return registroGenerado.next();
+            
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "No se pudo iniciar sesion", e);
+            throw new PersistenciaException("No se pudo guardar el cliente ", e);
+        }
+        
+    }    
+    
+    public boolean iniciarSesion(String usuario, String contra) throws PersistenciaException {
+        //validar si usuario existe
+        if(validarUsuario(usuario)) {
+            String sentenciaSQL = "SELECT contraseña FROM Clientes WHERE usuario = ?";
+            
+            try (
+                // recursos
+                Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
+                // Crear el statement o el comando donde ejecutamos la sentencia
+                 PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+                ) {
+
+            comandoSQL.setString(1, usuario);        
+
+            // obtener el conjunto de resultados que tiene o contiene las llaves generadas durante el registro o inserción
+            ResultSet registroGenerado = comandoSQL.executeQuery();
+
+            registroGenerado.next();
+            String contraBD = registroGenerado.getString("contraseña");
+            
+            if (contraBD.equals(contra)) {
+                    // Usuario y contraseña coinciden, inicio de sesión exitoso
+                    System.out.println("Inicio de sesión exitoso de " + usuario);
+                    return true;
+                } else {
+                    // Contraseña incorrecta
+                    System.out.println("Contraseña incorrecta de " + usuario);
+                    return false;
+                }
+
+            
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "No se pudo iniciar sesion", e);
+            throw new PersistenciaException("No se pudo guardar el cliente ", e);
+         
+            
+        }
+            
+        
+    } else {
+            System.out.println("usuario no existe");
+            return false;
+        }
+    
+    
+    }
+    
+    
 }
