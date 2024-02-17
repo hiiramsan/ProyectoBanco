@@ -10,7 +10,7 @@ package bancoblue.bancodominio;
  */
 public class RetiroSinCuenta extends Transaccion {
 
-    private String folio_operacion;
+    private int folio_operacion;
     private String contraseña;
     private String estado;
 
@@ -18,25 +18,25 @@ public class RetiroSinCuenta extends Transaccion {
         super();
     }
 
-    public RetiroSinCuenta(int id_transaccion, String fecha_hora, int monto, int cuenta_origen, String folio_operacion, String contraseña, String estado) {
+    public RetiroSinCuenta(int id_transaccion, String fecha_hora, int monto, int cuenta_origen, int folio_operacion, String contraseña, String estado) {
         super(id_transaccion, fecha_hora, monto, "RetiroSinCuenta",cuenta_origen);
         this.folio_operacion = folio_operacion;
         this.contraseña = contraseña;
         this.estado = estado;
     }
 
-    public RetiroSinCuenta(String fecha_hora, int monto, int cuenta_origen, String folio_operacion, String contraseña, String estado) {
+    public RetiroSinCuenta(String fecha_hora, int monto, int cuenta_origen, int folio_operacion, String contraseña, String estado) {
         super(fecha_hora, monto, "RetiroSinCuenta",cuenta_origen);
         this.folio_operacion = folio_operacion;
         this.contraseña = contraseña;
         this.estado = estado;
     }
 
-    public String getFolio_operacion() {
+    public int getFolio_operacion() {
         return folio_operacion;
     }
 
-    public void setFolio_operacion(String folio_operacion) {
+    public void setFolio_operacion(int folio_operacion) {
         this.folio_operacion = folio_operacion;
     }
 

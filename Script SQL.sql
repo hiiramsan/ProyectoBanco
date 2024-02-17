@@ -44,13 +44,13 @@ CREATE TABLE Transferencias (
 );
 
 CREATE TABLE RetirosSinTarjeta (
-    id_transaccion INT,
-    folioOperacion VARCHAR(20),
+    id_transaccion INT PRIMARY KEY,
+    folioOperacion INT,
     contraseña VARCHAR(8),
     estado VARCHAR(20),
-    PRIMARY KEY (id_transaccion),
     FOREIGN KEY (id_transaccion) REFERENCES Transacciones (id_transaccion)
 );
+
 
 select * from clientes;
 select * from cuentas;
