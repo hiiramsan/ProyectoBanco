@@ -113,7 +113,7 @@ public class clienteUI extends javax.swing.JFrame {
             }
         });
 
-        cuentasComboBox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cuentasComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cuentasComboBox.setForeground(new java.awt.Color(0, 102, 255));
         cuentasComboBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
 

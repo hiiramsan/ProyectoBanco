@@ -94,10 +94,10 @@ public class CuentaDAO implements ICuentaDAO {
 
             listaCuentas.clear();
             while (resultado.next()) {
-                String cuenta = resultado.getString("num_cuenta");
+                int cuenta = resultado.getInt("num_cuenta");
                 int saldo = resultado.getInt("saldo");
                 
-                String cuentaConSaldo = String.format("#%s     Saldo: %d", cuenta, saldo);
+                String cuentaConSaldo = String.format("#%d     Saldo: %d", cuenta, saldo);
                 listaCuentas.add(cuentaConSaldo);
             }
 
