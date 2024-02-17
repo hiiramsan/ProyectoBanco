@@ -44,14 +44,10 @@ CREATE TABLE Transferencias (
 );
 
 CREATE TABLE RetirosSinTarjeta (
-    id_transaccion INT PRIMARY KEY,
-    folioOperacion INT,
+    id_transaccion INT,
+    folioOperacion VARCHAR(20),
     contraseña VARCHAR(8),
     estado VARCHAR(20),
+    PRIMARY KEY (id_transaccion),
     FOREIGN KEY (id_transaccion) REFERENCES Transacciones (id_transaccion)
 );
-
-
-select * from clientes;
-select * from cuentas;
-update cuentas set saldo = 1500 where id_cliente = 6;

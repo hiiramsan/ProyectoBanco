@@ -88,10 +88,16 @@ public class index extends javax.swing.JFrame {
         retiroSinCuentaBtn.setForeground(new java.awt.Color(255, 255, 255));
         retiroSinCuentaBtn.setText("Retiro sin cuenta");
         retiroSinCuentaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        retiroSinCuentaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         retiroSinCuentaBtn.setFocusPainted(false);
         retiroSinCuentaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 retiroSinCuentaBtnMouseClicked(evt);
+            }
+        });
+        retiroSinCuentaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retiroSinCuentaBtnActionPerformed(evt);
             }
         });
 
@@ -184,6 +190,13 @@ public class index extends javax.swing.JFrame {
         
         // agregar interfaz para realizar un retiro sin cuenta
     }//GEN-LAST:event_retiroSinCuentaBtnMouseClicked
+
+    private void retiroSinCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retiroSinCuentaBtnActionPerformed
+        // TODO add your handling code here:
+        retiroSinCuentaUI rsc = new retiroSinCuentaUI();
+        rsc.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_retiroSinCuentaBtnActionPerformed
 
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
