@@ -16,3 +16,4 @@ com\mycompany\bancopresentacion\GUI\registroUI$3.class
 com\mycompany\bancopresentacion\GUI\registroUI.class
 com\mycompany\bancopresentacion\GUI\index.class
 com\mycompany\bancopresentacion\GUI\Sesion.class
+utils\Encriptador.class
