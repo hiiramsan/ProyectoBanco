@@ -50,7 +50,6 @@ public class CuentaDAO implements ICuentaDAO {
             comandoSQL.setInt(4, cuenta.getId_cliente());
             comandoSQL.setString(5, cuenta.getEstado());
 
-
             // 4. Ejecutamos el comando o lo enviamos a la BD
             int registrosModificados = comandoSQL.executeUpdate();
             LOG.log(Level.INFO, "Se agregaron con éxito {0} ", registrosModificados);
@@ -62,12 +61,12 @@ public class CuentaDAO implements ICuentaDAO {
             registroGenerado.next();
 
             Cuenta cuentaNueva = new Cuenta(
-                registroGenerado.getInt(1),
-                cuenta.getNum_cuenta(),
-                cuenta.getFecha_apertura(),
-                cuenta.getSaldo(),
-                cuenta.getId_cliente(),
-                cuenta.getEstado()
+                    registroGenerado.getInt(1),
+                    cuenta.getNum_cuenta(),
+                    cuenta.getFecha_apertura(),
+                    cuenta.getSaldo(),
+                    cuenta.getId_cliente(),
+                    cuenta.getEstado()
             );
             // regresamos la cuenta
             return cuentaNueva;
@@ -96,7 +95,7 @@ public class CuentaDAO implements ICuentaDAO {
             while (resultado.next()) {
                 int cuenta = resultado.getInt("num_cuenta");
                 int saldo = resultado.getInt("saldo");
-                
+
                 String cuentaConSaldo = String.format("#%d     Saldo: %d", cuenta, saldo);
                 listaCuentas.add(cuentaConSaldo);
             }
@@ -108,48 +107,72 @@ public class CuentaDAO implements ICuentaDAO {
         }
 
     }
-    
+
     public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException {
-    // 1. Crear la sentencia SQL que vamos a mandar a la BD
-    String sentenciaSQL = "SELECT * FROM Cuentas WHERE num_cuenta = ?";
+        // 1. Crear la sentencia SQL que vamos a mandar a la BD
+        String sentenciaSQL = "SELECT * FROM Cuentas WHERE num_cuenta = ?";
 
-    try (
-            // recursos
-            Connection conexion = this.conexion.crearConexion();
-            PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL);
-    ) {
-        // 2. Establecer el parámetro en la sentencia SQL
-        comandoSQL.setString(1, numeroCuenta);
+        try (
 
-        // 3. Ejecutar la consulta
-        ResultSet resultado = comandoSQL.executeQuery();
+                Connection conexion = this.conexion.crearConexion(); PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL);) {
+           
+            comandoSQL.setString(1, numeroCuenta);
 
-        // 4. Verificar si hay resultados
-        if (resultado.next()) {
-            // 5. Obtener los datos de la cuenta
-            int idCuenta = resultado.getInt("id_cuenta");
-            int num_cuenta = resultado.getInt("num_cuenta");
-            String fechaApertura = resultado.getString("fecha_apertura");
-            int saldo = resultado.getInt("saldo");
-            int idCliente = resultado.getInt("id_cliente");
-            String estado = resultado.getString("estado");
-            // Otros campos...
+            // 3. Ejecutar la consulta
+            ResultSet resultado = comandoSQL.executeQuery();
 
-            // 6. Crear el objeto CuentaDTO con los datos obtenidos
-           // (int id_cuenta, int num_cuenta, String fecha_apertura, int saldo, int id_cliente, String estado) 
-            Cuenta cuenta = new Cuenta(idCuenta,num_cuenta, fechaApertura, saldo, idCliente, estado);
             
-            // 7. Devolver el objeto CuentaDTO
-            return cuenta;
-        } else {
-            // Manejar el caso donde no se encontró la cuenta
-            return null;
-        }
-    } catch (Exception e) {
-        LOG.log(Level.SEVERE, "Error al obtener la cuenta por número", e);
-        throw new PersistenciaException("No se pudo obtener la cuenta por número", e);
-    }
-}
+            if (resultado.next()) {
+         
+                int idCuenta = resultado.getInt("id_cuenta");
+                int num_cuenta = resultado.getInt("num_cuenta");
+                String fechaApertura = resultado.getString("fecha_apertura");
+                int saldo = resultado.getInt("saldo");
+                int idCliente = resultado.getInt("id_cliente");
+                String estado = resultado.getString("estado");
+                // Otros campos...
 
+      
+                // (int id_cuenta, int num_cuenta, String fecha_apertura, int saldo, int id_cliente, String estado) 
+                Cuenta cuenta = new Cuenta(idCuenta, num_cuenta, fechaApertura, saldo, idCliente, estado);
+
+                return cuenta;
+            } else {
     
+                return null;
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Error al obtener la cuenta por número", e);
+            throw new PersistenciaException("No se pudo obtener la cuenta por número", e);
+        }
+    }
+    
+    public void modificarSaldoPorId(int idCuenta, double nuevoSaldo) throws PersistenciaException {
+        String sentenciaSQL = "UPDATE Cuentas SET saldo = saldo + ? WHERE id_cuenta = ?";
+
+        try (
+       
+                Connection conexion = this.conexion.crearConexion(); 
+                 PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+                ) {
+            comandoSQL.setDouble(1, nuevoSaldo);
+            comandoSQL.setInt(2, idCuenta);
+
+            int registrosModificados = comandoSQL.executeUpdate();
+
+            if (registrosModificados == 0) {
+                throw new PersistenciaException("No se encontró la cuenta con id_cuenta: " + idCuenta);
+            }
+
+            LOG.log(Level.INFO, "Se modificó con éxito el saldo de la cuenta con id_cuenta {0}", idCuenta);
+
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Error al modificar el saldo de la cuenta con id_cuenta " + idCuenta, e);
+            throw new PersistenciaException("No se pudo modificar el saldo de la cuenta", e);
+        }
+    }
+    
+    
+    
+
 }

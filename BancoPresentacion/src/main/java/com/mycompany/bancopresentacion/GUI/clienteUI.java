@@ -42,7 +42,7 @@ public class clienteUI extends javax.swing.JFrame {
         depositarBtn.setVisible(false);
         cancelarCuentaBtn.setVisible(false);
         cuentaSelectedTxt.setVisible(false);
-            fechaAperturaTxt.setVisible(false);
+        fechaAperturaTxt.setVisible(false);
     }
 
     /**
@@ -354,10 +354,11 @@ public class clienteUI extends javax.swing.JFrame {
                         .addComponent(cuentasComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(agregarCuenta, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cuentaLabel)
-                            .addComponent(depositarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cuentaSelectedTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cuentaSelectedTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cuentaLabel)
+                                .addComponent(depositarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(1, 1, 1)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fechaAperturaLabel)
@@ -461,21 +462,22 @@ public class clienteUI extends javax.swing.JFrame {
 
     private void mostrarCuentaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mostrarCuentaBtnMouseClicked
         // TODO add your handling code here:
-        
-        String cuentaSelect = (String) cuentasComboBox.getSelectedItem();
-        System.out.println(cuentaSelect);
 
+        String cuentaSelect = (String) cuentasComboBox.getSelectedItem();
         String[] partes = cuentaSelect.split(" ");
 
+        String numeroCuenta;
+        Cuenta cuentaCargada;
         if (partes.length >= 2) {
-            String numeroCuenta = partes[0].substring(1);
-            cargarCuentaSeleccionada(numeroCuenta);
+            numeroCuenta = partes[0].substring(1);
+            cuentaCargada = cargarCuentaSeleccionada(numeroCuenta);
+
+            cuentaSelectedTxt.setText(String.valueOf(cuentaCargada.getNum_cuenta()));
+            fechaAperturaTxt.setText(String.valueOf(cuentaCargada.getFecha_apertura()));
         } else {
             //handle err
         }
-        
-        
-        
+
         if (mostrarCuentaBtn.getText() == "Mostrar mas") {
             mostrarCuentaBtn.setText("Mostrar menos");
             cuentaLabel.setVisible(true);
@@ -497,7 +499,34 @@ public class clienteUI extends javax.swing.JFrame {
     }//GEN-LAST:event_mostrarCuentaBtnMouseClicked
 
     private void depositarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositarBtnActionPerformed
-        // TODO add your handling code here:
+        String saldoString = JOptionPane.showInputDialog("Ingrese el saldo a depositar a la cuenta:");
+        double nuevoSaldo = Double.parseDouble(saldoString);
+        if (nuevoSaldo >= 1 && nuevoSaldo <= 10000 && nuevoSaldo % 100 == 0) {
+            String cuentaSelect = (String) cuentasComboBox.getSelectedItem();
+            String[] partes = cuentaSelect.split(" ");
+
+            String numeroCuenta;
+            Cuenta cuentaCargada;
+            if (partes.length >= 2) {
+                numeroCuenta = partes[0].substring(1);
+                cuentaCargada = cargarCuentaSeleccionada(numeroCuenta);
+                System.out.println("tratando de depositar a esta cuenta con id: " + cuentaCargada.getId_cuenta());
+
+                try {
+                    cn.modificarSaldoPorId(cuentaCargada.getId_cuenta(), nuevoSaldo);
+                } catch (PersistenciaException ex) {
+                    // handle error
+                }
+
+            } else {
+            }
+
+            actualizarCuentas();
+        } else {
+            JOptionPane.showMessageDialog(null, "El deposito debe estar entre 1 y 10000 y ser múltiplo de 100.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_depositarBtnActionPerformed
 
     private void cancelarCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCuentaBtnActionPerformed
@@ -564,16 +593,14 @@ public class clienteUI extends javax.swing.JFrame {
         }
     }
 
-    private void cargarCuentaSeleccionada(String numeroCuenta) {
+    private Cuenta cargarCuentaSeleccionada(String numeroCuenta) {
         try {
             Cuenta cuentaSeleccionada = cn.obtenerCuentaPorNumCuentas(numeroCuenta);
-            cuentaSelectedTxt.setText(String.valueOf(cuentaSeleccionada.getNum_cuenta()));
-            fechaAperturaTxt.setText(String.valueOf(cuentaSeleccionada.getFecha_apertura()));
- 
-        } catch(PersistenciaException ex) {
+            return cuentaSeleccionada;
+        } catch (PersistenciaException ex) {
             //handle err
+            return null;
         }
-        
     }
 
 }

@@ -58,4 +58,8 @@ public class ControladorNegocio {
    public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException {
        return controladorPersistencia.obtenerCuentaPorNumCuentas(numeroCuenta);
    }
+   
+   public void modificarSaldoPorId(int idCuenta, double nuevoSaldo) throws PersistenciaException {
+       controladorPersistencia.modificarSaldoPorId(idCuenta, nuevoSaldo);
+   }
 } 

@@ -21,4 +21,6 @@ public interface ICuentaDAO {
     public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException;
     
     public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException;
+    
+    public void modificarSaldoPorId(int idCuenta, double nuevoSaldo) throws PersistenciaException;
 }
