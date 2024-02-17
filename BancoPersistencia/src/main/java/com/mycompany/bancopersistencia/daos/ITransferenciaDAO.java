@@ -4,10 +4,14 @@
  */
 package com.mycompany.bancopersistencia.daos;
 
+import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+
 /**
  *
  * @author PC
  */
 public interface ITransferenciaDAO {
+    
+    public boolean realizarTransferencia(int cuentaOrigen, int cuentaDestino, int monto) throws PersistenciaException;
     
 }
