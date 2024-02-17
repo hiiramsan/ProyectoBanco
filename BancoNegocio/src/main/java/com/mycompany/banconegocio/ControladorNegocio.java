@@ -54,4 +54,8 @@ public class ControladorNegocio {
        cliente.setContraseña(Encriptador.encriptar(cliente.getContraseña()));
        return controladorPersistencia.modifcarClientePorID(idCliente, cliente);
    }
+   
+   public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException {
+       return controladorPersistencia.obtenerCuentaPorNumCuentas(numeroCuenta);
+   }
 } 

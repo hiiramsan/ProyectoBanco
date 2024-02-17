@@ -19,4 +19,6 @@ public interface ICuentaDAO {
     public Cuenta agregarCuenta(CuentaDTO cuenta) throws PersistenciaException;
     
     public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException;
+    
+    public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException;
 }

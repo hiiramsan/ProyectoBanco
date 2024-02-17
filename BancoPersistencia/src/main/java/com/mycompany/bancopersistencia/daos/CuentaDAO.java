@@ -109,5 +109,47 @@ public class CuentaDAO implements ICuentaDAO {
 
     }
     
+    public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException {
+    // 1. Crear la sentencia SQL que vamos a mandar a la BD
+    String sentenciaSQL = "SELECT * FROM Cuentas WHERE num_cuenta = ?";
+
+    try (
+            // recursos
+            Connection conexion = this.conexion.crearConexion();
+            PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL);
+    ) {
+        // 2. Establecer el parámetro en la sentencia SQL
+        comandoSQL.setString(1, numeroCuenta);
+
+        // 3. Ejecutar la consulta
+        ResultSet resultado = comandoSQL.executeQuery();
+
+        // 4. Verificar si hay resultados
+        if (resultado.next()) {
+            // 5. Obtener los datos de la cuenta
+            int idCuenta = resultado.getInt("id_cuenta");
+            int num_cuenta = resultado.getInt("num_cuenta");
+            String fechaApertura = resultado.getString("fecha_apertura");
+            int saldo = resultado.getInt("saldo");
+            int idCliente = resultado.getInt("id_cliente");
+            String estado = resultado.getString("estado");
+            // Otros campos...
+
+            // 6. Crear el objeto CuentaDTO con los datos obtenidos
+           // (int id_cuenta, int num_cuenta, String fecha_apertura, int saldo, int id_cliente, String estado) 
+            Cuenta cuenta = new Cuenta(idCuenta,num_cuenta, fechaApertura, saldo, idCliente, estado);
+            
+            // 7. Devolver el objeto CuentaDTO
+            return cuenta;
+        } else {
+            // Manejar el caso donde no se encontró la cuenta
+            return null;
+        }
+    } catch (Exception e) {
+        LOG.log(Level.SEVERE, "Error al obtener la cuenta por número", e);
+        throw new PersistenciaException("No se pudo obtener la cuenta por número", e);
+    }
+}
+
     
 }

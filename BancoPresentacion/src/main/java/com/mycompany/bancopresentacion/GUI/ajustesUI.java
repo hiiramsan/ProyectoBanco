@@ -17,14 +17,14 @@ import javax.swing.JOptionPane;
  *
  * @author carlo
  */
-public class cuentaUI extends javax.swing.JFrame {
+public class ajustesUI extends javax.swing.JFrame {
 
     ControladorNegocio cn = new ControladorNegocio();
 
     /**
      * Creates new form cuentaUI
      */
-    public cuentaUI() {
+    public ajustesUI() {
         initComponents();
         mostrarDatosCliente();
 
@@ -416,8 +416,6 @@ public class cuentaUI extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo modificar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
-            
         } catch(PersistenciaException ex) {
             // handle errors
         }
