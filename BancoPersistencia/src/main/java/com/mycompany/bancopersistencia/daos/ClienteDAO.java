@@ -92,7 +92,7 @@ public class ClienteDAO implements IClienteDAO {
 
     public boolean validarUsuario(String usuario) throws PersistenciaException {
         String sentenciaSQL = "SELECT * FROM Clientes WHERE usuario = ?";
-
+        
         try (
                 // recursos
                 Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd

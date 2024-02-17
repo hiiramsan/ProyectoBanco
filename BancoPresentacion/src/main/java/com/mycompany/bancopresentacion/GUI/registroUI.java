@@ -12,6 +12,7 @@ import com.mycompany.bancopersistencia.dtos.CuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -370,12 +371,13 @@ public class registroUI extends javax.swing.JFrame {
         Date fechaActual = new Date();
         String fechaActualFormato = formatoFecha.format(fechaActual);
         int saldo = 0;
-
+        int num_cuenta = getNuevoNumCuenta();
+        
         try {
             ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
             Cliente clienteAgregado = controladorNegocio.agregarCliente(cliente);
             
-            CuentaDTO cuenta = new CuentaDTO(fechaActualFormato,saldo,clienteAgregado.getId_cliente(),"Activa");
+            CuentaDTO cuenta = new CuentaDTO(num_cuenta, fechaActualFormato,saldo,clienteAgregado.getId_cliente(),"Activa");
             Cuenta cuentaAgregada = controladorNegocio.agregarCuenta(cuenta);
 
             if (clienteAgregado != null) {
@@ -500,4 +502,10 @@ public class registroUI extends javax.swing.JFrame {
     private javax.swing.JTextField numeroTxt;
     private javax.swing.JTextField usuarioTxt;
     // End of variables declaration//GEN-END:variables
+
+    private int getNuevoNumCuenta() {
+        Random random = new Random();
+        // Generar un número aleatorio de 6 dígitos
+        return 100000 + random.nextInt(900000);
+    }
 }

@@ -9,16 +9,26 @@ package com.mycompany.bancopersistencia.dtos;
  * @author PC
  */
 public class CuentaDTO {
+    private int num_cuenta;
     private String fecha_apertura;
     private int saldo;
     private int id_cliente;
     private String estado;
 
-    public CuentaDTO(String fecha_apertura, int saldo, int id_cliente,String estado) {
+    public CuentaDTO(int num_cuenta, String fecha_apertura, int saldo, int id_cliente, String estado) {
+        this.num_cuenta = num_cuenta;
         this.fecha_apertura = fecha_apertura;
         this.saldo = saldo;
         this.id_cliente = id_cliente;
         this.estado = estado;
+    }
+
+    public int getNum_cuenta() {
+        return num_cuenta;
+    }
+
+    public void setNum_cuenta(int num_cuenta) {
+        this.num_cuenta = num_cuenta;
     }
 
     public String getEstado() {
