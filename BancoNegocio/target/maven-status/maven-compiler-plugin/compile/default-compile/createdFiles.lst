@@ -1,1 +1,2 @@
 com\mycompany\banconegocio\ControladorNegocio.class
+com\mycompany\banconegocio\validadores\Encriptador.class

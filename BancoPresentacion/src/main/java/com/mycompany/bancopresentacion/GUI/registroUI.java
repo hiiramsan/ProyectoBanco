@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import javax.swing.JOptionPane;
-import utils.Encriptador;
 
 /**
  *
@@ -373,10 +372,9 @@ public class registroUI extends javax.swing.JFrame {
         String fechaActualFormato = formatoFecha.format(fechaActual);
         int saldo = 0;
         int num_cuenta = getNuevoNumCuenta();
-        String contraEncriptada = Encriptador.encriptar(contra);
         
         try {
-            ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,usuario, contraEncriptada, codigoPostal, ciudad, calle, colonia, numero);
+            ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
             Cliente clienteAgregado = controladorNegocio.agregarCliente(cliente);
             
             CuentaDTO cuenta = new CuentaDTO(num_cuenta, fechaActualFormato,saldo,clienteAgregado.getId_cliente(),"Activa");

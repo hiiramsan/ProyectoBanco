@@ -40,7 +40,7 @@ public class ClienteDAO implements IClienteDAO {
         try (
                 // recursos
                 Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
-                // Crear el statement o el comando donde ejecutamos la sentencia
+                // Creaqqq  r el statement o el comando donde ejecutamos la sentencia
                  PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
                 ) {
 

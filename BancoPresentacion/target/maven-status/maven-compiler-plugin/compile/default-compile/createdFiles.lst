@@ -10,6 +10,7 @@ com\mycompany\bancopresentacion\GUI\clienteUI.class
 com\mycompany\bancopresentacion\GUI\index$2.class
 com\mycompany\bancopresentacion\GUI\registroUI$4.class
 com\mycompany\bancopresentacion\GUI\transferenciaMsgUI.class
+com\mycompany\bancopresentacion\GUI\clienteUI$3.class
 com\mycompany\bancopresentacion\GUI\index$1.class
 com\mycompany\bancopresentacion\GUI\loginUI$1.class
 com\mycompany\bancopresentacion\GUI\registroUI$3.class

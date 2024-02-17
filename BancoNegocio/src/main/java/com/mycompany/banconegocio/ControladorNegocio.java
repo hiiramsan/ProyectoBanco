@@ -6,6 +6,7 @@ package com.mycompany.banconegocio;
 
 import bancoblue.bancodominio.Cliente;
 import bancoblue.bancodominio.Cuenta;
+import com.mycompany.banconegocio.validadores.Encriptador;
 import com.mycompany.bancopersistencia.controlador.ControladorPersistencia;
 import com.mycompany.bancopersistencia.dtos.ClienteDTO;
 import com.mycompany.bancopersistencia.dtos.CuentaDTO;
@@ -20,6 +21,7 @@ public class ControladorNegocio {
   ControladorPersistencia controladorPersistencia = new ControladorPersistencia();
   
    public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException {
+       cliente.setContraseña(Encriptador.encriptar(cliente.getContraseña()));
        return controladorPersistencia.agregarCliente(cliente);
     }
    
@@ -32,6 +34,7 @@ public class ControladorNegocio {
    }
    
    public boolean iniciarSesion(String usuario, String contra) throws PersistenciaException {
+       contra = Encriptador.desencriptar(contra);
        return controladorPersistencia.iniciarSesion(usuario, contra);
    }
    
