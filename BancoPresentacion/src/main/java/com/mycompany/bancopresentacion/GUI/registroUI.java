@@ -368,18 +368,13 @@ public class registroUI extends javax.swing.JFrame {
         String confirmarContra = new String(confirmarContraTxt.getPassword());
         Date fecha = fechaSelected.getDate();
         String fechaNacimiento = (fecha != null) ? new SimpleDateFormat("yyyy-MM-dd").format(fecha) : "Fecha no seleccionada";
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaActual = new Date();
-        String fechaActualFormato = formatoFecha.format(fechaActual);
-        int saldo = 0;
-        int num_cuenta = GeneradorCuentas.getNuevoNumCuenta();
+        
         
         try {
             ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
             Cliente clienteAgregado = controladorNegocio.agregarCliente(cliente);
             
-            CuentaDTO cuenta = new CuentaDTO(num_cuenta, fechaActualFormato,saldo,clienteAgregado.getId_cliente(),"Activa");
-            Cuenta cuentaAgregada = controladorNegocio.agregarCuenta(cuenta);
+           
 
             if (clienteAgregado != null) {
                 JOptionPane.showMessageDialog(null, "El cliente y su cuenta inicial ha sido registrado correctamente.");
