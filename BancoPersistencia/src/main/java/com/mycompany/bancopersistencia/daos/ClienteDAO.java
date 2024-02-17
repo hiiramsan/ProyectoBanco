@@ -67,20 +67,8 @@ public class ClienteDAO implements IClienteDAO {
             // nos posicionamos en el primer registro o en el siguiente disponible.
             registroGenerado.next();
 
-            Cliente clienteNuevo = new Cliente(
-                    registroGenerado.getInt(1),
-                    cliente.getNombre(),
-                    cliente.getApellidoP(),
-                    cliente.getApellidoM(),
-                    cliente.getFechaNacimiento(),
-                    cliente.getUsuario(),
-                    cliente.getContraseña(),
-                    cliente.getCodigoPostal(),
-                    cliente.getCiudad(),
-                    cliente.getCalle(),
-                    cliente.getColonia(),
-                    cliente.getNumero()
-            );
+            Cliente clienteNuevo = buscarClientePorId(registroGenerado.getInt(1));
+                   
             // regresamos el cliente
             return clienteNuevo;
 
@@ -178,5 +166,47 @@ public class ClienteDAO implements IClienteDAO {
 
         return idCliente;
     }
+    
+    @Override
+    public Cliente buscarClientePorId(int idCliente) throws PersistenciaException {
+    String sentenciaSQL = "SELECT * FROM Clientes WHERE id_cliente = ?";
+    
+    try (
+        // recursos
+        Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
+        // Crear el statement o el comando donde ejecutamos la sentencia
+        PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+    ) {
+        comandoSQL.setInt(1, idCliente);
+
+        try (ResultSet resultado = comandoSQL.executeQuery()) {
+            if (resultado.next()) {
+                // Construir un objeto Cliente basado en los datos obtenidos de la consulta
+                Cliente cliente = new Cliente(
+                    resultado.getInt("id_cliente"),
+                    resultado.getString("nombre"),
+                    resultado.getString("apellido_paterno"),
+                    resultado.getString("apellido_materno"),
+                    resultado.getString("fechaNacimiento"),
+                    resultado.getString("usuario"),
+                    resultado.getString("contraseña"),
+                    resultado.getString("codigoPostal"),
+                    resultado.getString("ciudad"),
+                    resultado.getString("calle"),
+                    resultado.getString("colonia"),
+                    resultado.getString("numeroExterior")
+                );
+                return cliente;
+            }
+        }
+    } catch (SQLException e) {
+        LOG.log(Level.SEVERE, "Error al buscar cliente por ID", e);
+        throw new PersistenciaException("Error al buscar cliente por ID", e);
+    }
+    
+    // Si no se encuentra ningún cliente con el ID dado, se retorna null
+    return null;
+}
+
 
 }
