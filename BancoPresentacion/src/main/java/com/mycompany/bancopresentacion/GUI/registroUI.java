@@ -364,8 +364,8 @@ public class registroUI extends javax.swing.JFrame {
         String calle = calleTxt.getText();
         String numero = numeroTxt.getText();
         String usuario = usuarioTxt.getText();
-        String contra = contraTxt.getText();
-        String confirmarContra = confirmarContraTxt.getText();
+        String contra = new String(contraTxt.getPassword());
+        String confirmarContra = new String(confirmarContraTxt.getPassword());
         Date fecha = fechaSelected.getDate();
         String fechaNacimiento = (fecha != null) ? new SimpleDateFormat("yyyy-MM-dd").format(fecha) : "Fecha no seleccionada";
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");

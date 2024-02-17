@@ -1,6 +1,7 @@
 com\mycompany\bancopresentacion\GUI\transferenciaUI.class
 com\mycompany\bancopresentacion\GUI\cuentaUI$4.class
 com\mycompany\bancopresentacion\GUI\clienteUI$6.class
+com\mycompany\bancopresentacion\GUI\index$3.class
 com\mycompany\bancopresentacion\GUI\clienteUI$1.class
 com\mycompany\bancopresentacion\GUI\cuentaUI$1.class
 com\mycompany\bancopresentacion\GUI\utils\GeneradorCuentas.class

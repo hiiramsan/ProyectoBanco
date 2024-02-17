@@ -25,4 +25,6 @@ public interface IClienteDAO {
     public String obtenerIdCliente(String usuario) throws PersistenciaException;
     
     public Cliente buscarClientePorId(int idCliente) throws PersistenciaException;
+    
+    public Cliente modifcarClientePorID(String idCliente, ClienteDTO cliente) throws PersistenciaException;
 }

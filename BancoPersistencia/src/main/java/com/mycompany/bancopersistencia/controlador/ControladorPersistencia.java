@@ -56,4 +56,12 @@ public class ControladorPersistencia {
     public String obtenerIdCliente(String usuario) throws PersistenciaException {
         return this.clienteDAO.obtenerIdCliente(usuario);
     }
+    
+    public Cliente buscarClientePorId(int idCliente) throws PersistenciaException {
+        return this.clienteDAO.buscarClientePorId(idCliente);
+    }
+    
+    public Cliente modifcarClientePorID(String idCliente, ClienteDTO cliente) throws PersistenciaException {
+        return this.clienteDAO.modifcarClientePorID(idCliente, cliente);
+    }
 }

@@ -68,7 +68,7 @@ public class ClienteDAO implements IClienteDAO {
             registroGenerado.next();
 
             Cliente clienteNuevo = buscarClientePorId(registroGenerado.getInt(1));
-                   
+
             // regresamos el cliente
             return clienteNuevo;
 
@@ -78,9 +78,10 @@ public class ClienteDAO implements IClienteDAO {
         }
     }
 
+    // MOVER A VALIDADORESSSSSSSSSSS
     public boolean validarUsuario(String usuario) throws PersistenciaException {
         String sentenciaSQL = "SELECT * FROM Clientes WHERE usuario = ?";
-        
+
         try (
                 // recursos
                 Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
@@ -166,47 +167,87 @@ public class ClienteDAO implements IClienteDAO {
 
         return idCliente;
     }
-    
+
     @Override
     public Cliente buscarClientePorId(int idCliente) throws PersistenciaException {
-    String sentenciaSQL = "SELECT * FROM Clientes WHERE id_cliente = ?";
-    
-    try (
-        // recursos
-        Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
-        // Crear el statement o el comando donde ejecutamos la sentencia
-        PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
-    ) {
-        comandoSQL.setInt(1, idCliente);
+        String sentenciaSQL = "SELECT * FROM Clientes WHERE id_cliente = ?";
 
-        try (ResultSet resultado = comandoSQL.executeQuery()) {
-            if (resultado.next()) {
-                // Construir un objeto Cliente basado en los datos obtenidos de la consulta
-                Cliente cliente = new Cliente(
-                    resultado.getInt("id_cliente"),
-                    resultado.getString("nombre"),
-                    resultado.getString("apellido_paterno"),
-                    resultado.getString("apellido_materno"),
-                    resultado.getString("fechaNacimiento"),
-                    resultado.getString("usuario"),
-                    resultado.getString("contraseña"),
-                    resultado.getString("codigoPostal"),
-                    resultado.getString("ciudad"),
-                    resultado.getString("calle"),
-                    resultado.getString("colonia"),
-                    resultado.getString("numeroExterior")
-                );
-                return cliente;
+        try (
+                // recursos
+                Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
+                // Crear el statement o el comando donde ejecutamos la sentencia
+                 PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+                ) {
+            comandoSQL.setInt(1, idCliente);
+
+            try (ResultSet resultado = comandoSQL.executeQuery()) {
+                if (resultado.next()) {
+                    // Construir un objeto Cliente basado en los datos obtenidos de la consulta
+                    Cliente cliente = new Cliente(
+                            resultado.getInt("id_cliente"),
+                            resultado.getString("nombre"),
+                            resultado.getString("apellido_paterno"),
+                            resultado.getString("apellido_materno"),
+                            resultado.getString("fechaNacimiento"),
+                            resultado.getString("usuario"),
+                            resultado.getString("contraseña"),
+                            resultado.getString("codigoPostal"),
+                            resultado.getString("ciudad"),
+                            resultado.getString("calle"),
+                            resultado.getString("colonia"),
+                            resultado.getString("numeroExterior")
+                    );
+                    return cliente;
+                }
             }
+        } catch (SQLException e) {
+            LOG.log(Level.SEVERE, "Error al buscar cliente por ID", e);
+            throw new PersistenciaException("Error al buscar cliente por ID", e);
         }
-    } catch (SQLException e) {
-        LOG.log(Level.SEVERE, "Error al buscar cliente por ID", e);
-        throw new PersistenciaException("Error al buscar cliente por ID", e);
+
+        // Si no se encuentra ningún cliente con el ID dado, se retorna null
+        return null;
+    }
+
+    
+    public Cliente modifcarClientePorID(String idCliente, ClienteDTO cliente) throws PersistenciaException {
+        // 1. Crear la sentencia SQL que vamos a mandar a la BD
+        String sentenciaSQL = "UPDATE CLIENTES SET nombre=?, apellido_paterno=?, apellido_materno=?, fechaNacimiento=?, usuario=?, contraseña=?, codigoPostal=?, calle=?, numeroExterior=?, colonia=?, ciudad=? WHERE id_cliente=?";
+
+        // 2. Vamos a insertar o intentar hacer la inserción en la tabla
+        try (
+                // recursos
+                Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
+                // Creaqqq  r el statement o el comando donde ejecutamos la sentencia
+                 PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+                ) {
+
+            // 3. mandar los valores del cliente al comandoSQL
+            comandoSQL.setString(1, cliente.getNombre());
+            comandoSQL.setString(2, cliente.getApellidoP());
+            comandoSQL.setString(3, cliente.getApellidoM());
+            comandoSQL.setString(4, cliente.getFechaNacimiento());
+            comandoSQL.setString(5, cliente.getUsuario());
+            comandoSQL.setString(6, cliente.getContraseña());
+            comandoSQL.setString(7, cliente.getCodigoPostal());
+            comandoSQL.setString(8, cliente.getCalle());
+            comandoSQL.setString(9, cliente.getNumero());
+            comandoSQL.setString(10, cliente.getColonia());
+            comandoSQL.setString(11, cliente.getCiudad());
+            int idClienteInt = Integer.parseInt(idCliente);
+            comandoSQL.setInt(12, idClienteInt);
+            
+            // 4. Ejecutamos el comando o lo enviamos a la BD
+            int registrosModificados = comandoSQL.executeUpdate();
+            LOG.log(Level.INFO, "Se agregaron con éxito {0} ", registrosModificados);
+
+            return buscarClientePorId(idClienteInt);
+
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "No se agregó con éxito el cliente", e);
+            throw new PersistenciaException("No se pudo guardar el cliente ", e);
+        }
     }
     
-    // Si no se encuentra ningún cliente con el ID dado, se retorna null
-    return null;
-}
-
-
+    
 }

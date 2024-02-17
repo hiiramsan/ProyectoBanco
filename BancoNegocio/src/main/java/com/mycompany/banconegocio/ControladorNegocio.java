@@ -45,4 +45,13 @@ public class ControladorNegocio {
    public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException {
        return controladorPersistencia.obtenerCuentas(id_cliente);
    }
+   
+   public Cliente buscarClientePorId(int idCliente) throws PersistenciaException {
+       return controladorPersistencia.buscarClientePorId(idCliente);
+   }
+   
+   public Cliente modifcarClientePorID(String idCliente, ClienteDTO cliente) throws PersistenciaException {
+       cliente.setContraseña(Encriptador.encriptar(cliente.getContraseña()));
+       return controladorPersistencia.modifcarClientePorID(idCliente, cliente);
+   }
 } 

@@ -387,7 +387,7 @@ public class clienteUI extends javax.swing.JFrame {
             if (usuario != null) {
                 String idCliente = cn.obtenerIdCliente(usuario);
                 actualiarListaCuentas(idCliente);
-
+                Sesion.setIdCliente(idCliente);
             } else {
                 System.out.println("usuario null");
             }

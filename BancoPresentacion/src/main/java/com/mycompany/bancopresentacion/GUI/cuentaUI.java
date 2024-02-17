@@ -4,18 +4,33 @@
  */
 package com.mycompany.bancopresentacion.GUI;
 
+import bancoblue.bancodominio.Cliente;
+import com.mycompany.banconegocio.ControladorNegocio;
+import com.mycompany.bancopersistencia.dtos.ClienteDTO;
+import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author carlo
  */
 public class cuentaUI extends javax.swing.JFrame {
 
+    ControladorNegocio cn = new ControladorNegocio();
+
     /**
      * Creates new form cuentaUI
      */
     public cuentaUI() {
         initComponents();
+        mostrarDatosCliente();
+
     }
+
+    String idCliente = Sesion.getIdCliente();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -360,7 +375,53 @@ public class cuentaUI extends javax.swing.JFrame {
     }//GEN-LAST:event_apellidoMaternoTxtActionPerformed
 
     private void actualizarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarBtnActionPerformed
-
+        String nombre = nombreTxt.getText();
+        String apellidoPaterno = apellidoPaternoTxt.getText();
+        String apellidoMaterno = apellidoMaternoTxt.getText();
+        String codigoPostal = codigoPostalTxt.getText();
+        String ciudad = ciudadTxt.getText();
+        String colonia = coloniaTxt.getText();
+        String calle = calleTxt.getText();
+        String numero = numeroTxt.getText();
+        String usuario = usuarioTxt.getText();
+        String contra = contraTxt.getText();
+        String confirmarContra = confirmarContraTxt.getText();
+        Date fecha = fechaSelected.getDate();
+        String fechaNacimiento = (fecha != null) ? new SimpleDateFormat("yyyy-MM-dd").format(fecha) : "Fecha no seleccionada";
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaActual = new Date();
+        String fechaActualFormato = formatoFecha.format(fechaActual);
+        
+        if (!validarCampos()) {
+            JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+            return; // Sale del método si los campos no están llenos
+        }
+        
+        if(!validarContra()) {
+         contraAviso.setText("Las contraseñas no coinciden");
+         return;
+        }
+        
+        
+        try {
+            ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
+            Cliente clienteModificado = cn.modifcarClientePorID(idCliente, cliente);
+            
+            if (clienteModificado != null) {
+                JOptionPane.showMessageDialog(null, "El cliente ha sido actualizado correctamente.");
+                limpiarCampos();
+                clienteUI cUI = new clienteUI();
+                cUI.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo modificar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+            
+        } catch(PersistenciaException ex) {
+            // handle errors
+        }
+        
     }//GEN-LAST:event_actualizarBtnActionPerformed
 
     private void regresarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarBtnMouseClicked
@@ -372,9 +433,94 @@ public class cuentaUI extends javax.swing.JFrame {
 
     private void actualizarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actualizarBtnMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_actualizarBtnMouseClicked
 
+    private void mostrarDatosCliente() {
+        System.out.println(idCliente);
+        int idClienteInt = Integer.parseInt(idCliente);
+        try {
+            Cliente clienteActual = cn.buscarClientePorId(idClienteInt);
+
+            if (clienteActual != null) {
+                
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+                Date fechaNacimiento = formatoFecha.parse(clienteActual.getFechaNacimiento());
+                
+                nombreTxt.setText(clienteActual.getNombre());
+                apellidoPaternoTxt.setText(clienteActual.getApellidoP());
+                apellidoMaternoTxt.setText(clienteActual.getApellidoM());
+                fechaSelected.setDate(fechaNacimiento);
+                usuarioTxt.setText(clienteActual.getUsuario());
+                codigoPostalTxt.setText(clienteActual.getCodigoPostal());
+                ciudadTxt.setText(clienteActual.getCiudad());
+                contraTxt.setText(clienteActual.getContraseña());
+                confirmarContraTxt.setText(clienteActual.getContraseña());
+                calleTxt.setText(clienteActual.getCalle());
+                coloniaTxt.setText(clienteActual.getColonia());
+                numeroTxt.setText(clienteActual.getNumero());
+                // otros campos
+            } else {
+                // error
+            }
+        } catch (ParseException | PersistenciaException e) {
+            // handle error
+        }
+    }
+
+    public boolean validarCampos() {
+       // Validamos que ningún campo esté vacío o contenga solo espacios en blanco
+    if (nombreTxt.getText().isBlank() || 
+        apellidoPaternoTxt.getText().isBlank() || 
+        apellidoMaternoTxt.getText().isBlank() || 
+        codigoPostalTxt.getText().isBlank() || 
+        ciudadTxt.getText().isBlank() || 
+        coloniaTxt.getText().isBlank() || 
+        calleTxt.getText().isBlank() || 
+        numeroTxt.getText().isBlank() || 
+        usuarioTxt.getText().isBlank()||
+        contraTxt.getText().isBlank() || 
+        confirmarContraTxt.getText().isBlank() || 
+        fechaSelected == null) {
+        // Si algún campo está vacío o solo contiene espacios en blanco, retorna falso
+        return false;
+    }
+    // Si todos los campos tienen algún valor, retorna verdadero
+    return true;
+    }
+    
+    public boolean validarContra() {
+        
+        String pwd = new String(contraTxt.getPassword());
+        String confirmPwd = new String(confirmarContraTxt.getPassword());
+        
+        if(!pwd.equals(confirmPwd)) {
+            return false; //Las contraseñas no coinciden
+        }
+        return true;
+        
+        //Las contraseñas coinciden
+    }
+    
+    public void limpiarCampos() {
+        // Limpiamos el contenido de cada campo de texto
+        nombreTxt.setText("");
+        apellidoPaternoTxt.setText("");
+        apellidoMaternoTxt.setText("");
+        codigoPostalTxt.setText("");
+        ciudadTxt.setText("");
+        coloniaTxt.setText("");
+        calleTxt.setText("");
+        numeroTxt.setText("");
+        usuarioTxt.setText("");
+        contraTxt.setText("");
+        confirmarContraTxt.setText("");
+        // También puedes limpiar otros campos si los tienes
+
+        // Además, si estás utilizando JDateChooser para la fecha, puedes reiniciar su valor a null
+        fechaSelected.setDate(null);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizarBtn;

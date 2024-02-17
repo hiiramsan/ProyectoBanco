@@ -10,7 +10,8 @@ package com.mycompany.bancopresentacion.GUI;
  */
 public class Sesion {
     private static String usuario;
-
+    private static String idCliente;
+    
     public static String getUsuario() {
         return usuario;
     }
@@ -18,4 +19,14 @@ public class Sesion {
     public static void setUsuario(String usuario) {
         Sesion.usuario = usuario;
     }   
+
+    public static String getIdCliente() {
+        return idCliente;
+    }
+
+    public static void setIdCliente(String idCliente) {
+        Sesion.idCliente = idCliente;
+    }
+    
+     
 }
