@@ -54,4 +54,4 @@ CREATE TABLE RetirosSinTarjeta (
 
 select * from clientes;
 select * from cuentas;
-update cuentas set saldo = 100000 where id_cliente = 6;
+update cuentas set saldo = 1500 where id_cliente = 6;

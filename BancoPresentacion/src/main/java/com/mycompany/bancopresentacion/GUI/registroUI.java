@@ -10,6 +10,7 @@ import com.mycompany.banconegocio.ControladorNegocio;
 import com.mycompany.bancopersistencia.dtos.ClienteDTO;
 import com.mycompany.bancopersistencia.dtos.CuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import com.mycompany.bancopresentacion.GUI.utils.GeneradorCuentas;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -331,7 +332,7 @@ public class registroUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,7 +372,7 @@ public class registroUI extends javax.swing.JFrame {
         Date fechaActual = new Date();
         String fechaActualFormato = formatoFecha.format(fechaActual);
         int saldo = 0;
-        int num_cuenta = getNuevoNumCuenta();
+        int num_cuenta = GeneradorCuentas.getNuevoNumCuenta();
         
         try {
             ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
@@ -504,11 +505,7 @@ public class registroUI extends javax.swing.JFrame {
     private javax.swing.JTextField usuarioTxt;
     // End of variables declaration//GEN-END:variables
 
-    private int getNuevoNumCuenta() {
-        Random random = new Random();
-        // Generar un número aleatorio de 6 dígitos
-        return 100000 + random.nextInt(900000);
-    }
+    
     
     
 }

@@ -4,11 +4,17 @@
  */
 package com.mycompany.bancopresentacion.GUI;
 
+import bancoblue.bancodominio.Cuenta;
 import com.mycompany.banconegocio.ControladorNegocio;
+import com.mycompany.bancopersistencia.dtos.CuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import com.mycompany.bancopresentacion.GUI.utils.GeneradorCuentas;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,20 +23,21 @@ import java.util.logging.Logger;
 public class clienteUI extends javax.swing.JFrame {
 
     ControladorNegocio cn = new ControladorNegocio();
-    
-    
-    String usuario = Sesion.getUsuario();
+    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+    Date fechaActual = new Date();
+    String fechaActualFormato = formatoFecha.format(fechaActual);
 
+    String usuario = Sesion.getUsuario();
 
     /**
      * Creates new form clienteUI
      */
     public clienteUI() {
         initComponents();
-        System.out.println("Interfaz programada para el usuario "+ usuario);
+        System.out.println("Interfaz programada para el usuario " + usuario);
         actualizarCuentas();
+        panelCuenta.setVisible(false);
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,17 +50,21 @@ public class clienteUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        transferirBtn = new javax.swing.JLabel();
+        historialBtn = new javax.swing.JLabel();
+        miCuentaBtn = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         nombreCliente = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        opTransferenciaBtn = new javax.swing.JButton();
+        retiroSinTarjetaBtn = new javax.swing.JButton();
+        agregarCuenta = new javax.swing.JButton();
         cuentasComboBox = new javax.swing.JComboBox<>();
+        panelCuenta = new javax.swing.JPanel();
+        ajustesBtn = new javax.swing.JLabel();
+        cerrarSesionBtn = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -64,17 +75,25 @@ public class clienteUI extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(22, 66, 91));
         jLabel5.setText("BankApp");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(22, 66, 91));
-        jLabel1.setText("Transferir");
+        transferirBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        transferirBtn.setForeground(new java.awt.Color(22, 66, 91));
+        transferirBtn.setText("Transferir");
+        transferirBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(22, 66, 91));
-        jLabel2.setText("Historial");
+        historialBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        historialBtn.setForeground(new java.awt.Color(22, 66, 91));
+        historialBtn.setText("Historial");
+        historialBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(22, 66, 91));
-        jLabel3.setText("Mi cuenta");
+        miCuentaBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        miCuentaBtn.setForeground(new java.awt.Color(22, 66, 91));
+        miCuentaBtn.setText("Mi cuenta");
+        miCuentaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        miCuentaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                miCuentaBtnMouseClicked(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 24)); // NOI18N
         jLabel4.setText("Bienvenido de vuelta ");
@@ -89,37 +108,102 @@ public class clienteUI extends javax.swing.JFrame {
         jLabel17.setForeground(new java.awt.Color(22, 66, 91));
         jLabel17.setText("Operaciones");
 
-        jButton1.setForeground(new java.awt.Color(22, 66, 91));
-        jButton1.setText("Transferencia");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 66, 91), 1, true));
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        opTransferenciaBtn.setForeground(new java.awt.Color(22, 66, 91));
+        opTransferenciaBtn.setText("Transferencia");
+        opTransferenciaBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 66, 91), 1, true));
+        opTransferenciaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        opTransferenciaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                opTransferenciaBtnMouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        opTransferenciaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                opTransferenciaBtnActionPerformed(evt);
             }
         });
 
-        jButton2.setForeground(new java.awt.Color(22, 66, 91));
-        jButton2.setText("Retiro sin tarjeta");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
+        retiroSinTarjetaBtn.setForeground(new java.awt.Color(22, 66, 91));
+        retiroSinTarjetaBtn.setText("Retiro sin tarjeta");
+        retiroSinTarjetaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
+        retiroSinTarjetaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(22, 66, 91));
-        jButton3.setText("+");
-        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        agregarCuenta.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        agregarCuenta.setForeground(new java.awt.Color(22, 66, 91));
+        agregarCuenta.setText("+");
+        agregarCuenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
+        agregarCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        agregarCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                agregarCuentaActionPerformed(evt);
             }
         });
 
         cuentasComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cuentasComboBox.setForeground(new java.awt.Color(0, 102, 255));
         cuentasComboBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
+        cuentasComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cuentasComboBoxActionPerformed(evt);
+            }
+        });
+
+        panelCuenta.setBackground(new java.awt.Color(22, 66, 91));
+
+        ajustesBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ajustesBtn.setText("Ajustes");
+        ajustesBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ajustesBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ajustesBtnMouseClicked(evt);
+            }
+        });
+
+        cerrarSesionBtn.setForeground(new java.awt.Color(255, 255, 255));
+        cerrarSesionBtn.setText("Cerrar sesion");
+        cerrarSesionBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cerrarSesionBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cerrarSesionBtnMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelCuentaLayout = new javax.swing.GroupLayout(panelCuenta);
+        panelCuenta.setLayout(panelCuentaLayout);
+        panelCuentaLayout.setHorizontalGroup(
+            panelCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCuentaLayout.createSequentialGroup()
+                .addGroup(panelCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCuentaLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(ajustesBtn))
+                    .addGroup(panelCuentaLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(cerrarSesionBtn)))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        panelCuentaLayout.setVerticalGroup(
+            panelCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCuentaLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(ajustesBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cerrarSesionBtn)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 65, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,35 +213,44 @@ public class clienteUI extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(transferirBtn)
                                 .addGap(50, 50, 50)
-                                .addComponent(jLabel2)
+                                .addComponent(historialBtn)
                                 .addGap(50, 50, 50)
-                                .addComponent(jLabel3))
+                                .addComponent(miCuentaBtn)
+                                .addGap(25, 25, 25))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(152, 152, 152)
+                                        .addComponent(nombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(cuentasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(nombreCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel6))
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(53, 53, 53))))
+                                        .addComponent(agregarCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 190, Short.MAX_VALUE)))
+                        .addGap(28, 28, 28))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(opTransferenciaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(retiroSinTarjetaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,97 +258,154 @@ public class clienteUI extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(40, 40, 40)
+                    .addComponent(transferirBtn)
+                    .addComponent(historialBtn)
+                    .addComponent(miCuentaBtn))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                    .addComponent(cuentasComboBox))
-                .addGap(30, 30, 30)
+                    .addComponent(nombreCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cuentasComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(agregarCuenta, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel17)
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(84, 84, 84))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(retiroSinTarjetaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(opTransferenciaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(100, 100, 100))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 463, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void agregarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarCuentaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        int nuevaCuenta = GeneradorCuentas.getNuevoNumCuenta();
+        try {
+            if (usuario != null) {
+                String idCliente = cn.obtenerIdCliente(usuario);
+                String saldoString = JOptionPane.showInputDialog("Ingrese el saldo inicial para la cuenta:");
+                if (saldoString == null || saldoString.isEmpty()) {
+                    return;
+                }
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+                int saldo = Integer.parseInt(saldoString);
+
+                int cliente = Integer.parseInt(idCliente);
+                CuentaDTO cuenta = new CuentaDTO(nuevaCuenta, fechaActualFormato, saldo, cliente, "Activa");
+                Cuenta cuentaAgregada = cn.agregarCuenta(cuenta);
+                actualiarListaCuentas(idCliente);
+            } else {
+                // usuario no encontrado
+            }
+
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_agregarCuentaActionPerformed
+
+    private void opTransferenciaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opTransferenciaBtnMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_opTransferenciaBtnMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void opTransferenciaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTransferenciaBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_opTransferenciaBtnActionPerformed
 
-    
+    private void miCuentaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miCuentaBtnMouseClicked
+        if (panelCuenta.isVisible()) {
+            panelCuenta.setVisible(false);
+        } else {
+            panelCuenta.setVisible(true);
+        }
+
+    }//GEN-LAST:event_miCuentaBtnMouseClicked
+
+    private void ajustesBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajustesBtnMouseClicked
+        // TODO add your handling code here:
+        cuentaUI ajustesCuenta = new cuentaUI();
+        ajustesCuenta.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_ajustesBtnMouseClicked
+
+    private void cerrarSesionBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionBtnMouseClicked
+        // TODO add your handling code here:
+        Sesion.setUsuario(null);
+        index i = new index();
+        i.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_cerrarSesionBtnMouseClicked
+
+    private void cuentasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuentasComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cuentasComboBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton agregarCuenta;
+    private javax.swing.JLabel ajustesBtn;
+    private javax.swing.JLabel cerrarSesionBtn;
     private javax.swing.JComboBox<String> cuentasComboBox;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel historialBtn;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel miCuentaBtn;
     private javax.swing.JLabel nombreCliente;
+    private javax.swing.JButton opTransferenciaBtn;
+    private javax.swing.JPanel panelCuenta;
+    private javax.swing.JButton retiroSinTarjetaBtn;
+    private javax.swing.JLabel transferirBtn;
     // End of variables declaration//GEN-END:variables
 
     private void actualizarCuentas() {
         try {
-            if(usuario != null) {
+            if (usuario != null) {
                 String idCliente = cn.obtenerIdCliente(usuario);
                 actualiarListaCuentas(idCliente);
-                
+
             } else {
                 System.out.println("usuario null");
             }
-            
+
         } catch (PersistenciaException ex) {
             Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void actualiarListaCuentas(String id_cliente) {
         List<String> cuentas;
         try {
             cuentas = cn.obtenerCuentas(id_cliente);
-            
+
             cuentasComboBox.removeAllItems();
-            
-            if(cuentas != null && !cuentas.isEmpty()) {
-                for(String cuenta : cuentas) {
+
+            if (cuentas != null && !cuentas.isEmpty()) {
+                for (String cuenta : cuentas) {
                     cuentasComboBox.addItem(cuenta);
                 }
             }
@@ -263,5 +413,5 @@ public class clienteUI extends javax.swing.JFrame {
             Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }
