@@ -237,7 +237,7 @@ public class retirarUI extends javax.swing.JFrame {
     } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this, "Ingrese un monto o cuenta destino válido");
     } catch (PersistenciaException ex) {
-        JOptionPane.showMessageDialog(this, "Error al realizar el retiro");
+        JOptionPane.showMessageDialog(this, "Error al realizar el retiro.");
     }
     }//GEN-LAST:event_generarRetiroBtnActionPerformed
 

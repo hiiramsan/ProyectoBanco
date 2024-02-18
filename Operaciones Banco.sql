@@ -124,7 +124,8 @@ CREATE PROCEDURE RegistrarRetiroSinCuenta(
     IN monto INT,
     IN folioOperacion INT,
     IN contrasena VARCHAR(8),
-    IN fecha_hora DATETIME
+    IN fecha_hora DATETIME,
+    IN estadoRetiro VARCHAR(20)
 )
 BEGIN
     DECLARE saldo_cuenta_origen INT;
@@ -146,7 +147,7 @@ BEGIN
         
         -- Registrar el retiro sin cuenta con estado "Pendiente"
         INSERT INTO RetirosSinTarjeta (id_transaccion, folioOperacion, contraseña, estado)
-        VALUES (id_transaccion, folioOperacion, contrasena, 'Pendiente');
+        VALUES (id_transaccion, folioOperacion, contrasena, estadoRetiro);
         
         -- Indicar que el retiro sin cuenta se registró correctamente
         SELECT 'Retiro sin cuenta registrado correctamente' AS mensaje;

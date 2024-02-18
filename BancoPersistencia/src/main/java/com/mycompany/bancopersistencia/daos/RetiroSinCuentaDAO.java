@@ -36,7 +36,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
     @Override
     public boolean insertarRetiroSinTarjeta(RetiroSinCuentaDTO retiro) throws PersistenciaException {
         // Definir el nombre del procedimiento almacenado
-    String procedimientoAlmacenado = "{CALL RegistrarRetiroSinCuenta(?, ?, ?, ?,?)}";
+    String procedimientoAlmacenado = "{CALL RegistrarRetiroSinCuenta(?, ?, ?, ?,?,?)}";
 
     // Intentar llamar al procedimiento almacenado
     try (
@@ -50,6 +50,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
         llamadaProcedimiento.setInt(3, retiro.getFolio_operacion());
         llamadaProcedimiento.setString(4, retiro.getContraseña());
         llamadaProcedimiento.setString(5,retiro.getFecha_hora());
+        llamadaProcedimiento.setString(6,retiro.getEstado());
 
         // Ejecutar el procedimiento almacenado
         llamadaProcedimiento.execute();

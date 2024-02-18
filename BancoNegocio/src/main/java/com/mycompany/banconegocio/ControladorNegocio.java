@@ -74,8 +74,8 @@ public class ControladorNegocio {
         return controladorPersistencia.generarContraseña();
     }
     
-    public void insertarRetiroSinTarjeta(RetiroSinCuentaDTO retiro) throws PersistenciaException {
-        controladorPersistencia.insertarRetiroSinTarjeta(retiro);
+    public boolean insertarRetiroSinTarjeta(RetiroSinCuentaDTO retiro) throws PersistenciaException {
+        return controladorPersistencia.insertarRetiroSinTarjeta(retiro);
     }
     
     public int obtenerUltimoFolioUtilizado() throws PersistenciaException {
