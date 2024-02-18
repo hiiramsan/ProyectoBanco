@@ -11,6 +11,7 @@ import com.mycompany.banconegocio.validadores.Encriptador;
 import com.mycompany.bancopersistencia.controlador.ControladorPersistencia;
 import com.mycompany.bancopersistencia.dtos.ClienteDTO;
 import com.mycompany.bancopersistencia.dtos.CuentaDTO;
+import com.mycompany.bancopersistencia.dtos.RetiroSinCuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class ControladorNegocio {
         return controladorPersistencia.generarContraseña();
     }
     
-    public void insertarRetiroSinTarjeta(RetiroSinCuenta retiro) throws PersistenciaException {
+    public void insertarRetiroSinTarjeta(RetiroSinCuentaDTO retiro) throws PersistenciaException {
         controladorPersistencia.insertarRetiroSinTarjeta(retiro);
     }
     
