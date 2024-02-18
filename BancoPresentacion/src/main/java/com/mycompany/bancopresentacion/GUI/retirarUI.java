@@ -6,6 +6,8 @@ package com.mycompany.bancopresentacion.GUI;
 
 import com.mycompany.banconegocio.ControladorNegocio;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,15 +16,15 @@ import java.util.logging.Logger;
  *
  * @author carlo
  */
-public class transferenciaUI extends javax.swing.JFrame {
+public class retirarUI extends javax.swing.JFrame {
 
     ControladorNegocio cn = new ControladorNegocio();
     String usuario = Sesion.getUsuario();
-
+    
     /**
-     * Creates new form transferenciaUI
+     * Creates new form retirarUI
      */
-    public transferenciaUI() {
+    public retirarUI() {
         initComponents();
         actualizarCuentas();
     }
@@ -42,13 +44,11 @@ public class transferenciaUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        cuentasComboBox = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        cuentaDestinoTxt = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        cuentasComboBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         montoTxt = new javax.swing.JTextField();
-        transferirBoton = new javax.swing.JButton();
+        generarRetiroBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,34 +71,34 @@ public class transferenciaUI extends javax.swing.JFrame {
         jLabel3.setText("Mi cuenta");
 
         jLabel4.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 24)); // NOI18N
-        jLabel4.setText("Transferencia");
-
-        cuentasComboBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
+        jLabel4.setText("Retirar sin cuenta");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(22, 66, 91));
         jLabel6.setText("Cuenta origen");
 
-        cuentaDestinoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(22, 66, 91));
-        jLabel7.setText("Cuenta destino");
+        cuentasComboBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(22, 66, 91));
         jLabel9.setText("Importe");
 
         montoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
-
-        transferirBoton.setBackground(new java.awt.Color(53, 129, 184));
-        transferirBoton.setFont(new java.awt.Font("Microsoft New Tai Lue", 1, 14)); // NOI18N
-        transferirBoton.setForeground(new java.awt.Color(255, 255, 255));
-        transferirBoton.setText("Transferir");
-        transferirBoton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        transferirBoton.addActionListener(new java.awt.event.ActionListener() {
+        montoTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transferirBotonActionPerformed(evt);
+                montoTxtActionPerformed(evt);
+            }
+        });
+
+        generarRetiroBtn.setBackground(new java.awt.Color(53, 129, 184));
+        generarRetiroBtn.setFont(new java.awt.Font("Microsoft New Tai Lue", 1, 14)); // NOI18N
+        generarRetiroBtn.setForeground(new java.awt.Color(255, 255, 255));
+        generarRetiroBtn.setText("Generar retiro");
+        generarRetiroBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        generarRetiroBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        generarRetiroBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generarRetiroBtnActionPerformed(evt);
             }
         });
 
@@ -107,63 +107,53 @@ public class transferenciaUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 303, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
-                        .addGap(37, 37, 37)
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(52, 52, 52))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(generarRetiroBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cuentasComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(56, 56, 56)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(montoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(cuentasComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel6))
-                                .addGap(53, 53, 53)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cuentaDestinoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(277, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(transferirBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                            .addComponent(montoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addGap(35, 35, 35)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel4)
-                .addGap(16, 16, 16)
+                .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cuentaDestinoTxt)
-                    .addComponent(cuentasComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
-                .addGap(26, 26, 26)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(montoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                .addGap(83, 83, 83)
-                .addComponent(transferirBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cuentasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(montoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56)
+                .addComponent(generarRetiroBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,9 +171,13 @@ public class transferenciaUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void transferirBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferirBotonActionPerformed
+    private void montoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_transferirBotonActionPerformed
+    }//GEN-LAST:event_montoTxtActionPerformed
+
+    private void generarRetiroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarRetiroBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_generarRetiroBtnActionPerformed
 
     private void actualizarCuentas() {
         try {
@@ -216,21 +210,19 @@ public class transferenciaUI extends javax.swing.JFrame {
             Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cuentaDestinoTxt;
     private javax.swing.JComboBox<String> cuentasComboBox;
+    private javax.swing.JButton generarRetiroBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField montoTxt;
-    private javax.swing.JButton transferirBoton;
     // End of variables declaration//GEN-END:variables
 }

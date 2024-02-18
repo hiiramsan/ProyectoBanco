@@ -92,6 +92,11 @@ public class clienteUI extends javax.swing.JFrame {
         transferirBtn.setForeground(new java.awt.Color(22, 66, 91));
         transferirBtn.setText("Transferir");
         transferirBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        transferirBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                transferirBtnMouseClicked(evt);
+            }
+        });
 
         historialBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         historialBtn.setForeground(new java.awt.Color(22, 66, 91));
@@ -140,6 +145,11 @@ public class clienteUI extends javax.swing.JFrame {
         retiroSinTarjetaBtn.setText("Retiro sin tarjeta");
         retiroSinTarjetaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(22, 66, 91)));
         retiroSinTarjetaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        retiroSinTarjetaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retiroSinTarjetaBtnActionPerformed(evt);
+            }
+        });
 
         agregarCuenta.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         agregarCuenta.setForeground(new java.awt.Color(22, 66, 91));
@@ -424,6 +434,9 @@ public class clienteUI extends javax.swing.JFrame {
 
     private void opTransferenciaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTransferenciaBtnActionPerformed
         // TODO add your handling code here:
+        transferenciaUI tUI = new transferenciaUI();
+        tUI.setVisible(true);
+        dispose();
     }//GEN-LAST:event_opTransferenciaBtnActionPerformed
 
     private void miCuentaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miCuentaBtnMouseClicked
@@ -532,6 +545,20 @@ public class clienteUI extends javax.swing.JFrame {
     private void cancelarCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCuentaBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelarCuentaBtnActionPerformed
+
+    private void retiroSinTarjetaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retiroSinTarjetaBtnActionPerformed
+        // TODO add your handling code here:
+        retirarUI rUI = new retirarUI();
+        rUI.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_retiroSinTarjetaBtnActionPerformed
+
+    private void transferirBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transferirBtnMouseClicked
+        // TODO add your handling code here:
+        transferenciaUI tUI = new transferenciaUI();
+        tUI.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_transferirBtnMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
