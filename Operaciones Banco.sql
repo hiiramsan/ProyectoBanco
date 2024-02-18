@@ -44,6 +44,7 @@ END $$
 DELIMITER ;
 
 
+
 DELIMITER $$
 
 CREATE EVENT LimpiarRetirosExpirados
@@ -51,13 +52,15 @@ ON SCHEDULE EVERY 1 MINUTE
 DO
 BEGIN
     -- Actualizar el estado de los registros de RetirosSinTarjeta que hayan expirado
-    UPDATE RetirosSinTarjeta
-    SET estado = 'No cobrado'
-    WHERE TIMESTAMPDIFF(MINUTE, fechaHora, NOW()) > 10
-    AND estado <> 'No cobrado';
+    UPDATE RetirosSinTarjeta rst
+    INNER JOIN Transacciones t ON rst.id_transaccion = t.id_transaccion
+    SET rst.estado = 'No cobrado'
+    WHERE TIMESTAMPDIFF(MINUTE, t.fechaHora, NOW()) > 10
+    AND rst.estado <> 'No cobrado';
 END $$
 
 DELIMITER ;
+
 
 
 DELIMITER $$
@@ -67,15 +70,17 @@ CREATE PROCEDURE CobrarRetiroSinCuenta(
     IN p_contraseña VARCHAR(8)
 )
 BEGIN
-    DECLARE cuenta_origen_id INT;
     DECLARE monto_retiro INT;
     DECLARE saldo_cuenta_origen INT;
     DECLARE retiro_estado VARCHAR(20);
+    DECLARE cuenta_origen_id INT;
 
     -- Obtener la cuenta origen, el monto del retiro y el estado del retiro sin cuenta
-    SELECT cuenta_origen, monto, estado INTO cuenta_origen_id, monto_retiro, retiro_estado
-    FROM RetirosSinTarjeta
-    WHERE folioOperacion = p_folio AND contraseña = p_contraseña;
+    SELECT t.monto, rs.estado, t.cuenta_origen
+    INTO monto_retiro, retiro_estado, cuenta_origen_id
+    FROM RetirosSinTarjeta rs
+    INNER JOIN Transacciones t ON rs.id_transaccion = t.id_transaccion
+    WHERE rs.folioOperacion = p_folio AND rs.contrasena = p_contraseña;
 
     -- Obtener el saldo de la cuenta origen
     SELECT saldo INTO saldo_cuenta_origen
@@ -94,13 +99,9 @@ BEGIN
             SET saldo = saldo - monto_retiro
             WHERE id_cuenta = cuenta_origen_id;
 
-            -- Registrar la transacción
-            INSERT INTO Transacciones (fechaHora, monto,cuenta_origen, tipo_transaccion)
-            VALUES (NOW(), monto_retiro,cuenta_origen_id, 'Retiro sin cuenta');
-
             -- Eliminar el registro del retiro sin cuenta
             DELETE FROM RetirosSinTarjeta
-            WHERE folioOperacion = p_folio AND contraseña = p_contraseña;
+            WHERE folioOperacion = p_folio AND contrasena = p_contraseña;
 
             -- Confirmar la transacción
             COMMIT;
@@ -146,7 +147,7 @@ BEGIN
         SELECT LAST_INSERT_ID() INTO id_transaccion;
         
         -- Registrar el retiro sin cuenta con estado "Pendiente"
-        INSERT INTO RetirosSinTarjeta (id_transaccion, folioOperacion, contraseña, estado)
+        INSERT INTO RetirosSinTarjeta (id_transaccion, folioOperacion, contrasena, estado)
         VALUES (id_transaccion, folioOperacion, contrasena, estadoRetiro);
         
         -- Indicar que el retiro sin cuenta se registró correctamente
