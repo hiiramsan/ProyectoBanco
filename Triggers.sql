@@ -19,36 +19,5 @@ END $$
 
 DELIMITER ;
 
-DELIMITER $$
-CREATE TRIGGER moverSaldoDespuesDeCancelarCuenta
-AFTER UPDATE ON Cuentas
-FOR EACH ROW
-BEGIN
-IF NEW.estado = 'Cancelada' AND OLD.estado != 'Cancelada' THEN
-        DECLARE saldo_cancelado DOUBLE;
-        DECLARE cliente_id_cancelado INT;
-        DECLARE otra_cuenta_id INT;
 
-        -- Obtener el saldo y el cliente_id de la cuenta cancelada
-        SELECT saldo, cliente_id INTO saldo_cancelado, cliente_id_cancelado
-        FROM Cuentas
-        WHERE id_cuenta = NEW.id_cuenta;
-
-        -- Buscar otra cuenta activa del mismo cliente
-        SELECT id_cuenta INTO otra_cuenta_id
-        FROM Cuentas
-        WHERE cliente_id = cliente_id_cancelado
-            AND estado = 'Activa'
-            AND id_cuenta != NEW.id_cuenta
-        LIMIT 1;
-
-        -- Transferir saldo a la otra cuenta si se encuentra
-        IF otra_cuenta_id IS NOT NULL THEN
-            UPDATE Cuentas
-            SET saldo = saldo + saldo_cancelado
-            WHERE id_cuenta = otra_cuenta_id;
-        END IF;
-    END IF;
-END //
-DELIMITER ;
 

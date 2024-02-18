@@ -83,7 +83,7 @@ BEGIN
     WHERE id_cuenta = cuenta_origen_id;
 
     -- Verificar que el estado del retiro sin cuenta sea "pendiente"
-    IF retiro_estado = 'pendiente' THEN
+    IF retiro_estado = 'Pendiente' THEN
         -- Verificar que el monto a cobrar no sea mayor que el saldo disponible en la cuenta origen
         IF monto_retiro <= saldo_cuenta_origen THEN
             -- Iniciar la transacción

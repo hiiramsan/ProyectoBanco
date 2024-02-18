@@ -54,3 +54,5 @@ CREATE TABLE RetirosSinTarjeta (
 
 select * from clientes;
 select * from cuentas;
+select * from transferencias;
+select * from transacciones;
