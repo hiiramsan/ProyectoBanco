@@ -40,7 +40,7 @@ CREATE TABLE Transferencias (
     PRIMARY KEY (id_transaccion),
     FOREIGN KEY (id_transaccion) REFERENCES Transacciones(id_transaccion),
     FOREIGN KEY (cuenta_origen) REFERENCES Cuentas(id_cuenta),
-    FOREIGN KEY (cuenta_destino) REFERENCES Cuentas(id_cuenta)
+    FOREIGN KEY (cuenta_destino) REFERENCES Cuentas(num_cuenta)
 );
 
 CREATE TABLE RetirosSinTarjeta (
@@ -51,3 +51,6 @@ CREATE TABLE RetirosSinTarjeta (
     PRIMARY KEY (id_transaccion),
     FOREIGN KEY (id_transaccion) REFERENCES Transacciones (id_transaccion)
 );
+
+select * from clientes;
+select * from cuentas;

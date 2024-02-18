@@ -9,6 +9,7 @@ import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -182,7 +183,32 @@ public class transferenciaUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void transferirBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferirBotonActionPerformed
-        // TODO add your handling code here:
+         try {
+        // Obtener la cuenta de origen seleccionada
+        String cuentaOrigenSeleccionada = (String) cuentasComboBox.getSelectedItem();
+        
+        // Obtener la cuenta destino y el monto ingresados
+        int cuentaDestino = Integer.parseInt(cuentaDestinoTxt.getText());
+        int monto = Integer.parseInt(montoTxt.getText());
+        
+        // Obtener el ID de la cuenta de origen a partir de la cadena seleccionada
+        String[] parts = cuentaOrigenSeleccionada.split(":");
+        int idCuentaOrigen = Integer.parseInt(parts[0].trim());
+        
+        // Llamar al método para realizar la transferencia en el controlador de negocio
+        boolean transferenciaExitosa = cn.realizarTransferencia(idCuentaOrigen, cuentaDestino, monto);
+        
+        // Mostrar un mensaje dependiendo del resultado de la transferencia
+        if (transferenciaExitosa) {
+            JOptionPane.showMessageDialog(this, "Transferencia realizada con éxito");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al realizar la transferencia");
+        }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Ingrese un monto válido");
+    } catch (PersistenciaException ex) {
+        JOptionPane.showMessageDialog(this, "Error al realizar la transferencia");
+    }
     }//GEN-LAST:event_transferirBotonActionPerformed
 
     private void actualizarCuentas() {
