@@ -40,9 +40,6 @@ public class transferenciaUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cuentasComboBox = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
@@ -59,18 +56,12 @@ public class transferenciaUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(22, 66, 91));
         jLabel5.setText("BankApp");
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(22, 66, 91));
-        jLabel1.setText("Transferir");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(22, 66, 91));
-        jLabel2.setText("Historial");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(22, 66, 91));
-        jLabel3.setText("Mi cuenta");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 24)); // NOI18N
         jLabel4.setText("Transferencia");
@@ -98,6 +89,7 @@ public class transferenciaUI extends javax.swing.JFrame {
         transferirBoton.setForeground(new java.awt.Color(255, 255, 255));
         transferirBoton.setText("Transferir");
         transferirBoton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        transferirBoton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         transferirBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 transferirBotonActionPerformed(evt);
@@ -113,12 +105,6 @@ public class transferenciaUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel3)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,11 +130,7 @@ public class transferenciaUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                .addComponent(jLabel5)
                 .addGap(35, 35, 35)
                 .addComponent(jLabel4)
                 .addGap(16, 16, 16)
@@ -233,6 +215,13 @@ public class transferenciaUI extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_transferirBotonActionPerformed
 
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        clienteUI cUI = new clienteUI();
+        cUI.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jLabel5MouseClicked
+
     private String obtenerNumeroCuenta(String cuentaSeleccionadaCompleta) {
      // Extraer solo el número de cuenta de la cadena completa
     String[] partes = cuentaSeleccionadaCompleta.split("\\s+");
@@ -281,9 +270,6 @@ public class transferenciaUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cuentaDestinoTxt;
     private javax.swing.JComboBox<String> cuentasComboBox;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

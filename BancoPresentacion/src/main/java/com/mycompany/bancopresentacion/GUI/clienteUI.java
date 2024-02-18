@@ -4,6 +4,7 @@
  */
 package com.mycompany.bancopresentacion.GUI;
 
+import bancoblue.bancodominio.Cliente;
 import bancoblue.bancodominio.Cuenta;
 import com.mycompany.banconegocio.ControladorNegocio;
 import com.mycompany.bancopersistencia.dtos.CuentaDTO;
@@ -28,6 +29,7 @@ public class clienteUI extends javax.swing.JFrame {
     String fechaActualFormato = formatoFecha.format(fechaActual);
 
     String usuario = Sesion.getUsuario();
+    
 
     /**
      * Creates new form clienteUI
@@ -43,8 +45,21 @@ public class clienteUI extends javax.swing.JFrame {
         cancelarCuentaBtn.setVisible(false);
         cuentaSelectedTxt.setVisible(false);
         fechaAperturaTxt.setVisible(false);
+        displayUserInfo();
     }
 
+    private void displayUserInfo(){
+        try {
+            String idCliente = cn.obtenerIdCliente(usuario);
+            int idClienteInt = Integer.parseInt(idCliente);
+            Cliente clienteActual = cn.buscarClientePorId(idClienteInt);
+            nombreCliente.setText(clienteActual.getNombre());
+        } catch(PersistenciaException | NumberFormatException ex) {
+            System.out.println("AQUI ESTA EL ERROR");
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -315,28 +330,26 @@ public class clienteUI extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(fechaAperturaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(0, 11, Short.MAX_VALUE)
-                                                .addComponent(nombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(fechaAperturaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addComponent(fechaAperturaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(cuentaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(cuentaSelectedTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                                         .addComponent(depositarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(19, 19, 19))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(opTransferenciaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(34, 34, 34)
                                 .addComponent(retiroSinTarjetaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 194, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap(568, Short.MAX_VALUE)
@@ -357,10 +370,11 @@ public class clienteUI extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(nombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nombreCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(mostrarCuentaBtn, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -413,13 +427,6 @@ public class clienteUI extends javax.swing.JFrame {
         try {
             if (usuario != null) {
                 String idCliente = cn.obtenerIdCliente(usuario);
-
-//                String saldoString = JOptionPane.showInputDialog("Ingrese el saldo inicial para la cuenta:");
-//                if (saldoString == null || saldoString.isEmpty()) {
-//                    return;
-//                }
-//
-//                int saldo = Integer.parseInt(saldoString);
                 int cliente = Integer.parseInt(idCliente);
                 CuentaDTO cuenta = new CuentaDTO(nuevaCuenta, fechaActualFormato, 0, cliente, "Activa");
                 Cuenta cuentaAgregada = cn.agregarCuenta(cuenta);
@@ -558,6 +565,7 @@ public class clienteUI extends javax.swing.JFrame {
             int cuentaACancelar = cuentaCargada.getId_cuenta();
             try {
                 cn.cancelarCuentaPorId(cuentaACancelar);
+                actualizarCuentas();
             } catch (PersistenciaException ex) {
                 // handle error
             }

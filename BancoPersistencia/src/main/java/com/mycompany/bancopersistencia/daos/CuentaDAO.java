@@ -79,7 +79,7 @@ public class CuentaDAO implements ICuentaDAO {
 
     public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException {
         List<String> listaCuentas = new ArrayList<>();
-        String sentenciaSQL = "select num_cuenta, saldo from Cuentas where id_cliente = ?";
+        String sentenciaSQL = "select num_cuenta, saldo from Cuentas where id_cliente = ? and estado = 'Activa'";
         try (
                 // recursos
                 Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd

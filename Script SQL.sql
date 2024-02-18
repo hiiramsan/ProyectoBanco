@@ -52,15 +52,12 @@ CREATE TABLE RetirosSinTarjeta (
     FOREIGN KEY (id_transaccion) REFERENCES Transacciones (id_transaccion)
 );
 
+use banco;
 select * from clientes;
 select * from cuentas;
 select * from transferencias;
 select * from transacciones;
 select * from RetirosSinTarjeta;
 
--- todas las transacciones
-SELECT T.*, R.folioOperacion, R.contrasena, TS.cuenta_destino
-FROM Transacciones T
-LEFT JOIN RetirosSinTarjeta R ON T.id_transaccion = R.id_transaccion
-LEFT JOIN Transferencias TS ON T.id_transaccion = TS.id_transaccion;
+
 
