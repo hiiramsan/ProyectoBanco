@@ -245,7 +245,7 @@ public class clienteUI extends javax.swing.JFrame {
 
         fechaAperturaLabel.setText("Fecha Apertura:");
 
-        depositarBtn.setBackground(new java.awt.Color(51, 255, 51));
+        depositarBtn.setBackground(new java.awt.Color(0, 204, 102));
         depositarBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         depositarBtn.setForeground(new java.awt.Color(255, 255, 255));
         depositarBtn.setText("Depositar");
@@ -543,7 +543,20 @@ public class clienteUI extends javax.swing.JFrame {
     }//GEN-LAST:event_depositarBtnActionPerformed
 
     private void cancelarCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCuentaBtnActionPerformed
-        // TODO add your handling code here:
+        String cuentaSelect = (String) cuentasComboBox.getSelectedItem();
+        String[] partes = cuentaSelect.split(" ");
+        String numeroCuenta;
+        Cuenta cuentaCargada;
+        if (partes.length >= 2) {
+            numeroCuenta = partes[0].substring(1);
+            cuentaCargada = cargarCuentaSeleccionada(numeroCuenta);
+            int cuentaACancelar = cuentaCargada.getId_cuenta();
+            try {
+                cn.cancelarCuentaPorId(cuentaACancelar);
+            } catch (PersistenciaException ex) {
+                // handle error
+            }
+        }
     }//GEN-LAST:event_cancelarCuentaBtnActionPerformed
 
     private void retiroSinTarjetaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retiroSinTarjetaBtnActionPerformed

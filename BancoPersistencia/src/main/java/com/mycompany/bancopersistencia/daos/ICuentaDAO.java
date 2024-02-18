@@ -23,4 +23,6 @@ public interface ICuentaDAO {
     public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException;
     
     public void modificarSaldoPorId(int idCuenta, double nuevoSaldo) throws PersistenciaException;
+    
+    public void cancelarCuentaPorId(int idCuenta) throws PersistenciaException;
 }

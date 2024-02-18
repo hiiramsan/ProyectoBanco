@@ -99,4 +99,8 @@ public class ControladorPersistencia {
     public boolean realizarTransferencia(int cuentaOrigen, int cuentaDestino, int monto) throws PersistenciaException {
         return this.transferenciaDAO.realizarTransferencia(cuentaOrigen, cuentaDestino, monto);
     }
+    
+    public void cancelarCuentaPorId(int idCuenta) throws PersistenciaException {
+       this.cuentaDAO.cancelarCuentaPorId(idCuenta);
+    }
 }

@@ -84,4 +84,8 @@ public class ControladorNegocio {
     public boolean realizarTransferencia(int cuentaOrigen, int cuentaDestino, int monto) throws PersistenciaException {
         return controladorPersistencia.realizarTransferencia(cuentaOrigen, cuentaDestino, monto);
     }
+    
+    public void cancelarCuentaPorId(int idCuenta) throws PersistenciaException {
+        controladorPersistencia.cancelarCuentaPorId(idCuenta);
+    }
 }

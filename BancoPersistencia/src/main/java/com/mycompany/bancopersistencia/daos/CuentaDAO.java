@@ -113,17 +113,15 @@ public class CuentaDAO implements ICuentaDAO {
         String sentenciaSQL = "SELECT * FROM Cuentas WHERE num_cuenta = ?";
 
         try (
-
                 Connection conexion = this.conexion.crearConexion(); PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL);) {
-           
+
             comandoSQL.setString(1, numeroCuenta);
 
             // 3. Ejecutar la consulta
             ResultSet resultado = comandoSQL.executeQuery();
 
-            
             if (resultado.next()) {
-         
+
                 int idCuenta = resultado.getInt("id_cuenta");
                 int num_cuenta = resultado.getInt("num_cuenta");
                 String fechaApertura = resultado.getString("fecha_apertura");
@@ -132,13 +130,12 @@ public class CuentaDAO implements ICuentaDAO {
                 String estado = resultado.getString("estado");
                 // Otros campos...
 
-      
                 // (int id_cuenta, int num_cuenta, String fecha_apertura, int saldo, int id_cliente, String estado) 
                 Cuenta cuenta = new Cuenta(idCuenta, num_cuenta, fechaApertura, saldo, idCliente, estado);
 
                 return cuenta;
             } else {
-    
+
                 return null;
             }
         } catch (Exception e) {
@@ -146,14 +143,12 @@ public class CuentaDAO implements ICuentaDAO {
             throw new PersistenciaException("No se pudo obtener la cuenta por número", e);
         }
     }
-    
+
     public void modificarSaldoPorId(int idCuenta, double nuevoSaldo) throws PersistenciaException {
         String sentenciaSQL = "UPDATE Cuentas SET saldo = saldo + ? WHERE id_cuenta = ?";
 
         try (
-       
-                Connection conexion = this.conexion.crearConexion(); 
-                 PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+                Connection conexion = this.conexion.crearConexion(); PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
                 ) {
             comandoSQL.setDouble(1, nuevoSaldo);
             comandoSQL.setInt(2, idCuenta);
@@ -171,8 +166,26 @@ public class CuentaDAO implements ICuentaDAO {
             throw new PersistenciaException("No se pudo modificar el saldo de la cuenta", e);
         }
     }
-    
-    
-    
+
+    public void cancelarCuentaPorId(int idCuenta) throws PersistenciaException {
+        String sentenciaSQL = "UPDATE Cuentas SET estado = 'Cancelada' WHERE id_cuenta = ?";
+
+        try (
+                Connection conexion = this.conexion.crearConexion(); PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL);) {
+            comandoSQL.setInt(1, idCuenta);
+
+            int registrosModificados = comandoSQL.executeUpdate();
+
+            if (registrosModificados == 0) {
+                throw new PersistenciaException("No se encontró la cuenta con id_cuenta: " + idCuenta);
+            }
+
+            LOG.log(Level.INFO, "Se canceló con éxito la cuenta con id_cuenta {0}", idCuenta);
+
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Error al cancelar la cuenta con id_cuenta " + idCuenta, e);
+            throw new PersistenciaException("No se pudo cancelar la cuenta", e);
+        }
+    }
 
 }
