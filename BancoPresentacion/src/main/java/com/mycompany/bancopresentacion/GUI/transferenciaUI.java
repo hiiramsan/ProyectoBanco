@@ -4,6 +4,7 @@
  */
 package com.mycompany.bancopresentacion.GUI;
 
+import bancoblue.bancodominio.Cuenta;
 import com.mycompany.banconegocio.ControladorNegocio;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 import java.util.List;
@@ -183,18 +184,38 @@ public class transferenciaUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void transferirBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferirBotonActionPerformed
-         try {
+          try {
         // Obtener la cuenta de origen seleccionada
         String cuentaOrigenSeleccionada = (String) cuentasComboBox.getSelectedItem();
+       
+        // Extraer solo el número de cuenta de la cadena completa
+        String numeroCuenta = obtenerNumeroCuenta(cuentaOrigenSeleccionada);
+              System.out.println(numeroCuenta);
+        // Verificar si se pudo extraer el número de cuenta
         
+        Cuenta cuentaOrigen = cn.obtenerCuentaPorNumCuentas(numeroCuenta);
+        
+        int idCuentaOrigen = cuentaOrigen.getId_cuenta();
         // Obtener la cuenta destino y el monto ingresados
-        int cuentaDestino = Integer.parseInt(cuentaDestinoTxt.getText());
-        int monto = Integer.parseInt(montoTxt.getText());
+        int cuentaDestino = Integer.parseInt(cuentaDestinoTxt.getText().trim()); // Eliminar espacios en blanco alrededor
+        String montoStr = montoTxt.getText().trim(); // Eliminar espacios en blanco alrededor
+        int monto = Integer.parseInt(montoStr);
         
-        // Obtener el ID de la cuenta de origen a partir de la cadena seleccionada
-        String[] parts = cuentaOrigenSeleccionada.split(":");
-        int idCuentaOrigen = Integer.parseInt(parts[0].trim());
         
+        System.out.println("Cuenta destino ingresada: " + cuentaDestinoTxt.getText());
+        System.out.println("Monto ingresado: " + montoStr);
+        // Validar que el monto sea un número positivo
+        if (monto <= 0) {
+            throw new NumberFormatException();
+            
+        }
+        
+        if (monto>cuentaOrigen.getSaldo()){
+            JOptionPane.showMessageDialog(this, "El monto seleccionado supera el saldo de su cuenta.");
+            throw new NumberFormatException();
+        }
+        
+              System.out.println(idCuentaOrigen);
         // Llamar al método para realizar la transferencia en el controlador de negocio
         boolean transferenciaExitosa = cn.realizarTransferencia(idCuentaOrigen, cuentaDestino, monto);
         
@@ -204,13 +225,31 @@ public class transferenciaUI extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Error al realizar la transferencia");
         }
+        
+         dispose();
+        
+        // Abrir la ventana clienteUI
+        clienteUI clienteUI = new clienteUI();
+        clienteUI.setVisible(true);
     } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Ingrese un monto válido");
+        JOptionPane.showMessageDialog(this, "Ingrese un monto o cuenta destino válido");
     } catch (PersistenciaException ex) {
         JOptionPane.showMessageDialog(this, "Error al realizar la transferencia");
     }
     }//GEN-LAST:event_transferirBotonActionPerformed
 
+    private String obtenerNumeroCuenta(String cuentaSeleccionadaCompleta) {
+     // Extraer solo el número de cuenta de la cadena completa
+    String[] partes = cuentaSeleccionadaCompleta.split("\\s+");
+    if (partes.length > 0) {
+        String numeroCuenta = partes[0]; // El número de cuenta debería ser la primera parte
+        // Eliminar el símbolo '#' del número de cuenta si está presente
+        return numeroCuenta.replace("#", "");
+    } else {
+        return null; // No se pudo extraer el número de cuenta
+    }
+}
+    
     private void actualizarCuentas() {
         try {
             if (usuario != null) {
