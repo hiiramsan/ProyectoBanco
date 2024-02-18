@@ -7,12 +7,14 @@ package com.mycompany.banconegocio;
 import bancoblue.bancodominio.Cliente;
 import bancoblue.bancodominio.Cuenta;
 import bancoblue.bancodominio.RetiroSinCuenta;
+import bancoblue.bancodominio.Transaccion;
 import com.mycompany.banconegocio.validadores.Encriptador;
 import com.mycompany.bancopersistencia.controlador.ControladorPersistencia;
 import com.mycompany.bancopersistencia.dtos.ClienteDTO;
 import com.mycompany.bancopersistencia.dtos.CuentaDTO;
 import com.mycompany.bancopersistencia.dtos.RetiroSinCuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -88,5 +90,9 @@ public class ControladorNegocio {
     
     public void cancelarCuentaPorId(int idCuenta) throws PersistenciaException {
         controladorPersistencia.cancelarCuentaPorId(idCuenta);
+    }
+    
+    public List<Transaccion> obtenerHistorialTransacciones(String tipoTransaccion, String fechaInicio, String fechaFin) throws PersistenciaException{
+        return controladorPersistencia.obtenerHistorialTransacciones(tipoTransaccion, fechaInicio, fechaFin);
     }
 }

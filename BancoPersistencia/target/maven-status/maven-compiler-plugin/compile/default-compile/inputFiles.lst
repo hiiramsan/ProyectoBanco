@@ -5,7 +5,9 @@ C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\mai
 C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\main\java\com\mycompany\bancopersistencia\dtos\RetiroSinCuentaDTO.java
 C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\main\java\com\mycompany\bancopersistencia\daos\ICuentaDAO.java
 C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\main\java\com\mycompany\bancopersistencia\conexion\Conexion.java
+C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\main\java\com\mycompany\bancopersistencia\daos\IHistorialDAO.java
 C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\main\java\com\mycompany\bancopersistencia\daos\TransferenciaDAO.java
+C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\main\java\com\mycompany\bancopersistencia\daos\HistorialDAO.java
 C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\main\java\com\mycompany\bancopersistencia\daos\ClienteDAO.java
 C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\main\java\com\mycompany\bancopersistencia\controlador\ControladorPersistencia.java
 C:\Users\carlo\OneDrive\Documents\GitHub\ProyectoBanco\BancoPersistencia\src\main\java\com\mycompany\bancopersistencia\dtos\ClienteDTO.java

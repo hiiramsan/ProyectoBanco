@@ -4,14 +4,26 @@
  */
 package com.mycompany.bancopresentacion.GUI;
 
+import bancoblue.bancodominio.Transaccion;
+import com.mycompany.banconegocio.ControladorNegocio;
+import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author carlo
  */
 public class historialUI extends javax.swing.JFrame {
+
+    ControladorNegocio cn = new ControladorNegocio();
 
     /**
      * Creates new form historialUI
@@ -39,7 +51,7 @@ public class historialUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         buscarBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaOperaciones = new javax.swing.JTable();
         fechaInicioDate = new com.toedter.calendar.JDateChooser();
         fechaFinDate = new com.toedter.calendar.JDateChooser();
         operacionComboBox = new javax.swing.JComboBox<>();
@@ -92,32 +104,32 @@ public class historialUI extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaOperaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Fecha", "Monto", "Origen", "Tipo", "Destino"
+                "ID", "Fecha", "Monto", "Origen", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaOperaciones);
 
         fechaInicioDate.setDateFormatString("y-MM-dd");
 
         fechaFinDate.setDateFormatString("y-MM-dd");
 
-        operacionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas", "Transferencias", "Retiros Sin Cuenta" }));
+        operacionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas", "Transferencia", "Retiro sin cuenta" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -214,8 +226,8 @@ public class historialUI extends javax.swing.JFrame {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
-        index i = new index();
-        i.setVisible(true);
+        clienteUI cUI = new clienteUI();
+        cUI.setVisible(true);
         dispose();
     }//GEN-LAST:event_jLabel5MouseClicked
 
@@ -234,8 +246,60 @@ public class historialUI extends javax.swing.JFrame {
         Date fechaFin = fechaFinDate.getDate();
         String fechaInicioString = (fechaInicio != null) ? new SimpleDateFormat("yyyy-MM-dd").format(fechaInicio) : "NoDate";
         String fechaFinString = (fechaFin != null) ? new SimpleDateFormat("yyyy-MM-dd").format(fechaFin) : "NoDate";
-        System.out.println("Buscando " + operaciones + " entre el " + fechaInicioString + " y el " + fechaFinString);
+
+        try {
+            if ((fechaInicio != null && fechaFin == null) || (fechaInicio == null && fechaFin != null)) {
+                JOptionPane.showMessageDialog(null, "Selecciona dos fechas o ninguna");
+            } else {
+                List<Transaccion> transacciones = cn.obtenerHistorialTransacciones(operaciones, fechaInicioString, fechaFinString);
+
+                System.out.println("Buscando " + operaciones + " entre el " + fechaInicioString + " y el " + fechaFinString);
+
+                System.out.println("result = " + transacciones);
+                cargarDatosTabla(tablaOperaciones, transacciones);
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(historialUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_buscarBtnActionPerformed
+
+    public void mostrarTransaccionesEnTabla(List<Transaccion> transacciones) {
+        DefaultTableModel model = (DefaultTableModel) tablaOperaciones.getModel();
+
+        // Limpia la tabla antes de agregar nuevas filas
+        model.setRowCount(0);
+
+        for (Transaccion transaccion : transacciones) {
+            Object[] rowData = {transaccion.getId_transaccion(), transaccion.getFecha_hora(), transaccion.getMonto(), transaccion.getTipo_transaccion(), transaccion.getCuenta_origen()};
+            model.addRow(rowData);
+        }
+    }
+    
+    public void cargarDatosTabla(JTable tabla, List<Transaccion> listaTransacciones) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        tabla.setModel(modelo);
+        
+        modelo.addColumn("ID");
+            modelo.addColumn("Fecha");
+            modelo.addColumn("Monto");
+            modelo.addColumn("Cuenta origen");
+            modelo.addColumn("Tipo");
+
+            for (Transaccion tr : listaTransacciones) {
+                Object[] filas = {
+                    tr.getId_transaccion(),
+                    tr.getFecha_hora(),
+                    tr.getMonto(),
+                    tr.getCuenta_origen(),
+                    tr.getTipo_transaccion()
+                };
+                modelo.addRow(filas);
+            }
+    }
+    
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscarBtn;
@@ -250,7 +314,7 @@ public class historialUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> operacionComboBox;
+    private javax.swing.JTable tablaOperaciones;
     // End of variables declaration//GEN-END:variables
 }

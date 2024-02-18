@@ -160,3 +160,39 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE ObtenerHistorialTransacciones(
+    IN tipoTransaccionParam VARCHAR(20),
+    IN fechaInicioParam VARCHAR(20),
+    IN fechaFinParam VARCHAR(20)
+)
+BEGIN
+    IF tipoTransaccionParam = 'Todas' THEN
+    -- todas las transacciones
+        IF fechaInicioParam = 'NoDate' OR fechaFinParam = 'NoDate' THEN
+            SELECT id_transaccion, fechaHora, monto, tipo_transaccion, cuenta_origen
+            FROM transacciones;
+        ELSE
+            SELECT id_transaccion, fechaHora, monto, tipo_transaccion, cuenta_origen
+            FROM Transacciones 
+            WHERE fechaHora BETWEEN STR_TO_DATE(fechaInicioParam, '%Y-%m-%d') AND STR_TO_DATE(fechaFinParam, '%Y-%m-%d');
+        END IF;
+    ELSE
+        -- Consulta escpecifica por tipo de ttransaccion
+        IF fechaInicioParam = 'NoDate' OR fechaFinParam = 'NoDate' THEN
+            SELECT id_transaccion, fechaHora, monto, tipo_transaccion, cuenta_origen
+            FROM Transacciones
+            WHERE tipo_transaccion = tipoTransaccionParam;
+        ELSE
+            SELECT id_transaccion, fechaHora, monto, tipo_transaccion, cuenta_origen
+            FROM Transacciones 
+            WHERE tipo_transaccion = tipoTransaccionParam 
+            AND fechaHora BETWEEN STR_TO_DATE(fechaInicioParam, '%Y-%m-%d') AND STR_TO_DATE(fechaFinParam, '%Y-%m-%d');
+        END IF;
+    END IF;
+END $$
+
+DELIMITER ;
+

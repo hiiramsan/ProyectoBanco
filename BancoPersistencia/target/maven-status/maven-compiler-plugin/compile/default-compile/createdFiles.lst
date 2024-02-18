@@ -2,6 +2,7 @@ com\mycompany\bancopersistencia\daos\IRetiroSinCuentaDAO.class
 com\mycompany\bancopersistencia\daos\ITransferenciaDAO.class
 com\mycompany\bancopersistencia\conexion\IConexion.class
 com\mycompany\bancopersistencia\controlador\ControladorPersistencia.class
+com\mycompany\bancopersistencia\daos\IHistorialDAO.class
 com\mycompany\bancopersistencia\dtos\TransferenciaDTO.class
 com\mycompany\bancopersistencia\dtos\ClienteDTO.class
 com\mycompany\bancopersistencia\dtos\RetiroSinCuentaDTO.class
@@ -11,6 +12,7 @@ com\mycompany\bancopersistencia\daos\ICuentaDAO.class
 com\mycompany\bancopersistencia\daos\IClienteDAO.class
 com\mycompany\bancopersistencia\daos\TransferenciaDAO.class
 com\mycompany\bancopersistencia\dtos\CuentaDTO.class
+com\mycompany\bancopersistencia\daos\HistorialDAO.class
 com\mycompany\bancopersistencia\persistencia\PersistenciaException.class
 com\mycompany\bancopersistencia\conexion\Conexion.class
 com\mycompany\bancopersistencia\daos\RetiroSinCuentaDAO.class
