@@ -102,6 +102,11 @@ public class clienteUI extends javax.swing.JFrame {
         historialBtn.setForeground(new java.awt.Color(22, 66, 91));
         historialBtn.setText("Historial");
         historialBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        historialBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historialBtnMouseClicked(evt);
+            }
+        });
 
         miCuentaBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         miCuentaBtn.setForeground(new java.awt.Color(22, 66, 91));
@@ -572,6 +577,13 @@ public class clienteUI extends javax.swing.JFrame {
         tUI.setVisible(true);
         dispose();
     }//GEN-LAST:event_transferirBtnMouseClicked
+
+    private void historialBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historialBtnMouseClicked
+        // TODO add your handling code here:
+        historialUI hUI = new historialUI();
+        hUI.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_historialBtnMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
