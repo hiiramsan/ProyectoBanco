@@ -30,23 +30,23 @@ CREATE TABLE Transacciones (
     id_transaccion INT PRIMARY KEY AUTO_INCREMENT,
     fechaHora DATETIME,
     monto INT,
-    tipo_transaccion VARCHAR(20)
+    cuenta_origen INT,
+    tipo_transaccion VARCHAR(20),
+    FOREIGN KEY (cuenta_origen) REFERENCES Cuentas(id_cuenta)
 );
 
 CREATE TABLE Transferencias (
     id_transaccion INT,
-    cuenta_origen INT,
     cuenta_destino INT,
     PRIMARY KEY (id_transaccion),
     FOREIGN KEY (id_transaccion) REFERENCES Transacciones(id_transaccion),
-    FOREIGN KEY (cuenta_origen) REFERENCES Cuentas(id_cuenta),
     FOREIGN KEY (cuenta_destino) REFERENCES Cuentas(num_cuenta)
 );
 
 CREATE TABLE RetirosSinTarjeta (
     id_transaccion INT,
-    folioOperacion VARCHAR(20),
-    contraseña VARCHAR(8),
+    folioOperacion INT,
+    contrasena VARCHAR(8),
     estado VARCHAR(20),
     PRIMARY KEY (id_transaccion),
     FOREIGN KEY (id_transaccion) REFERENCES Transacciones (id_transaccion)

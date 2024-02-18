@@ -190,7 +190,6 @@ public class transferenciaUI extends javax.swing.JFrame {
        
         // Extraer solo el número de cuenta de la cadena completa
         String numeroCuenta = obtenerNumeroCuenta(cuentaOrigenSeleccionada);
-              System.out.println(numeroCuenta);
         // Verificar si se pudo extraer el número de cuenta
         
         Cuenta cuentaOrigen = cn.obtenerCuentaPorNumCuentas(numeroCuenta);
@@ -201,9 +200,6 @@ public class transferenciaUI extends javax.swing.JFrame {
         String montoStr = montoTxt.getText().trim(); // Eliminar espacios en blanco alrededor
         int monto = Integer.parseInt(montoStr);
         
-        
-        System.out.println("Cuenta destino ingresada: " + cuentaDestinoTxt.getText());
-        System.out.println("Monto ingresado: " + montoStr);
         // Validar que el monto sea un número positivo
         if (monto <= 0) {
             throw new NumberFormatException();
@@ -215,7 +211,6 @@ public class transferenciaUI extends javax.swing.JFrame {
             throw new NumberFormatException();
         }
         
-              System.out.println(idCuentaOrigen);
         // Llamar al método para realizar la transferencia en el controlador de negocio
         boolean transferenciaExitosa = cn.realizarTransferencia(idCuentaOrigen, cuentaDestino, monto);
         

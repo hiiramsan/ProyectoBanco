@@ -4,13 +4,19 @@
  */
 package com.mycompany.bancopresentacion.GUI;
 
+import bancoblue.bancodominio.Cuenta;
+import bancoblue.bancodominio.RetiroSinCuenta;
 import com.mycompany.banconegocio.ControladorNegocio;
+import com.mycompany.bancopersistencia.dtos.RetiroSinCuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -176,9 +182,78 @@ public class retirarUI extends javax.swing.JFrame {
     }//GEN-LAST:event_montoTxtActionPerformed
 
     private void generarRetiroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarRetiroBtnActionPerformed
-        // TODO add your handling code here:
+        try {
+        // Obtener la cuenta de origen seleccionada
+        String cuentaOrigenSeleccionada = (String) cuentasComboBox.getSelectedItem();
+       
+        // Extraer solo el número de cuenta de la cadena completa
+        String numeroCuenta = obtenerNumeroCuenta(cuentaOrigenSeleccionada);
+              System.out.println(numeroCuenta);
+        // Verificar si se pudo extraer el número de cuenta
+        
+        Cuenta cuentaOrigen = cn.obtenerCuentaPorNumCuentas(numeroCuenta);
+        
+        int idCuentaOrigen = cuentaOrigen.getId_cuenta();
+        
+        int folioOperacion = cn.obtenerUltimoFolioUtilizado()+1;
+        String contrasena = cn.generarContraseña();
+        
+        LocalDateTime fechaHoraActual = LocalDateTime.now();
+
+        // Formatear la fecha y hora como una cadena de texto
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String fechaHoraString = fechaHoraActual.format(formatter);
+        // Obtener el monto ingresados
+        String montoStr = montoTxt.getText().trim(); // Eliminar espacios en blanco alrededor
+        int monto = Integer.parseInt(montoStr);
+      
+        // Validar que el monto sea un número positivo
+        if (monto <= 0) {
+            throw new NumberFormatException();
+            
+        }
+        
+        if (monto>cuentaOrigen.getSaldo()){
+            JOptionPane.showMessageDialog(this, "El monto seleccionado supera el saldo de su cuenta.");
+            throw new NumberFormatException();
+        }
+        
+        RetiroSinCuentaDTO retiro = new RetiroSinCuentaDTO(folioOperacion,contrasena,"Pendiente",fechaHoraString,monto,idCuentaOrigen);
+        // Llamar al método para realizar la transferencia en el controlador de negocio
+        boolean retiroSinCuentaExitoso = cn.insertarRetiroSinTarjeta(retiro);
+        
+        // Mostrar un mensaje dependiendo del resultado de la transferencia
+        if (retiroSinCuentaExitoso) {
+            JOptionPane.showMessageDialog(this, "Retiro realizado con éxito, dispone de 10 minutos para cobrarlo");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al realizar el retiro");
+        }
+        
+         dispose();
+        
+        // Abrir la ventana clienteUI
+        clienteUI clienteUI = new clienteUI();
+        clienteUI.setVisible(true);
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Ingrese un monto o cuenta destino válido");
+    } catch (PersistenciaException ex) {
+        JOptionPane.showMessageDialog(this, "Error al realizar el retiro");
+    }
     }//GEN-LAST:event_generarRetiroBtnActionPerformed
 
+    
+    private String obtenerNumeroCuenta(String cuentaSeleccionadaCompleta) {
+     // Extraer solo el número de cuenta de la cadena completa
+    String[] partes = cuentaSeleccionadaCompleta.split("\\s+");
+    if (partes.length > 0) {
+        String numeroCuenta = partes[0]; // El número de cuenta debería ser la primera parte
+        // Eliminar el símbolo '#' del número de cuenta si está presente
+        return numeroCuenta.replace("#", "");
+    } else {
+        return null; // No se pudo extraer el número de cuenta
+    }
+}
+    
     private void actualizarCuentas() {
         try {
             if (usuario != null) {

@@ -26,13 +26,13 @@ BEGIN
         UPDATE Cuentas SET saldo = saldo + monto_param WHERE num_cuenta = cuenta_destino_param;
 
         -- Registrar la transacción
-        INSERT INTO Transacciones (fechaHora, monto, tipo_transaccion) VALUES (NOW(), monto_param, 'Transferencia');
+        INSERT INTO Transacciones (fechaHora, monto,cuenta_origen, tipo_transaccion) VALUES (NOW(), monto_param,cuenta_origen_param, 'Transferencia');
 
         
         SET @id_transaccion = LAST_INSERT_ID();
 
         -- Registrar la transferencia
-        INSERT INTO Transferencias (id_transaccion, cuenta_origen, cuenta_destino) VALUES (@id_transaccion, cuenta_origen_param, cuenta_destino_param);
+        INSERT INTO Transferencias (id_transaccion, cuenta_destino) VALUES (@id_transaccion, cuenta_destino_param);
 
         COMMIT;
     ELSE
@@ -95,8 +95,8 @@ BEGIN
             WHERE id_cuenta = cuenta_origen_id;
 
             -- Registrar la transacción
-            INSERT INTO Transacciones (fechaHora, monto, tipo_transaccion)
-            VALUES (NOW(), monto_retiro, 'Retiro sin cuenta');
+            INSERT INTO Transacciones (fechaHora, monto,cuenta_origen, tipo_transaccion)
+            VALUES (NOW(), monto_retiro,cuenta_origen_id, 'Retiro sin cuenta');
 
             -- Eliminar el registro del retiro sin cuenta
             DELETE FROM RetirosSinTarjeta
@@ -112,6 +112,49 @@ BEGIN
         -- Lanzar una excepción o mensaje de error si el estado no es "pendiente"
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El estado del retiro sin cuenta no es pendiente';
     END IF;
+END $$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE PROCEDURE RegistrarRetiroSinCuenta(
+    IN cuenta_origen INT,
+    IN monto INT,
+    IN folioOperacion INT,
+    IN contrasena VARCHAR(8),
+    IN fecha_hora DATETIME
+)
+BEGIN
+    DECLARE saldo_cuenta_origen INT;
+    DECLARE id_transaccion INT;
+    -- Obtener el saldo de la cuenta de origen
+    SELECT saldo INTO saldo_cuenta_origen
+    FROM Cuentas
+    WHERE id_cuenta = cuenta_origen;
+    
+    -- Verificar si el monto es menor o igual al saldo de la cuenta de origen
+    IF monto <= saldo_cuenta_origen THEN
+        -- Registrar la transacción
+        INSERT INTO Transacciones (fechaHora, monto, cuenta_origen, tipo_transaccion)
+        VALUES (fecha_hora, monto, cuenta_origen, 'Retiro sin cuenta');
+        
+        -- Obtener el ID de la transacción registrada
+
+        SELECT LAST_INSERT_ID() INTO id_transaccion;
+        
+        -- Registrar el retiro sin cuenta con estado "Pendiente"
+        INSERT INTO RetirosSinTarjeta (id_transaccion, folioOperacion, contraseña, estado)
+        VALUES (id_transaccion, folioOperacion, contrasena, 'Pendiente');
+        
+        -- Indicar que el retiro sin cuenta se registró correctamente
+        SELECT 'Retiro sin cuenta registrado correctamente' AS mensaje;
+        ELSE
+        -- Indicar que el monto excede el saldo de la cuenta de origen
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El monto excede el saldo de la cuenta de origen';
+    END IF;
+    
 END $$
 
 DELIMITER ;

@@ -6,6 +6,7 @@ package com.mycompany.bancopersistencia.daos;
 
 import bancoblue.bancodominio.RetiroSinCuenta;
 import com.mycompany.bancopersistencia.conexion.IConexion;
+import com.mycompany.bancopersistencia.dtos.RetiroSinCuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -33,28 +34,32 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
     }
 
     @Override
-    public void insertarRetiroSinTarjeta(RetiroSinCuenta retiro) throws PersistenciaException {
-         // 1. Crear la sentencia SQL para la inserción
-        String sentenciaSQL = "INSERT INTO RetirosSinTarjeta (folioOperacion, contraseña, fechaHora, estado) VALUES (?, ?, ?, ?)";
+    public boolean insertarRetiroSinTarjeta(RetiroSinCuentaDTO retiro) throws PersistenciaException {
+        // Definir el nombre del procedimiento almacenado
+    String procedimientoAlmacenado = "{CALL RegistrarRetiroSinCuenta(?, ?, ?, ?,?)}";
 
-        // 2. Intentar hacer la inserción en la tabla
-        try (
-            // Recursos
-            Connection conexion = this.conexion.crearConexion(); // Establecer la conexión con la BD
-            PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL); // Crear el comando SQL
-        ) {
-            // 3. Asignar los valores del retiro sin cuenta al comando SQL
-            comandoSQL.setInt(1, retiro.getFolio_operacion());
-            comandoSQL.setString(2, retiro.getContraseña());
-            comandoSQL.setTimestamp(3, Timestamp.valueOf(retiro.getFecha_hora()));
-            comandoSQL.setString(4, retiro.getEstado());
+    // Intentar llamar al procedimiento almacenado
+    try (
+        // Recursos
+        Connection conexion = this.conexion.crearConexion(); // Establecer la conexión con la BD
+        CallableStatement llamadaProcedimiento = conexion.prepareCall(procedimientoAlmacenado); // Crear la llamada al procedimiento almacenado
+    ) {
+        // Asignar los parámetros al procedimiento almacenado
+        llamadaProcedimiento.setInt(1, retiro.getCuenta_origen());
+        llamadaProcedimiento.setInt(2, retiro.getMonto());
+        llamadaProcedimiento.setInt(3, retiro.getFolio_operacion());
+        llamadaProcedimiento.setString(4, retiro.getContraseña());
+        llamadaProcedimiento.setString(5,retiro.getFecha_hora());
 
-            // 4. Ejecutar el comando SQL para realizar la inserción
-            comandoSQL.executeUpdate();
-        } catch (SQLException e) {
-            LOG.log(Level.SEVERE, "Error al insertar el retiro sin cuenta", e);
-            throw new PersistenciaException("Error al insertar el retiro sin cuenta", e);
-        }
+        // Ejecutar el procedimiento almacenado
+        llamadaProcedimiento.execute();
+        LOG.log(Level.INFO, "Transferencia realizada con éxito");
+         return true;
+    } catch (SQLException e) {
+        LOG.log(Level.SEVERE, "Error al insertar el retiro sin cuenta", e);
+        return false;
+        
+    }
     }
 
     @Override
@@ -67,7 +72,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
 
     @Override
     public int obtenerUltimoFolioUtilizado() throws PersistenciaException {
-        int ultimoFolio = 0;
+        int ultimoFolio = 999;
 
         // Consulta SQL para obtener el máximo folioOperacion
         String sentenciaSQL = "SELECT MAX(folioOperacion) AS ultimoFolio FROM RetirosSinTarjeta";

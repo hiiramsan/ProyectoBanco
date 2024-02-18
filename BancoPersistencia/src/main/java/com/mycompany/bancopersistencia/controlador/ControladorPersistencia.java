@@ -19,6 +19,7 @@ import com.mycompany.bancopersistencia.daos.RetiroSinCuentaDAO;
 import com.mycompany.bancopersistencia.daos.TransferenciaDAO;
 import com.mycompany.bancopersistencia.dtos.ClienteDTO;
 import com.mycompany.bancopersistencia.dtos.CuentaDTO;
+import com.mycompany.bancopersistencia.dtos.RetiroSinCuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 import java.util.List;
 
@@ -88,8 +89,8 @@ public class ControladorPersistencia {
         return this.retiroSinCuentaDAO.generarContraseña();
     }
     
-    public void insertarRetiroSinTarjeta(RetiroSinCuenta retiro) throws PersistenciaException {
-        this.retiroSinCuentaDAO.insertarRetiroSinTarjeta(retiro);
+    public boolean insertarRetiroSinTarjeta(RetiroSinCuentaDTO retiro) throws PersistenciaException {
+        return this.retiroSinCuentaDAO.insertarRetiroSinTarjeta(retiro);
     }
     
     public int obtenerUltimoFolioUtilizado() throws PersistenciaException {
