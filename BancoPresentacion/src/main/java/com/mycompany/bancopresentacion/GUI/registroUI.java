@@ -380,6 +380,37 @@ public class registroUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Es necesario que la persona sea mayor de edad para continuar con el registro.", "Menor de edad", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
+        if(!validarNombre(nombre)) {
+            JOptionPane.showMessageDialog(this, "Formato de nombre incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(!validarApellido(apellidoMaterno)) {
+            JOptionPane.showMessageDialog(this, "Formato de apellido materno incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(!validarApellido(apellidoPaterno)) {
+            JOptionPane.showMessageDialog(this, "Formato de apellido paterno incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        
+        if(!validarCodigoPostal(codigoPostal)) {
+            JOptionPane.showMessageDialog(this, "Formato de codigo postal incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(!validarUsuario(usuario)) {
+            JOptionPane.showMessageDialog(this, "Formato de direccion incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(!validarDireccion(calle, colonia, numero, ciudad)) {
+            JOptionPane.showMessageDialog(this, "Formato de direccion incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         try {
             ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
@@ -471,6 +502,93 @@ public class registroUI extends javax.swing.JFrame {
         long milisegundosFechaActual = fechaActual.getTime();
         long diferencia = milisegundosFechaActual - milisegundosFechaNacimiento;
         return (int) (diferencia / 1000 / 60 / 60 / 24 / 365.25);
+    }
+
+    /**
+     * Realiza la validación del nombre.
+     *
+     * @param nombre El nombre a validar.
+     * @return true si el nombre es válido, false de lo contrario.
+     */
+    public boolean validarNombre(String nombre) {
+        // Validar que el nombre no esté vacío, contenga solo letras y no exceda la longitud máxima
+        return !nombre.isEmpty() && nombre.matches("^[a-zA-Z]+$") && nombre.length() <= 50;
+    }
+
+    /**
+     * Realiza la validación del apellido.
+     *
+     * @param apellido El apellido a validar.
+     * @return true si el apellido es válido, false de lo contrario.
+     */
+    public boolean validarApellido(String apellido) {
+        // Validar que el apellido no esté vacío, contenga solo letras y no exceda la longitud máxima
+        return !apellido.isEmpty() && apellido.matches("^[a-zA-Z]+$") && apellido.length() <= 50;
+    }
+    
+    
+
+    /**
+     * Realiza la validación del código postal.
+     *
+     * @param codigoPostal El código postal a validar.
+     * @return true si el código postal es válido, false de lo contrario.
+     */
+    public static boolean validarCodigoPostal(String codigoPostal) {
+        // Validar que el código postal contenga solo dígitos y tenga la longitud correcta
+        return codigoPostal.matches("^[0-9]{5}$");
+    }
+
+    /**
+     * Realiza la validación del usuario.
+     *
+     * @param usuario El nombre de usuario a validar.
+     * @return true si el usuario es válido, false de lo contrario.
+     */
+    public boolean validarUsuario(String usuario) {
+        // Validar que el usuario no esté vacío y no exceda la longitud máxima
+        return !usuario.isEmpty() && usuario.length() <= 50;
+    }
+
+    /**
+     * Realiza la validación de la contraseña.
+     *
+     * @param contra La contraseña a validar.
+     * @return true si la contraseña es válida, false de lo contrario.
+     */
+    public boolean validarContrasena(String contra) {
+        // Validar que la contraseña no esté vacía y no exceda la longitud máxima
+        return !contra.isEmpty() && contra.length() <= 50;
+    }
+
+    /**
+     * Realiza la validación de la fecha de nacimiento.
+     *
+     * @param fecha La fecha de nacimiento a validar.
+     * @return true si la fecha de nacimiento es válida, false de lo contrario.
+     */
+    public boolean validarFechaNacimiento(Date fecha) {
+        // Puedes agregar la lógica de validación de edad aquí según tus requisitos
+        // En este ejemplo, simplemente se valida que la fecha no sea nula
+        return fecha != null;
+    }
+    
+    
+    /**
+     * Realiza la validación del direccion.
+     *
+     * @param calle dir a validar.
+     * @param colonia dir a validar.
+     * @param numExterior dir a validar.
+     * @param ciudad dir a validar.
+     * @return true si el apellido es válido, false de lo contrario.
+     */
+    public boolean validarDireccion(String calle, String colonia, String numExterior, String ciudad) {
+        // Validar que el apellido no esté vacío, contenga solo letras y no exceda la longitud máxima
+        return  calle.length() <= 100
+                &&  colonia.length() <= 100
+                &&  ciudad.length() <= 100
+                && !numExterior.matches("^[0-9]$") && numExterior.length() <= 8;
     }
 
     /**
