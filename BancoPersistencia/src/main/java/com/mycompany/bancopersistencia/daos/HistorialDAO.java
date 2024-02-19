@@ -28,19 +28,36 @@ public class HistorialDAO implements IHistorialDAO {
     final IConexion conexion;
     private static final Logger LOG = Logger.getLogger(HistorialDAO.class.getName());
 
+    /**
+     * Constructor de la clase HistorialDAO.
+     *
+     * @param conexion Objeto que proporciona métodos para establecer la
+     * conexión con la base de datos.
+     */
     public HistorialDAO(IConexion conexion) {
         this.conexion = conexion;
     }
 
+    /**
+     * Obtiene el historial de transacciones de la base de datos filtrado por
+     * tipo de transacción y rango de fechas.
+     *
+     * @param tipoTransaccion El tipo de transacción a filtrar.
+     * @param fechaInicio La fecha de inicio del rango.
+     * @param fechaFin La fecha de fin del rango.
+     * @return Una lista de objetos Transaccion que representan el historial de
+     * transacciones.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
     @Override
     public List<Transaccion> obtenerHistorialTransacciones(String tipoTransaccion, String fechaInicio, String fechaFin) throws PersistenciaException {
         List<Transaccion> transacciones = new ArrayList<>();
         String llamadaSP = "{CALL ObtenerHistorialTransacciones(?, ?, ?)}";
 
         try (
-                Connection conexion = this.conexion.crearConexion(); 
-                CallableStatement llamada = conexion.prepareCall(llamadaSP);) {
-            
+                Connection conexion = this.conexion.crearConexion(); CallableStatement llamada = conexion.prepareCall(llamadaSP);) {
+
             llamada.setString(1, tipoTransaccion);
             llamada.setString(2, fechaInicio);
             llamada.setString(3, fechaFin);
@@ -54,7 +71,6 @@ public class HistorialDAO implements IHistorialDAO {
                 int monto = resultado.getInt("monto");
                 int cuentaOrigen = resultado.getInt("cuenta_origen");
                 String tipoTransaccionResultado = resultado.getString("tipo_transaccion");
-                
 
                 Transaccion transaccion = new Transaccion(idTransaccion, fechaHora, monto, tipoTransaccionResultado, cuentaOrigen);
                 transacciones.add(transaccion);
@@ -100,4 +116,4 @@ public List<Cliente> consultarTodos() throws PersistenciaException {
         
       return listaClientes;
     }
-*/
+ */

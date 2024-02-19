@@ -26,10 +26,25 @@ public class CuentaDAO implements ICuentaDAO {
     final IConexion conexion;
     private static final Logger LOG = Logger.getLogger(CuentaDAO.class.getName());
 
+    /**
+     * Constructor de la clase CuentaDAO.
+     *
+     * @param conexion Objeto que proporciona métodos para establecer la
+     * conexión con la base de datos.
+     */
     public CuentaDAO(IConexion conexion) {
         this.conexion = conexion;
     }
 
+    /**
+     * Agrega una nueva cuenta a la base de datos.
+     *
+     * @param cuenta Objeto CuentaDTO que contiene la información de la cuenta a
+     * agregar.
+     * @return La cuenta agregada.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
     @Override
     public Cuenta agregarCuenta(CuentaDTO cuenta) throws PersistenciaException {
         // 1. Crear la sentencia SQL que vamos a mandar a la BD
@@ -77,6 +92,16 @@ public class CuentaDAO implements ICuentaDAO {
         }
     }
 
+    /**
+     * Obtiene las cuentas asociadas a un cliente.
+     *
+     * @param id_cliente El ID del cliente.
+     * @return Una lista de cadenas que representan las cuentas del cliente con
+     * su saldo.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    @Override
     public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException {
         List<String> listaCuentas = new ArrayList<>();
         String sentenciaSQL = "select num_cuenta, saldo from Cuentas where id_cliente = ? and estado = 'Activa'";
@@ -108,6 +133,15 @@ public class CuentaDAO implements ICuentaDAO {
 
     }
 
+    /**
+     * Obtiene una cuenta de la base de datos por su número de cuenta.
+     *
+     * @param numeroCuenta El número de cuenta.
+     * @return La cuenta encontrada, o null si no se encuentra.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    @Override
     public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException {
         // 1. Crear la sentencia SQL que vamos a mandar a la BD
         String sentenciaSQL = "SELECT * FROM Cuentas WHERE num_cuenta = ?";
@@ -144,6 +178,15 @@ public class CuentaDAO implements ICuentaDAO {
         }
     }
 
+    /**
+     * Modifica el saldo de una cuenta en la base de datos.
+     *
+     * @param idCuenta El ID de la cuenta.
+     * @param nuevoSaldo El nuevo saldo de la cuenta.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    @Override
     public void modificarSaldoPorId(int idCuenta, double nuevoSaldo) throws PersistenciaException {
         String sentenciaSQL = "UPDATE Cuentas SET saldo = saldo + ? WHERE id_cuenta = ?";
 
@@ -167,6 +210,14 @@ public class CuentaDAO implements ICuentaDAO {
         }
     }
 
+    /**
+     * Cancela una cuenta en la base de datos.
+     *
+     * @param idCuenta El ID de la cuenta a cancelar.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    @Override
     public void cancelarCuentaPorId(int idCuenta) throws PersistenciaException {
         String sentenciaSQL = "UPDATE Cuentas SET estado = 'Cancelada' WHERE id_cuenta = ?";
 
@@ -188,6 +239,13 @@ public class CuentaDAO implements ICuentaDAO {
         }
     }
 
+    /**
+     * Valida si un número de cuenta está activo en la base de datos.
+     *
+     * @param numeroCuenta El número de cuenta a validar.
+     * @return true si la cuenta está activa, false de lo contrario.
+     */
+    @Override
     public boolean validarNumCuenta(int numeroCuenta) {
         boolean cuentaActiva = false;
 

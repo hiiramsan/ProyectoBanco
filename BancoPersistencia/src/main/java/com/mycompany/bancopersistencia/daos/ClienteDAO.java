@@ -27,10 +27,25 @@ public class ClienteDAO implements IClienteDAO {
     final IConexion conexion;
     private static final Logger LOG = Logger.getLogger(ClienteDAO.class.getName());
 
+    /**
+     * Constructor de la clase ClienteDAO.
+     *
+     * @param conexion Objeto que proporciona métodos para establecer la
+     * conexión con la base de datos.
+     */
     public ClienteDAO(IConexion conexion) {
         this.conexion = conexion;
     }
 
+    /**
+     * Agrega un nuevo cliente a la base de datos.
+     *
+     * @param cliente Objeto ClienteDTO que contiene la información del cliente
+     * a agregar.
+     * @return El cliente agregado.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
     @Override
     public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException {
         // 1. Crear la sentencia SQL que vamos a mandar a la BD
@@ -79,6 +94,14 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     // MOVER A VALIDADORESSSSSSSSSSS
+    /**
+     * Valida si un usuario ya existe en la base de datos.
+     *
+     * @param usuario El nombre de usuario a validar.
+     * @return true si el usuario existe, false de lo contrario.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
     public boolean validarUsuario(String usuario) throws PersistenciaException {
         String sentenciaSQL = "SELECT * FROM Clientes WHERE usuario = ?";
 
@@ -103,6 +126,15 @@ public class ClienteDAO implements IClienteDAO {
 
     }
 
+    /**
+     * Inicia sesión de un usuario en la aplicación.
+     *
+     * @param usuario El nombre de usuario.
+     * @param contra La contraseña del usuario.
+     * @return true si la sesión se inicia correctamente, false de lo contrario.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
     public boolean iniciarSesion(String usuario, String contra) throws PersistenciaException {
         //validar si usuario existe
         if (validarUsuario(usuario)) {
@@ -145,6 +177,14 @@ public class ClienteDAO implements IClienteDAO {
         }
     }
 
+    /**
+     * Obtiene el ID de un cliente dado su nombre de usuario.
+     *
+     * @param usuario El nombre de usuario del cliente.
+     * @return El ID del cliente.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
     public String obtenerIdCliente(String usuario) throws PersistenciaException {
         String sentenciaSQL = "SELECT id_cliente FROM Clientes WHERE usuario = ?";
         String idCliente = null;  // Variable para almacenar el resultado
@@ -168,6 +208,14 @@ public class ClienteDAO implements IClienteDAO {
         return idCliente;
     }
 
+    /**
+     * Busca un cliente en la base de datos por su ID.
+     *
+     * @param idCliente El ID del cliente a buscar.
+     * @return El cliente encontrado, o null si no se encuentra.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
     @Override
     public Cliente buscarClientePorId(int idCliente) throws PersistenciaException {
         String sentenciaSQL = "SELECT * FROM Clientes WHERE id_cliente = ?";
@@ -209,7 +257,16 @@ public class ClienteDAO implements IClienteDAO {
         return null;
     }
 
-    
+    /**
+     * Modifica los datos de un cliente en la base de datos.
+     *
+     * @param idCliente El ID del cliente a modificar.
+     * @param cliente El objeto ClienteDTO con los nuevos datos del cliente.
+     * @return El cliente modificado.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    @Override
     public Cliente modifcarClientePorID(String idCliente, ClienteDTO cliente) throws PersistenciaException {
         // 1. Crear la sentencia SQL que vamos a mandar a la BD
         String sentenciaSQL = "UPDATE CLIENTES SET nombre=?, apellido_paterno=?, apellido_materno=?, fechaNacimiento=?, usuario=?, contraseña=?, codigoPostal=?, calle=?, numeroExterior=?, colonia=?, ciudad=? WHERE id_cliente=?";
@@ -236,7 +293,7 @@ public class ClienteDAO implements IClienteDAO {
             comandoSQL.setString(11, cliente.getCiudad());
             int idClienteInt = Integer.parseInt(idCliente);
             comandoSQL.setInt(12, idClienteInt);
-            
+
             // 4. Ejecutamos el comando o lo enviamos a la BD
             int registrosModificados = comandoSQL.executeUpdate();
             LOG.log(Level.INFO, "Se agregaron con éxito {0} ", registrosModificados);
@@ -248,6 +305,5 @@ public class ClienteDAO implements IClienteDAO {
             throw new PersistenciaException("No se pudo guardar el cliente ", e);
         }
     }
-    
-    
+
 }

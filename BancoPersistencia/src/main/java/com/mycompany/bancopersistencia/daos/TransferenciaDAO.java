@@ -17,20 +17,33 @@ import java.util.logging.Logger;
  * @author PC
  */
 public class TransferenciaDAO implements ITransferenciaDAO {
-    
+
     final IConexion conexion;
     private static final Logger LOG = Logger.getLogger(TransferenciaDAO.class.getName());
 
+    /**
+     * Construye un nuevo objeto TransferenciaDAO con la conexión especificada.
+     *
+     * @param conexion La conexión a la base de datos.
+     */
     public TransferenciaDAO(IConexion conexion) {
         this.conexion = conexion;
     }
-    
+
+    /**
+     * Realiza una transferencia entre cuentas en la base de datos.
+     *
+     * @param cuentaOrigen El número de cuenta de origen.
+     * @param cuentaDestino El número de cuenta de destino.
+     * @param monto El monto a transferir.
+     * @return true si la transferencia se realiza correctamente, false si no.
+     * @throws PersistenciaException Si ocurre un error durante la
+     * transferencia.
+     */
     @Override
     public boolean realizarTransferencia(int cuentaOrigen, int cuentaDestino, int monto) throws PersistenciaException {
         try (
-            Connection connection = conexion.crearConexion();
-            CallableStatement callableStatement = connection.prepareCall("{call RealizarTransferencia(?, ?, ?)}")
-        ) {
+                Connection connection = conexion.crearConexion(); CallableStatement callableStatement = connection.prepareCall("{call RealizarTransferencia(?, ?, ?)}")) {
             // Establecer los parámetros del procedimiento almacenado
             callableStatement.setInt(1, cuentaOrigen);
             callableStatement.setInt(2, cuentaDestino);

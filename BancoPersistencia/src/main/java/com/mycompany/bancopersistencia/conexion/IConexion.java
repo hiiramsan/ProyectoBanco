@@ -8,9 +8,17 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
+ * Interfaz que define un método para crear una conexión a la base de datos.
  *
  * @author Carlos, Chema
  */
 public interface IConexion {
+
+    /**
+     * Crea y establece una conexión a la base de datos.
+     *
+     * @return La conexión establecida.
+     * @throws SQLException Si ocurre un error durante la conexión.
+     */
     public Connection crearConexion() throws SQLException;
 }

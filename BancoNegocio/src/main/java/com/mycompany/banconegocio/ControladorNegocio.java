@@ -58,11 +58,11 @@ public class ControladorNegocio {
 
     public Cliente modifcarClientePorID(String idCliente, ClienteDTO cliente) throws PersistenciaException {
         cliente.setContraseña(Encriptador.encriptar(cliente.getContraseña()));
-        return controladorPersistencia.modifcarClientePorID(idCliente, cliente);
+        return controladorPersistencia.modificarClientePorId(idCliente, cliente);
     }
 
     public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException {
-        return controladorPersistencia.obtenerCuentaPorNumCuentas(numeroCuenta);
+        return controladorPersistencia.obtenerCuentaPorNumeroCuenta(numeroCuenta);
     }
 
     public void modificarSaldoPorId(int idCuenta, double nuevoSaldo) throws PersistenciaException {
