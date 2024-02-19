@@ -252,4 +252,14 @@ public class ControladorPersistencia {
     public boolean validarNumCuenta(int numCuenta) {
         return cuentaDAO.validarNumCuenta(numCuenta);
     }
+    
+    /**
+     * Valida si una cuenta tiene saldo.
+     *
+     * @param numCuenta El número de cuenta a validar.
+     * @return true si el tiene saldo, false de lo contrario.
+     */
+    public boolean cuentaTieneSaldo(int numeroCuenta) throws PersistenciaException {
+        return cuentaDAO.cuentaTieneSaldo(numeroCuenta);
+    }
 }

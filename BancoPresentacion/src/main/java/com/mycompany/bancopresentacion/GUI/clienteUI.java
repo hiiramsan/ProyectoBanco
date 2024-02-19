@@ -29,7 +29,6 @@ public class clienteUI extends javax.swing.JFrame {
     String fechaActualFormato = formatoFecha.format(fechaActual);
 
     String usuario = Sesion.getUsuario();
-    
 
     /**
      * Creates new form clienteUI
@@ -48,18 +47,18 @@ public class clienteUI extends javax.swing.JFrame {
         displayUserInfo();
     }
 
-    private void displayUserInfo(){
+    private void displayUserInfo() {
         try {
             String idCliente = cn.obtenerIdCliente(usuario);
             int idClienteInt = Integer.parseInt(idCliente);
             Cliente clienteActual = cn.buscarClientePorId(idClienteInt);
             nombreCliente.setText(clienteActual.getNombre());
-        } catch(PersistenciaException | NumberFormatException ex) {
+        } catch (PersistenciaException | NumberFormatException ex) {
             System.out.println("AQUI ESTA EL ERROR");
         }
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -564,9 +563,14 @@ public class clienteUI extends javax.swing.JFrame {
             cuentaCargada = cargarCuentaSeleccionada(numeroCuenta);
             int cuentaACancelar = cuentaCargada.getId_cuenta();
             try {
-                cn.cancelarCuentaPorId(cuentaACancelar);
+                if (!cn.cancelarCuentaPorId(cuentaACancelar)) {
+                    JOptionPane.showMessageDialog(null, "La cuenta no tiene que contar con saldo positivo. Retira el dinero primero", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cuenta cancelada con exito", "Aviso", JOptionPane.OK_OPTION);
+                }
                 actualizarCuentas();
             } catch (PersistenciaException ex) {
+
                 // handle error
             }
         }

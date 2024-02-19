@@ -95,12 +95,22 @@ public class ControladorNegocio {
         } 
     }
     
-    public void cancelarCuentaPorId(int idCuenta) throws PersistenciaException {
-        controladorPersistencia.cancelarCuentaPorId(idCuenta);
+    public boolean cancelarCuentaPorId(int idCuenta) throws PersistenciaException {
+        if(cuentaTieneSaldo(idCuenta)) {
+            return false;
+        } else {
+            controladorPersistencia.cancelarCuentaPorId(idCuenta);
+            return true;
+        }
+        
     }
     
     public List<Transaccion> obtenerHistorialTransacciones(String tipoTransaccion, String fechaInicio, String fechaFin) throws PersistenciaException{
         return controladorPersistencia.obtenerHistorialTransacciones(tipoTransaccion, fechaInicio, fechaFin);
+    }
+    
+    public boolean cuentaTieneSaldo(int numCuenta) throws PersistenciaException {
+        return controladorPersistencia.cuentaTieneSaldo(numCuenta);
     }
     
     

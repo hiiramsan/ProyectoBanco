@@ -71,4 +71,12 @@ public interface ICuentaDAO {
      * @return true si la cuenta está activa, false si no lo está.
      */
     public boolean validarNumCuenta(int numCuenta);
+    
+    /**
+     * Valida si una cuenta tiene saldo.
+     *
+     * @param numCuenta El número de cuenta a validar.
+     * @return true si el tiene saldo, false de lo contrario.
+     */
+    public boolean cuentaTieneSaldo(int numCuenta)throws PersistenciaException;
 }

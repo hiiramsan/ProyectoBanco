@@ -269,4 +269,32 @@ public class CuentaDAO implements ICuentaDAO {
         return cuentaActiva;
     }
 
+    /**
+     * Valida si una cuenta tiene saldo.
+     *
+     * @param numCuenta El número de cuenta a validar.
+     * @return true si el tiene saldo, false de lo contrario.
+     */
+    @Override
+    public boolean cuentaTieneSaldo(int numeroCuenta) throws PersistenciaException {
+        boolean tieneSaldo = false;
+
+        String sentenciaSQL = "SELECT saldo FROM Cuentas WHERE id_cuenta = ?";
+        try (
+                Connection conexion = this.conexion.crearConexion(); PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS);
+                ) {
+
+            comandoSQL.setInt(1, numeroCuenta);
+
+            ResultSet resultado = comandoSQL.executeQuery();
+
+            if (resultado.next() && resultado.getInt("saldo") > 0) {
+                tieneSaldo = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       return tieneSaldo;
+    }
 }
