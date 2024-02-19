@@ -564,9 +564,9 @@ public class clienteUI extends javax.swing.JFrame {
             int cuentaACancelar = cuentaCargada.getId_cuenta();
             try {
                 if (!cn.cancelarCuentaPorId(cuentaACancelar)) {
-                    JOptionPane.showMessageDialog(null, "La cuenta no tiene que contar con saldo positivo. Retira el dinero primero", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "La cuenta no tiene que contar con saldo. Retira el dinero primero", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Cuenta cancelada con exito", "Aviso", JOptionPane.OK_OPTION);
+                    JOptionPane.showMessageDialog(null, "Cuenta "+ numeroCuenta + " cancelada.");
                 }
                 actualizarCuentas();
             } catch (PersistenciaException ex) {
