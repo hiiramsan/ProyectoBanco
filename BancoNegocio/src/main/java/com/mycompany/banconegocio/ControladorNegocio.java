@@ -68,8 +68,8 @@ public class ControladorNegocio {
         controladorPersistencia.modificarSaldoPorId(idCuenta, nuevoSaldo);
     }
 
-    public void cobrarRetiroSinCuenta(int folio, String contraseña) throws PersistenciaException {
-        controladorPersistencia.cobrarRetiroSinCuenta(folio, contraseña);
+    public boolean cobrarRetiroSinCuenta(int folio, String contraseña) throws PersistenciaException {
+        return controladorPersistencia.cobrarRetiroSinCuenta(folio, contraseña);
     }
 
     public String generarContraseña() throws PersistenciaException {
