@@ -17,5 +17,5 @@ public interface IRetiroSinCuentaDAO {
     public boolean insertarRetiroSinTarjeta(RetiroSinCuentaDTO retiro) throws PersistenciaException;
     public String generarContraseña() throws PersistenciaException;
     public int obtenerUltimoFolioUtilizado() throws PersistenciaException;
-    public void cobrarRetiroSinCuenta(int folio, String contraseña) throws PersistenciaException;
+    public boolean cobrarRetiroSinCuenta(int folio, String contraseña) throws PersistenciaException;
 }

@@ -224,7 +224,7 @@ public class retirarUI extends javax.swing.JFrame {
         
         // Mostrar un mensaje dependiendo del resultado de la transferencia
         if (retiroSinCuentaExitoso) {
-            JOptionPane.showMessageDialog(this, "Retiro realizado con éxito, dispone de 10 minutos para cobrarlo");
+            JOptionPane.showMessageDialog(this, "Retiro realizado con éxito, dispone de 10 minutos para cobrarlo \n Folio:"+ folioOperacion+"\n Contraseña:"+contrasena);
         } else {
             JOptionPane.showMessageDialog(this, "Error al realizar el retiro");
         }

@@ -4,11 +4,18 @@
  */
 package com.mycompany.bancopresentacion.GUI;
 
+import com.mycompany.banconegocio.ControladorNegocio;
+import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author carlo
  */
 public class retiroSinCuentaUI extends javax.swing.JFrame {
+
+    ControladorNegocio cn = new ControladorNegocio();
+    String usuario = Sesion.getUsuario();
 
     /**
      * Creates new form retiroSinCuentaUI
@@ -35,7 +42,7 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
         folioTxt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         contraTxt = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        retirarBoton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,12 +79,12 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
 
         contraTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setText("Retirar");
-        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        retirarBoton.setText("Retirar");
+        retirarBoton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        retirarBoton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        retirarBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                retirarBotonActionPerformed(evt);
             }
         });
 
@@ -96,7 +103,7 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
                             .addComponent(contraTxt)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(124, 124, 124)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(retirarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -111,7 +118,7 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(contraTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(retirarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
@@ -173,14 +180,34 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_regresarBtnMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void retirarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirarBotonActionPerformed
+        try {
+            // Obtener la cuenta de origen seleccionada
+            int folio = Integer.parseInt(folioTxt.getText());
+            String contra = contraTxt.getText();
+            
+            boolean cobroExitoso = cn.cobrarRetiroSinCuenta(folio, contra);
+            
+            if (cobroExitoso) {
+            JOptionPane.showMessageDialog(this, "Cobro exitoso.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al cobrar el monto.");
+        }
+            
+
+            dispose();
+
+            // Abrir la ventana clienteUI
+            index index = new index();
+            index.setVisible(true);
+        }  catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(this, "Error al realizar el retiro.");
+        }
+    }//GEN-LAST:event_retirarBotonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField contraTxt;
     private javax.swing.JTextField folioTxt;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -188,5 +215,6 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel regresarBtn;
+    private javax.swing.JButton retirarBoton;
     // End of variables declaration//GEN-END:variables
 }

@@ -100,7 +100,7 @@ BEGIN
             WHERE id_cuenta = cuenta_origen_id;
 
             -- Eliminar el registro del retiro sin cuenta
-            DELETE FROM RetirosSinTarjeta
+            UPDATE  RetirosSinTarjeta SET estado = 'Cobrado'
             WHERE folioOperacion = p_folio AND contrasena = p_contraseña;
 
             -- Confirmar la transacción

@@ -96,7 +96,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
     }
 
     @Override
-    public void cobrarRetiroSinCuenta(int folio, String contraseña) throws PersistenciaException {
+    public boolean cobrarRetiroSinCuenta(int folio, String contraseña) throws PersistenciaException {
         String procedimientoAlmacenado = "{CALL CobrarRetiroSinCuenta(?, ?)}";
 
         try (
@@ -107,9 +107,10 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
             llamadaProcedimiento.setString(2, contraseña);
 
             llamadaProcedimiento.execute();
+            return true;
         } catch (SQLException e) {
             LOG.log(Level.SEVERE, "Error al cobrar el retiro sin cuenta", e);
-            throw new PersistenciaException("Error al cobrar el retiro sin cuenta", e);
+            return false;
         }
     }
     }
