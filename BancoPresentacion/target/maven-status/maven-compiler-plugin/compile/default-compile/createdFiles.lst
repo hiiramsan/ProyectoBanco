@@ -1,6 +1,7 @@
 com\mycompany\bancopresentacion\GUI\historialUI$4.class
 com\mycompany\bancopresentacion\GUI\transferenciaUI.class
 com\mycompany\bancopresentacion\GUI\ajustesUI$2.class
+com\mycompany\bancopresentacion\GUI\RetiroExitosoUI$2.class
 com\mycompany\bancopresentacion\GUI\clienteUI$6.class
 com\mycompany\bancopresentacion\GUI\index$3.class
 com\mycompany\bancopresentacion\GUI\retirarUI$1.class
@@ -9,6 +10,7 @@ com\mycompany\bancopresentacion\GUI\retiroSinCuentaUI.class
 com\mycompany\bancopresentacion\GUI\clienteUI$3.class
 com\mycompany\bancopresentacion\GUI\ajustesUI.class
 com\mycompany\bancopresentacion\GUI\clienteUI$2.class
+com\mycompany\bancopresentacion\GUI\RetiroExitosoUI$3.class
 com\mycompany\bancopresentacion\GUI\Presentacion.class
 com\mycompany\bancopresentacion\GUI\registroUI$2.class
 com\mycompany\bancopresentacion\GUI\clienteUI$9.class
