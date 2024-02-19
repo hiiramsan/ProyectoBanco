@@ -70,6 +70,7 @@ public class ControladorNegocio {
     }
 
     public boolean cobrarRetiroSinCuenta(int folio, String contraseña) throws PersistenciaException {
+        contraseña = Encriptador.desencriptar(contraseña);
         return controladorPersistencia.cobrarRetiroSinCuenta(folio, contraseña);
     }
 
@@ -78,6 +79,8 @@ public class ControladorNegocio {
     }
     
     public boolean insertarRetiroSinTarjeta(RetiroSinCuentaDTO retiro) throws PersistenciaException {
+        // modificacion de encriptacion
+        retiro.setContraseña(Encriptador.encriptar(retiro.getContraseña()));
         return controladorPersistencia.insertarRetiroSinTarjeta(retiro);
     }
     

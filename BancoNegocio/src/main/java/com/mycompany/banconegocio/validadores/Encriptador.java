@@ -26,4 +26,6 @@ public class Encriptador {
     public static String desencriptar(String textoEncriptado) {
         // Desencriptar es lo mismo que encriptar con un desplazamiento negativo
         return encriptar(textoEncriptado);
-    }}
+    }
+
+}
