@@ -200,7 +200,7 @@ public class transferenciaUI extends javax.swing.JFrame {
         if (transferenciaExitosa) {
             JOptionPane.showMessageDialog(this, "Transferencia realizada con éxito");
         } else {
-            JOptionPane.showMessageDialog(this, "Error al realizar la transferencia");
+            JOptionPane.showMessageDialog(this, "Error al realizar la transferencia. La cuenta no existe");
         }
         
          dispose();

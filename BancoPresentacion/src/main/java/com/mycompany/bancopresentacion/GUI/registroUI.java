@@ -354,9 +354,7 @@ public class registroUI extends javax.swing.JFrame {
             contraAviso.setText("Las contraseñas no coinciden");
             return;
         }
-
         
-
         String nombre = nombreTxt.getText();
         String apellidoPaterno = apellidoPaternoTxt.getText();
         String apellidoMaterno = apellidoMaternoTxt.getText();

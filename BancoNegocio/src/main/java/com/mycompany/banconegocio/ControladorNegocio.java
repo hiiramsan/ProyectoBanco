@@ -16,6 +16,7 @@ import com.mycompany.bancopersistencia.dtos.RetiroSinCuentaDTO;
 import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 import java.sql.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -85,7 +86,13 @@ public class ControladorNegocio {
     }
     
     public boolean realizarTransferencia(int cuentaOrigen, int cuentaDestino, int monto) throws PersistenciaException {
-        return controladorPersistencia.realizarTransferencia(cuentaOrigen, cuentaDestino, monto);
+        if(controladorPersistencia.validarNumCuenta(cuentaDestino)) {
+            return controladorPersistencia.realizarTransferencia(cuentaOrigen, cuentaDestino, monto);
+        } else {
+            
+            return false;
+            
+        } 
     }
     
     public void cancelarCuentaPorId(int idCuenta) throws PersistenciaException {
@@ -95,4 +102,6 @@ public class ControladorNegocio {
     public List<Transaccion> obtenerHistorialTransacciones(String tipoTransaccion, String fechaInicio, String fechaFin) throws PersistenciaException{
         return controladorPersistencia.obtenerHistorialTransacciones(tipoTransaccion, fechaInicio, fechaFin);
     }
+    
+    
 }

@@ -113,4 +113,8 @@ public class ControladorPersistencia {
     public List<Transaccion> obtenerHistorialTransacciones(String tipoTransaccion, String fechaInicio, String fechaFin) throws PersistenciaException{
         return historialDAO.obtenerHistorialTransacciones(tipoTransaccion, fechaInicio, fechaFin);
     }
+    
+    public boolean validarNumCuenta(int numCuenta) {
+        return cuentaDAO.validarNumCuenta(numCuenta);
+    }
 }

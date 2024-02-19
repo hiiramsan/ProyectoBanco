@@ -188,4 +188,27 @@ public class CuentaDAO implements ICuentaDAO {
         }
     }
 
+    public boolean validarNumCuenta(int numeroCuenta) {
+        boolean cuentaActiva = false;
+
+        String sentenciaSQL = "SELECT * FROM Cuentas WHERE num_cuenta = ? AND estado = 'Activa'";
+        try (
+                Connection conexion = this.conexion.crearConexion(); PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+                ) {
+
+            comandoSQL.setInt(1, numeroCuenta);
+
+            ResultSet resultado = comandoSQL.executeQuery();
+
+            if (resultado.next()) {
+                cuentaActiva = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return cuentaActiva;
+    }
+
 }

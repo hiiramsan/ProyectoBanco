@@ -1,6 +1,7 @@
 CREATE DATABASE banco;
 use banco;
 
+
 CREATE TABLE Clientes (
     id_cliente INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50),
