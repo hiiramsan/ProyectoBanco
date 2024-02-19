@@ -231,16 +231,16 @@ public class retirarUI extends javax.swing.JFrame {
 
             // Mostrar un mensaje dependiendo del resultado de la transferencia
             if (retiroSinCuentaExitoso) {
-                JOptionPane.showMessageDialog(this, "Retiro realizado con éxito, dispone de 10 minutos para cobrarlo \n Folio:" + folioOperacion + "\n Contraseña:" + contrasena);
+                //JOptionPane.showMessageDialog(this, "Retiro realizado con éxito, dispone de 10 minutos para cobrarlo \n Folio:" + folioOperacion + "\n Contraseña:" + contrasena);
+                RetiroExitosoUI r = new RetiroExitosoUI(folioOperacion, contrasena);
+                r.setVisible(true);
+                
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Error al realizar el retiro");
             }
 
             dispose();
-
-            // Abrir la ventana clienteUI
-            clienteUI clienteUI = new clienteUI();
-            clienteUI.setVisible(true);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un monto o cuenta destino válido");
         } catch (PersistenciaException ex) {
