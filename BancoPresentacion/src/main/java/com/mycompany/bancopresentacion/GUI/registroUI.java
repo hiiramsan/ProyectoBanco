@@ -382,7 +382,7 @@ public class registroUI extends javax.swing.JFrame {
         }
         
         if(!validarNombre(nombre)) {
-            JOptionPane.showMessageDialog(this, "Formato de nombre incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Formato de NOMBRE incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -403,7 +403,7 @@ public class registroUI extends javax.swing.JFrame {
         }
         
         if(!validarUsuario(usuario)) {
-            JOptionPane.showMessageDialog(this, "Formato de direccion incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Formato de usuario incorrecto.", "Input error", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -512,7 +512,7 @@ public class registroUI extends javax.swing.JFrame {
      */
     public boolean validarNombre(String nombre) {
         // Validar que el nombre no esté vacío, contenga solo letras y no exceda la longitud máxima
-        return !nombre.isEmpty() && nombre.matches("^[a-zA-Z]+$") && nombre.length() <= 50;
+        return nombre.length() <= 50;
     }
 
     /**
