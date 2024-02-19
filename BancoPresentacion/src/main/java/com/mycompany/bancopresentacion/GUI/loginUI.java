@@ -12,10 +12,12 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class loginUI extends javax.swing.JFrame {
+
     ControladorNegocio cn = new ControladorNegocio();
+
     /**
      * Creates new form loginUI
      */
@@ -33,7 +35,7 @@ public class loginUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        inicio = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -47,13 +49,13 @@ public class loginUI extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(22, 66, 91));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("BankApp");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        inicio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        inicio.setForeground(new java.awt.Color(255, 255, 255));
+        inicio.setText("BankApp");
+        inicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        inicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                inicioMouseClicked(evt);
             }
         });
 
@@ -136,7 +138,7 @@ public class loginUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jLabel5))
+                        .addComponent(inicio))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(177, 177, 177)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -146,7 +148,7 @@ public class loginUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addComponent(inicio)
                 .addGap(54, 54, 54)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(57, Short.MAX_VALUE))
@@ -166,46 +168,58 @@ public class loginUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Método ejecutado cuando se hace clic en el botón "Iniciar sesión".
+     * Intenta iniciar sesión con las credenciales proporcionadas por el
+     * usuario. Si el inicio de sesión es exitoso, abre la interfaz de usuario
+     * del cliente. Si las credenciales son incorrectas, muestra un mensaje de
+     * advertencia.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
     private void iniciarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarBtnActionPerformed
         // TODO add your handling code here:
         String usuario = usuarioTxt.getText();
         String contra = new String(contraTxt.getPassword());
-        
+
         try {
-            
+
             boolean inicioSesionExitoso = cn.iniciarSesion(usuario, contra);
-            
+
             if (inicioSesionExitoso) {
-                    Sesion.setUsuario(usuario);
-                    clienteUI cUI = new clienteUI();
-                    cUI.setVisible(true);
-                    dispose();
-                } else {
-                    avisoCredenciales.setText("Usuario o contraseña incorrecta");
-                }
+                Sesion.setUsuario(usuario);
+                clienteUI cUI = new clienteUI();
+                cUI.setVisible(true);
+                dispose();
+            } else {
+                avisoCredenciales.setText("Usuario o contraseña incorrecta");
+            }
         } catch (PersistenciaException ex) {
             Logger.getLogger(loginUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_iniciarBtnActionPerformed
-
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    /**
+     * Método ejecutado cuando se hace clic en el label de navegación "Volver al
+     * inicio". Abre la interfaz de usuario del índice principal.
+     *
+     * @param evt El evento del mouse asociado al clic del label.
+     */
+    private void inicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inicioMouseClicked
         // TODO add your handling code here:
         index i = new index();
         i.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jLabel5MouseClicked
-
+    }//GEN-LAST:event_inicioMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel avisoCredenciales;
     private javax.swing.JPasswordField contraTxt;
     private javax.swing.JButton iniciarBtn;
+    private javax.swing.JLabel inicio;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField usuarioTxt;

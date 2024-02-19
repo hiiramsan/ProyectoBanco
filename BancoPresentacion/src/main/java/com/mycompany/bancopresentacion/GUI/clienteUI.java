@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class clienteUI extends javax.swing.JFrame {
 
@@ -31,7 +31,9 @@ public class clienteUI extends javax.swing.JFrame {
     String usuario = Sesion.getUsuario();
 
     /**
-     * Creates new form clienteUI
+     * Constructor de la interfaz de cliente. Inicializa los componentes de la
+     * interfaz, muestra información del usuario actual y oculta elementos de la
+     * interfaz que no se necesitan inicialmente.
      */
     public clienteUI() {
         initComponents();
@@ -47,6 +49,9 @@ public class clienteUI extends javax.swing.JFrame {
         displayUserInfo();
     }
 
+    /**
+     * Muestra la información del usuario actual en la interfaz.
+     */
     private void displayUserInfo() {
         try {
             String idCliente = cn.obtenerIdCliente(usuario);
@@ -419,7 +424,12 @@ public class clienteUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Método ejecutado cuando se hace clic en el botón "Agregar Cuenta". Agrega
+     * una nueva cuenta para el cliente actual.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
     private void agregarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarCuentaActionPerformed
         // TODO add your handling code here:
         int nuevaCuenta = GeneradorCuentas.getNuevoNumCuenta();
@@ -442,14 +452,25 @@ public class clienteUI extends javax.swing.JFrame {
     private void opTransferenciaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opTransferenciaBtnMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_opTransferenciaBtnMouseClicked
-
+    /**
+     * Método ejecutado cuando se selecciona una opción de transferencia. Abre
+     * la interfaz de usuario para realizar una transferencia.
+     *
+     * @param evt El evento de acción asociado a la selección de la opción de
+     * transferencia.
+     */
     private void opTransferenciaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTransferenciaBtnActionPerformed
         // TODO add your handling code here:
         transferenciaUI tUI = new transferenciaUI();
         tUI.setVisible(true);
         dispose();
     }//GEN-LAST:event_opTransferenciaBtnActionPerformed
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Mi Cuenta". Muestra u
+     * oculta el panel de cuenta en la interfaz de usuario.
+     *
+     * @param evt El evento del mouse asociado al clic del botón.
+     */
     private void miCuentaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miCuentaBtnMouseClicked
         if (panelCuenta.isVisible()) {
             panelCuenta.setVisible(false);
@@ -458,14 +479,24 @@ public class clienteUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_miCuentaBtnMouseClicked
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Ajustes". Abre la
+     * interfaz de usuario para gestionar los ajustes de la cuenta.
+     *
+     * @param evt El evento del mouse asociado al clic del botón.
+     */
     private void ajustesBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajustesBtnMouseClicked
         // TODO add your handling code here:
         ajustesUI ajustesCuenta = new ajustesUI();
         ajustesCuenta.setVisible(true);
         dispose();
     }//GEN-LAST:event_ajustesBtnMouseClicked
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Cerrar Sesión". Cierra
+     * la sesión del usuario actual y vuelve a la página de inicio de sesión.
+     *
+     * @param evt El evento del mouse asociado al clic del botón.
+     */
     private void cerrarSesionBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionBtnMouseClicked
         // TODO add your handling code here:
         Sesion.setUsuario(null);
@@ -483,7 +514,12 @@ public class clienteUI extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_cuentasComboBoxMouseClicked
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Mostrar Cuenta".
+     * Muestra u oculta información adicional de la cuenta seleccionada.
+     *
+     * @param evt El evento del mouse asociado al clic del botón.
+     */
     private void mostrarCuentaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mostrarCuentaBtnMouseClicked
         // TODO add your handling code here:
 
@@ -521,7 +557,12 @@ public class clienteUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_mostrarCuentaBtnMouseClicked
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Depositar". Realiza un
+     * depósito en la cuenta seleccionada.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
     private void depositarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositarBtnActionPerformed
         String saldoString = JOptionPane.showInputDialog("Ingrese el saldo a depositar a la cuenta:");
         double nuevoSaldo = Double.parseDouble(saldoString);
@@ -552,7 +593,12 @@ public class clienteUI extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_depositarBtnActionPerformed
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Cancelar Cuenta".
+     * Cancela la cuenta seleccionada si cumple con ciertas condiciones.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
     private void cancelarCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCuentaBtnActionPerformed
         String cuentaSelect = (String) cuentasComboBox.getSelectedItem();
         String[] partes = cuentaSelect.split(" ");
@@ -566,7 +612,7 @@ public class clienteUI extends javax.swing.JFrame {
                 if (!cn.cancelarCuentaPorId(cuentaACancelar)) {
                     JOptionPane.showMessageDialog(null, "La cuenta no tiene que contar con saldo. Retira el dinero primero", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Cuenta "+ numeroCuenta + " cancelada.");
+                    JOptionPane.showMessageDialog(null, "Cuenta " + numeroCuenta + " cancelada.");
                 }
                 actualizarCuentas();
             } catch (PersistenciaException ex) {
@@ -575,21 +621,36 @@ public class clienteUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_cancelarCuentaBtnActionPerformed
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Retiro Sin Tarjeta".
+     * Abre la interfaz de usuario para realizar un retiro sin tarjeta.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
     private void retiroSinTarjetaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retiroSinTarjetaBtnActionPerformed
         // TODO add your handling code here:
         retirarUI rUI = new retirarUI();
         rUI.setVisible(true);
         dispose();
     }//GEN-LAST:event_retiroSinTarjetaBtnActionPerformed
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Transferir". Abre la
+     * interfaz de usuario para realizar una transferencia.
+     *
+     * @param evt El evento del mouse asociado al clic del botón.
+     */
     private void transferirBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transferirBtnMouseClicked
         // TODO add your handling code here:
         transferenciaUI tUI = new transferenciaUI();
         tUI.setVisible(true);
         dispose();
     }//GEN-LAST:event_transferirBtnMouseClicked
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Historial". Abre la
+     * interfaz de usuario para ver el historial de transacciones.
+     *
+     * @param evt El evento del mouse asociado al clic del botón.
+     */
     private void historialBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historialBtnMouseClicked
         // TODO add your handling code here:
         historialUI hUI = new historialUI();

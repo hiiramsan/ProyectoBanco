@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class ajustesUI extends javax.swing.JFrame {
 
@@ -373,7 +373,14 @@ public class ajustesUI extends javax.swing.JFrame {
     private void apellidoMaternoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apellidoMaternoTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_apellidoMaternoTxtActionPerformed
-
+    /**
+     * Actualiza la información del cliente con los datos ingresados en los
+     * campos de la interfaz. Realiza validaciones de los campos y muestra
+     * mensajes de advertencia en caso de campos incompletos o contraseñas no
+     * coincidentes.
+     *
+     * @param evt El evento que desencadena la acción.
+     */
     private void actualizarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarBtnActionPerformed
         String nombre = nombreTxt.getText();
         String apellidoPaterno = apellidoPaternoTxt.getText();
@@ -391,22 +398,22 @@ public class ajustesUI extends javax.swing.JFrame {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaActual = new Date();
         String fechaActualFormato = formatoFecha.format(fechaActual);
-        
+        // Validar si todos los campos están completos
         if (!validarCampos()) {
             JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             return; // Sale del método si los campos no están llenos
         }
-        
-        if(!validarContra()) {
-         contraAviso.setText("Las contraseñas no coinciden");
-         return;
+        // Validar si las contraseñas coinciden
+        if (!validarContra()) {
+            contraAviso.setText("Las contraseñas no coinciden");
+            return;
         }
-        
-        
+
+        // Intentar modificar el cliente con la información proporcionada
         try {
-            ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
+            ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
             Cliente clienteModificado = cn.modifcarClientePorID(idCliente, cliente);
-            
+            // Verificar si el cliente se ha modificado correctamente
             if (clienteModificado != null) {
                 JOptionPane.showMessageDialog(null, "El cliente ha sido actualizado correctamente.");
                 limpiarCampos();
@@ -416,12 +423,17 @@ public class ajustesUI extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo modificar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch(PersistenciaException ex) {
+        } catch (PersistenciaException ex) {
             // handle errors
         }
-        
-    }//GEN-LAST:event_actualizarBtnActionPerformed
 
+    }//GEN-LAST:event_actualizarBtnActionPerformed
+    /**
+     * Muestra la interfaz principal de cliente cuando se hace clic en el botón
+     * "Regresar".
+     *
+     * @param evt El evento de clic del mouse.
+     */
     private void regresarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarBtnMouseClicked
         // TODO add your handling code here:
         clienteUI cUI = new clienteUI();
@@ -433,7 +445,9 @@ public class ajustesUI extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_actualizarBtnMouseClicked
-
+    /**
+     * Muestra los datos del cliente actual en los campos de la interfaz.
+     */
     private void mostrarDatosCliente() {
         System.out.println(idCliente);
         int idClienteInt = Integer.parseInt(idCliente);
@@ -441,10 +455,10 @@ public class ajustesUI extends javax.swing.JFrame {
             Cliente clienteActual = cn.buscarClientePorId(idClienteInt);
 
             if (clienteActual != null) {
-                
+
                 SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
                 Date fechaNacimiento = formatoFecha.parse(clienteActual.getFechaNacimiento());
-                
+
                 nombreTxt.setText(clienteActual.getNombre());
                 apellidoPaternoTxt.setText(clienteActual.getApellidoP());
                 apellidoMaternoTxt.setText(clienteActual.getApellidoM());
@@ -466,40 +480,54 @@ public class ajustesUI extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Valida que todos los campos de la interfaz estén llenos.
+     *
+     * @return true si todos los campos están llenos, false de lo contrario.
+     */
     public boolean validarCampos() {
-       // Validamos que ningún campo esté vacío o contenga solo espacios en blanco
-    if (nombreTxt.getText().isBlank() || 
-        apellidoPaternoTxt.getText().isBlank() || 
-        apellidoMaternoTxt.getText().isBlank() || 
-        codigoPostalTxt.getText().isBlank() || 
-        ciudadTxt.getText().isBlank() || 
-        coloniaTxt.getText().isBlank() || 
-        calleTxt.getText().isBlank() || 
-        numeroTxt.getText().isBlank() || 
-        usuarioTxt.getText().isBlank()||
-        contraTxt.getText().isBlank() || 
-        confirmarContraTxt.getText().isBlank() || 
-        fechaSelected == null) {
-        // Si algún campo está vacío o solo contiene espacios en blanco, retorna falso
-        return false;
+        // Validamos que ningún campo esté vacío o contenga solo espacios en blanco
+        if (nombreTxt.getText().isBlank()
+                || apellidoPaternoTxt.getText().isBlank()
+                || apellidoMaternoTxt.getText().isBlank()
+                || codigoPostalTxt.getText().isBlank()
+                || ciudadTxt.getText().isBlank()
+                || coloniaTxt.getText().isBlank()
+                || calleTxt.getText().isBlank()
+                || numeroTxt.getText().isBlank()
+                || usuarioTxt.getText().isBlank()
+                || contraTxt.getText().isBlank()
+                || confirmarContraTxt.getText().isBlank()
+                || fechaSelected == null) {
+            // Si algún campo está vacío o solo contiene espacios en blanco, retorna falso
+            return false;
+        }
+        // Si todos los campos tienen algún valor, retorna verdadero
+        return true;
     }
-    // Si todos los campos tienen algún valor, retorna verdadero
-    return true;
-    }
-    
+
+    /**
+     * Valida si las contraseñas ingresadas coinciden.
+     *
+     * @return true si las contraseñas coinciden, false de lo contrario.
+     */
     public boolean validarContra() {
-        
+
         String pwd = new String(contraTxt.getPassword());
         String confirmPwd = new String(confirmarContraTxt.getPassword());
-        
-        if(!pwd.equals(confirmPwd)) {
+
+        if (!pwd.equals(confirmPwd)) {
             return false; //Las contraseñas no coinciden
         }
         return true;
-        
+
         //Las contraseñas coinciden
     }
-    
+
+    /**
+     * Limpia el contenido de todos los campos de la interfaz y reinicia la
+     * fecha seleccionada.
+     */
     public void limpiarCampos() {
         // Limpiamos el contenido de cada campo de texto
         nombreTxt.setText("");
@@ -518,7 +546,7 @@ public class ajustesUI extends javax.swing.JFrame {
         // Además, si estás utilizando JDateChooser para la fecha, puedes reiniciar su valor a null
         fechaSelected.setDate(null);
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizarBtn;

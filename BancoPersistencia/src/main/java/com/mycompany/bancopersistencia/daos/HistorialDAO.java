@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class HistorialDAO implements IHistorialDAO {
 

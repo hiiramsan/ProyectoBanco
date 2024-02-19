@@ -6,7 +6,7 @@ package com.mycompany.bancopresentacion.GUI;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class transferenciaMsgUI extends javax.swing.JFrame {
 

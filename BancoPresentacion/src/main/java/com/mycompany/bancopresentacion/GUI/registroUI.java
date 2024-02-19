@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class registroUI extends javax.swing.JFrame {
 
@@ -342,7 +342,14 @@ public class registroUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Método ejecutado cuando se hace clic en el botón "Crear cuenta". Valida
+     * los campos del formulario de registro. Si los campos están completos y
+     * las contraseñas coinciden, registra al cliente y crea una cuenta para él.
+     * Si el cliente es menor de edad, muestra un mensaje de advertencia.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
     private void crearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBtnActionPerformed
 
         if (!validarCampos()) {
@@ -354,7 +361,7 @@ public class registroUI extends javax.swing.JFrame {
             contraAviso.setText("Las contraseñas no coinciden");
             return;
         }
-        
+
         String nombre = nombreTxt.getText();
         String apellidoPaterno = apellidoPaternoTxt.getText();
         String apellidoMaterno = apellidoMaternoTxt.getText();
@@ -368,13 +375,12 @@ public class registroUI extends javax.swing.JFrame {
         String confirmarContra = new String(confirmarContraTxt.getPassword());
         Date fecha = fechaSelected.getDate();
         String fechaNacimiento = (fecha != null) ? new SimpleDateFormat("yyyy-MM-dd").format(fecha) : "Fecha no seleccionada";
-        
-        if (!validarEdad(fecha)) 
-        {
+
+        if (!validarEdad(fecha)) {
             JOptionPane.showMessageDialog(this, "Es necesario que la persona sea mayor de edad para continuar con el registro.", "Menor de edad", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         try {
             ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
             Cliente clienteAgregado = controladorNegocio.agregarCliente(cliente);
@@ -395,7 +401,12 @@ public class registroUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al agregar el cliente o al agregar la cuenta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_crearBtnActionPerformed
-
+    /**
+     * Método para validar si todos los campos del formulario de registro están
+     * llenos.
+     *
+     * @return true si todos los campos están llenos, false de lo contrario.
+     */
     public boolean validarCampos() {
         // Validamos que ningún campo esté vacío o contenga solo espacios en blanco
         if (nombreTxt.getText().isBlank()
@@ -417,6 +428,11 @@ public class registroUI extends javax.swing.JFrame {
         return true;
     }
 
+    /**
+     * Método para validar si las contraseñas coinciden.
+     *
+     * @return true si las contraseñas coinciden, false de lo contrario.
+     */
     public boolean validarContra() {
 
         String pwd = new String(contraTxt.getPassword());
@@ -430,12 +446,26 @@ public class registroUI extends javax.swing.JFrame {
         //Las contraseñas coinciden
     }
 
+    /**
+     * Método para validar si el cliente es mayor de edad.
+     *
+     * @param fechaNacimiento La fecha de nacimiento del cliente.
+     * @return true si el cliente es mayor de edad, false de lo contrario.
+     */
     public boolean validarEdad(Date fechaNacimiento) {
         Date fechaActual = new Date();
         int edad = calcularEdad(fechaNacimiento, fechaActual);
         return edad >= 18;
     }
 
+    /**
+     * Método para calcular la edad a partir de la fecha de nacimiento y la
+     * fecha actual.
+     *
+     * @param fechaNacimiento La fecha de nacimiento del cliente.
+     * @param fechaActual La fecha actual.
+     * @return La edad del cliente.
+     */
     private int calcularEdad(Date fechaNacimiento, Date fechaActual) {
         long milisegundosFechaNacimiento = fechaNacimiento.getTime();
         long milisegundosFechaActual = fechaActual.getTime();
@@ -443,6 +473,10 @@ public class registroUI extends javax.swing.JFrame {
         return (int) (diferencia / 1000 / 60 / 60 / 24 / 365.25);
     }
 
+    /**
+     * Método para limpiar el contenido de todos los campos del formulario de
+     * registro.
+     */
     public void limpiarCampos() {
         // Limpiamos el contenido de cada campo de texto
         nombreTxt.setText("");
@@ -464,14 +498,24 @@ public class registroUI extends javax.swing.JFrame {
     private void apellidoMaternoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apellidoMaternoTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_apellidoMaternoTxtActionPerformed
-
+    /**
+     * Método ejecutado cuando se hace clic en el label de navegación "Volver al
+     * inicio". Abre la interfaz de usuario del cliente.
+     *
+     * @param evt El evento del mouse asociado al clic del label.
+     */
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
         clienteUI cUI = new clienteUI();
         cUI.setVisible(true);
         dispose();
     }//GEN-LAST:event_jLabel5MouseClicked
-
+    /**
+     * Método ejecutado cuando se presiona una tecla en el campo de confirmación
+     * de contraseña. Limpia el mensaje de advertencia de contraseña.
+     *
+     * @param evt El evento del teclado asociado a la presión de tecla.
+     */
     private void confirmarContraTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmarContraTxtKeyPressed
         // TODO add your handling code here:
         contraAviso.setText("");

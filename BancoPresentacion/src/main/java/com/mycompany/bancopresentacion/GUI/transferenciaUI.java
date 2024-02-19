@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class transferenciaUI extends javax.swing.JFrame {
 
@@ -164,76 +164,98 @@ public class transferenciaUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Método ejecutado cuando se hace clic en el botón "Transferir". Intenta
+     * realizar una transferencia desde la cuenta de origen seleccionada hacia
+     * la cuenta destino ingresada.
+     *
+     * @param evt El evento de acción asociado al clic del botón "Transferir".
+     */
     private void transferirBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferirBotonActionPerformed
-          try {
-        // Obtener la cuenta de origen seleccionada
-        String cuentaOrigenSeleccionada = (String) cuentasComboBox.getSelectedItem();
-       
-        // Extraer solo el número de cuenta de la cadena completa
-        String numeroCuenta = obtenerNumeroCuenta(cuentaOrigenSeleccionada);
-        // Verificar si se pudo extraer el número de cuenta
-        
-        Cuenta cuentaOrigen = cn.obtenerCuentaPorNumCuentas(numeroCuenta);
-        
-        int idCuentaOrigen = cuentaOrigen.getId_cuenta();
-        // Obtener la cuenta destino y el monto ingresados
-        int cuentaDestino = Integer.parseInt(cuentaDestinoTxt.getText().trim()); // Eliminar espacios en blanco alrededor
-        String montoStr = montoTxt.getText().trim(); // Eliminar espacios en blanco alrededor
-        int monto = Integer.parseInt(montoStr);
-        
-        // Validar que el monto sea un número positivo
-        if (monto <= 0) {
-            throw new NumberFormatException();
-            
-        }
-        
-        if (monto>cuentaOrigen.getSaldo()){
-            JOptionPane.showMessageDialog(this, "El monto seleccionado supera el saldo de su cuenta.");
-            throw new NumberFormatException();
-        }
-        
-        // Llamar al método para realizar la transferencia en el controlador de negocio
-        boolean transferenciaExitosa = cn.realizarTransferencia(idCuentaOrigen, cuentaDestino, monto);
-        
-        // Mostrar un mensaje dependiendo del resultado de la transferencia
-        if (transferenciaExitosa) {
-            JOptionPane.showMessageDialog(this, "Transferencia realizada con éxito");
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al realizar la transferencia. La cuenta no existe");
-        }
-        
-         dispose();
-        
-        // Abrir la ventana clienteUI
-        clienteUI clienteUI = new clienteUI();
-        clienteUI.setVisible(true);
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Ingrese un monto o cuenta destino válido");
-    } catch (PersistenciaException ex) {
-        JOptionPane.showMessageDialog(this, "Error al realizar la transferencia");
-    }
-    }//GEN-LAST:event_transferirBotonActionPerformed
+        try {
+            // Obtener la cuenta de origen seleccionada
+            String cuentaOrigenSeleccionada = (String) cuentasComboBox.getSelectedItem();
 
+            // Extraer solo el número de cuenta de la cadena completa
+            String numeroCuenta = obtenerNumeroCuenta(cuentaOrigenSeleccionada);
+            // Verificar si se pudo extraer el número de cuenta
+
+            Cuenta cuentaOrigen = cn.obtenerCuentaPorNumCuentas(numeroCuenta);
+
+            int idCuentaOrigen = cuentaOrigen.getId_cuenta();
+            // Obtener la cuenta destino y el monto ingresados
+            int cuentaDestino = Integer.parseInt(cuentaDestinoTxt.getText().trim()); // Eliminar espacios en blanco alrededor
+            String montoStr = montoTxt.getText().trim(); // Eliminar espacios en blanco alrededor
+            int monto = Integer.parseInt(montoStr);
+
+            // Validar que el monto sea un número positivo
+            if (monto <= 0) {
+                throw new NumberFormatException();
+
+            }
+
+            if (monto > cuentaOrigen.getSaldo()) {
+                JOptionPane.showMessageDialog(this, "El monto seleccionado supera el saldo de su cuenta.");
+                throw new NumberFormatException();
+            }
+
+            // Llamar al método para realizar la transferencia en el controlador de negocio
+            boolean transferenciaExitosa = cn.realizarTransferencia(idCuentaOrigen, cuentaDestino, monto);
+
+            // Mostrar un mensaje dependiendo del resultado de la transferencia
+            if (transferenciaExitosa) {
+                JOptionPane.showMessageDialog(this, "Transferencia realizada con éxito");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al realizar la transferencia. La cuenta no existe");
+            }
+
+            dispose();
+
+            // Abrir la ventana clienteUI
+            clienteUI clienteUI = new clienteUI();
+            clienteUI.setVisible(true);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese un monto o cuenta destino válido");
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(this, "Error al realizar la transferencia");
+        }
+    }//GEN-LAST:event_transferirBotonActionPerformed
+    /**
+     * Método ejecutado cuando se hace clic en el label para volver al inicio.
+     * Cierra la ventana actual y abre la ventana clienteUI.
+     *
+     * @param evt El evento de clic del mouse asociado al jLabel5.
+     */
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
         clienteUI cUI = new clienteUI();
         cUI.setVisible(true);
         dispose();
     }//GEN-LAST:event_jLabel5MouseClicked
+    /**
+     * Método utilizado para extraer el número de cuenta de la cadena completa
+     * de la cuenta seleccionada.
+     *
+     * @param cuentaSeleccionadaCompleta La cadena completa que contiene la
+     * cuenta seleccionada.
+     * @return El número de cuenta extraído.
+     */
 
     private String obtenerNumeroCuenta(String cuentaSeleccionadaCompleta) {
-     // Extraer solo el número de cuenta de la cadena completa
-    String[] partes = cuentaSeleccionadaCompleta.split("\\s+");
-    if (partes.length > 0) {
-        String numeroCuenta = partes[0]; // El número de cuenta debería ser la primera parte
-        // Eliminar el símbolo '#' del número de cuenta si está presente
-        return numeroCuenta.replace("#", "");
-    } else {
-        return null; // No se pudo extraer el número de cuenta
+        // Extraer solo el número de cuenta de la cadena completa
+        String[] partes = cuentaSeleccionadaCompleta.split("\\s+");
+        if (partes.length > 0) {
+            String numeroCuenta = partes[0]; // El número de cuenta debería ser la primera parte
+            // Eliminar el símbolo '#' del número de cuenta si está presente
+            return numeroCuenta.replace("#", "");
+        } else {
+            return null; // No se pudo extraer el número de cuenta
+        }
     }
-}
-    
+
+    /**
+     * Método utilizado para actualizar la lista de cuentas del cliente.
+     */
     private void actualizarCuentas() {
         try {
             if (usuario != null) {
@@ -249,6 +271,12 @@ public class transferenciaUI extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método utilizado para actualizar la lista de cuentas del cliente en el
+     * comboBox.
+     *
+     * @param id_cliente El ID del cliente.
+     */
     private void actualiarListaCuentas(String id_cliente) {
         List<String> cuentas;
         try {

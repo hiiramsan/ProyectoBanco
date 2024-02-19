@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  *
- * @author PC
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class ControladorPersistencia {
 

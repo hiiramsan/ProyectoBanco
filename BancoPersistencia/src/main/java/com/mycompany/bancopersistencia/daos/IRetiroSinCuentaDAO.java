@@ -10,7 +10,7 @@ import com.mycompany.bancopersistencia.persistencia.PersistenciaException;
 
 /**
  *
- * @author PC
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public interface IRetiroSinCuentaDAO {
 

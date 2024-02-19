@@ -20,13 +20,13 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class retirarUI extends javax.swing.JFrame {
 
     ControladorNegocio cn = new ControladorNegocio();
     String usuario = Sesion.getUsuario();
-    
+
     /**
      * Creates new form retirarUI
      */
@@ -180,80 +180,97 @@ public class retirarUI extends javax.swing.JFrame {
     private void montoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_montoTxtActionPerformed
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Generar Retiro".
+     * Realiza un retiro de efectivo sin tarjeta. Se genera un folio de
+     * operación, una contraseña temporal y se registra el retiro en la base de
+     * datos.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
     private void generarRetiroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarRetiroBtnActionPerformed
         try {
-        // Obtener la cuenta de origen seleccionada
-        String cuentaOrigenSeleccionada = (String) cuentasComboBox.getSelectedItem();
-       
-        // Extraer solo el número de cuenta de la cadena completa
-        String numeroCuenta = obtenerNumeroCuenta(cuentaOrigenSeleccionada);
-              System.out.println(numeroCuenta);
-        // Verificar si se pudo extraer el número de cuenta
-        
-        Cuenta cuentaOrigen = cn.obtenerCuentaPorNumCuentas(numeroCuenta);
-        
-        int idCuentaOrigen = cuentaOrigen.getId_cuenta();
-        
-        int folioOperacion = cn.obtenerUltimoFolioUtilizado()+1;
-        String contrasena = cn.generarContraseña();
-        
-        LocalDateTime fechaHoraActual = LocalDateTime.now();
+            // Obtener la cuenta de origen seleccionada
+            String cuentaOrigenSeleccionada = (String) cuentasComboBox.getSelectedItem();
 
-        // Formatear la fecha y hora como una cadena de texto
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String fechaHoraString = fechaHoraActual.format(formatter);
-        // Obtener el monto ingresados
-        String montoStr = montoTxt.getText().trim(); // Eliminar espacios en blanco alrededor
-        int monto = Integer.parseInt(montoStr);
-      
-        // Validar que el monto sea un número positivo
-        if (monto <= 0) {
-            throw new NumberFormatException();
-            
+            // Extraer solo el número de cuenta de la cadena completa
+            String numeroCuenta = obtenerNumeroCuenta(cuentaOrigenSeleccionada);
+            System.out.println(numeroCuenta);
+            // Verificar si se pudo extraer el número de cuenta
+
+            Cuenta cuentaOrigen = cn.obtenerCuentaPorNumCuentas(numeroCuenta);
+
+            int idCuentaOrigen = cuentaOrigen.getId_cuenta();
+
+            int folioOperacion = cn.obtenerUltimoFolioUtilizado() + 1;
+            String contrasena = cn.generarContraseña();
+
+            LocalDateTime fechaHoraActual = LocalDateTime.now();
+
+            // Formatear la fecha y hora como una cadena de texto
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String fechaHoraString = fechaHoraActual.format(formatter);
+            // Obtener el monto ingresados
+            String montoStr = montoTxt.getText().trim(); // Eliminar espacios en blanco alrededor
+            int monto = Integer.parseInt(montoStr);
+
+            // Validar que el monto sea un número positivo
+            if (monto <= 0) {
+                throw new NumberFormatException();
+
+            }
+
+            if (monto > cuentaOrigen.getSaldo()) {
+                JOptionPane.showMessageDialog(this, "El monto seleccionado supera el saldo de su cuenta.");
+                throw new NumberFormatException();
+            }
+
+            RetiroSinCuentaDTO retiro = new RetiroSinCuentaDTO(folioOperacion, contrasena, "Pendiente", fechaHoraString, monto, idCuentaOrigen);
+            // Llamar al método para realizar la transferencia en el controlador de negocio
+            boolean retiroSinCuentaExitoso = cn.insertarRetiroSinTarjeta(retiro);
+
+            // Mostrar un mensaje dependiendo del resultado de la transferencia
+            if (retiroSinCuentaExitoso) {
+                JOptionPane.showMessageDialog(this, "Retiro realizado con éxito, dispone de 10 minutos para cobrarlo \n Folio:" + folioOperacion + "\n Contraseña:" + contrasena);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al realizar el retiro");
+            }
+
+            dispose();
+
+            // Abrir la ventana clienteUI
+            clienteUI clienteUI = new clienteUI();
+            clienteUI.setVisible(true);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese un monto o cuenta destino válido");
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(this, "Error al realizar el retiro.");
         }
-        
-        if (monto>cuentaOrigen.getSaldo()){
-            JOptionPane.showMessageDialog(this, "El monto seleccionado supera el saldo de su cuenta.");
-            throw new NumberFormatException();
-        }
-        
-        RetiroSinCuentaDTO retiro = new RetiroSinCuentaDTO(folioOperacion,contrasena,"Pendiente",fechaHoraString,monto,idCuentaOrigen);
-        // Llamar al método para realizar la transferencia en el controlador de negocio
-        boolean retiroSinCuentaExitoso = cn.insertarRetiroSinTarjeta(retiro);
-        
-        // Mostrar un mensaje dependiendo del resultado de la transferencia
-        if (retiroSinCuentaExitoso) {
-            JOptionPane.showMessageDialog(this, "Retiro realizado con éxito, dispone de 10 minutos para cobrarlo \n Folio:"+ folioOperacion+"\n Contraseña:"+contrasena);
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al realizar el retiro");
-        }
-        
-         dispose();
-        
-        // Abrir la ventana clienteUI
-        clienteUI clienteUI = new clienteUI();
-        clienteUI.setVisible(true);
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Ingrese un monto o cuenta destino válido");
-    } catch (PersistenciaException ex) {
-        JOptionPane.showMessageDialog(this, "Error al realizar el retiro.");
-    }
     }//GEN-LAST:event_generarRetiroBtnActionPerformed
 
-    
+    /**
+     * Método para obtener solo el número de cuenta de la cadena completa.
+     *
+     * @param cuentaSeleccionadaCompleta La cadena completa que representa la
+     * cuenta seleccionada.
+     * @return El número de cuenta extraído.
+     */
     private String obtenerNumeroCuenta(String cuentaSeleccionadaCompleta) {
-     // Extraer solo el número de cuenta de la cadena completa
-    String[] partes = cuentaSeleccionadaCompleta.split("\\s+");
-    if (partes.length > 0) {
-        String numeroCuenta = partes[0]; // El número de cuenta debería ser la primera parte
-        // Eliminar el símbolo '#' del número de cuenta si está presente
-        return numeroCuenta.replace("#", "");
-    } else {
-        return null; // No se pudo extraer el número de cuenta
+        // Extraer solo el número de cuenta de la cadena completa
+        String[] partes = cuentaSeleccionadaCompleta.split("\\s+");
+        if (partes.length > 0) {
+            String numeroCuenta = partes[0]; // El número de cuenta debería ser la primera parte
+            // Eliminar el símbolo '#' del número de cuenta si está presente
+            return numeroCuenta.replace("#", "");
+        } else {
+            return null; // No se pudo extraer el número de cuenta
+        }
     }
-}
-    
+
+    /**
+     * Método para actualizar la lista de cuentas del cliente. Obtiene las
+     * cuentas asociadas al cliente y las muestra en el comboBox.
+     */
     private void actualizarCuentas() {
         try {
             if (usuario != null) {
@@ -269,6 +286,13 @@ public class retirarUI extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método para actualizar la lista de cuentas del cliente. Obtiene las
+     * cuentas asociadas al cliente y las muestra en el comboBox.
+     *
+     * @param id_cliente El ID del cliente del que se desean obtener las
+     * cuentas.
+     */
     private void actualiarListaCuentas(String id_cliente) {
         List<String> cuentas;
         try {
@@ -285,7 +309,7 @@ public class retirarUI extends javax.swing.JFrame {
             Logger.getLogger(clienteUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cuentasComboBox;

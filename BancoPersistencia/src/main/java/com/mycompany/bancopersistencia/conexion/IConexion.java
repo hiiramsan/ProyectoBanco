@@ -10,7 +10,7 @@ import java.sql.SQLException;
 /**
  * Interfaz que define un método para crear una conexión a la base de datos.
  *
- * @author Carlos, Chema
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public interface IConexion {
 

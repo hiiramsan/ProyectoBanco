@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author PC
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class ClienteDAO implements IClienteDAO {
 

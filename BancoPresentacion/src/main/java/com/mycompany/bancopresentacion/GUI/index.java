@@ -8,7 +8,7 @@ import java.net.URL;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class index extends javax.swing.JFrame {
 
@@ -18,9 +18,7 @@ public class index extends javax.swing.JFrame {
     public index() {
         initComponents();
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -171,14 +169,24 @@ public class index extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Método ejecutado cuando se hace clic en el botón "Login". Abre la
+     * interfaz de usuario de inicio de sesión.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
         loginUI l = new loginUI();
         l.setVisible(true);
         dispose();
     }//GEN-LAST:event_loginBtnActionPerformed
-
+    /**
+     * Método ejecutado cuando se hace clic en el label "Registrar". Abre la
+     * interfaz de usuario de registro.
+     *
+     * @param evt El evento del mouse asociado al clic del label.
+     */
     private void registrarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrarBtnMouseClicked
         // TODO add your handling code here:
         registroUI r = new registroUI();
@@ -187,10 +195,15 @@ public class index extends javax.swing.JFrame {
     }//GEN-LAST:event_registrarBtnMouseClicked
 
     private void retiroSinCuentaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_retiroSinCuentaBtnMouseClicked
-        
+
         // agregar interfaz para realizar un retiro sin cuenta
     }//GEN-LAST:event_retiroSinCuentaBtnMouseClicked
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Retiro sin cuenta".
+     * Abre la interfaz de usuario para realizar un retiro sin cuenta.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
     private void retiroSinCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retiroSinCuentaBtnActionPerformed
         // TODO add your handling code here:
         retiroSinCuentaUI rsc = new retiroSinCuentaUI();
@@ -198,7 +211,7 @@ public class index extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_retiroSinCuentaBtnActionPerformed
 
-  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

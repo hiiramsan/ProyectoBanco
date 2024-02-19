@@ -6,7 +6,7 @@ package com.mycompany.banconegocio.validadores;
 
 /**
  *
- * @author carlos
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class Encriptador {
 

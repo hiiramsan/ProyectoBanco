@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class historialUI extends javax.swing.JFrame {
 
@@ -42,10 +42,10 @@ public class historialUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        inicio = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        regresar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -60,13 +60,13 @@ public class historialUI extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(22, 66, 91));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("BankApp");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        inicio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        inicio.setForeground(new java.awt.Color(255, 255, 255));
+        inicio.setText("BankApp");
+        inicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        inicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                inicioMouseClicked(evt);
             }
         });
 
@@ -75,12 +75,12 @@ public class historialUI extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Microsoft PhagsPa", 0, 18)); // NOI18N
         jLabel4.setText("Historial de operaciones");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("<");
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        regresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        regresar.setText("<");
+        regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        regresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                regresarMouseClicked(evt);
             }
         });
 
@@ -137,7 +137,7 @@ public class historialUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
@@ -166,7 +166,7 @@ public class historialUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel1))
+                    .addComponent(regresar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -193,7 +193,7 @@ public class historialUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jLabel5))
+                        .addComponent(inicio))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -203,7 +203,7 @@ public class historialUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jLabel5)
+                .addComponent(inicio)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
@@ -223,20 +223,36 @@ public class historialUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+/**
+     * Método ejecutado cuando se hace clic en el label "inicio". Abre la
+     * interfaz de usuario del cliente.
+     *
+     * @param evt El evento del mouse asociado al clic del label.
+     */
+    private void inicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inicioMouseClicked
         // TODO add your handling code here:
         clienteUI cUI = new clienteUI();
         cUI.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jLabel5MouseClicked
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_inicioMouseClicked
+    /**
+     * Método ejecutado cuando se hace clic en el label "regresar". Abre la
+     * interfaz de usuario del cliente.
+     *
+     * @param evt El evento del mouse asociado al clic del label.
+     */
+    private void regresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarMouseClicked
         // TODO add your handling code here:
         clienteUI cUI = new clienteUI();
         cUI.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_regresarMouseClicked
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Buscar". Realiza una
+     * búsqueda de transacciones según los criterios especificados.
+     *
+     * @param evt El evento de acción asociado al clic del botón.
+     */
 
     private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
         // TODO add your handling code here:
@@ -263,7 +279,11 @@ public class historialUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_buscarBtnActionPerformed
-
+    /**
+     * Método para mostrar las transacciones en la tabla.
+     *
+     * @param transacciones La lista de transacciones a mostrar en la tabla.
+     */
     public void mostrarTransaccionesEnTabla(List<Transaccion> transacciones) {
         DefaultTableModel model = (DefaultTableModel) tablaOperaciones.getModel();
 
@@ -275,46 +295,51 @@ public class historialUI extends javax.swing.JFrame {
             model.addRow(rowData);
         }
     }
-    
+
+    /**
+     * Método para cargar los datos en la tabla.
+     *
+     * @param tabla La tabla donde se cargarán los datos.
+     * @param listaTransacciones La lista de transacciones que se cargarán en la
+     * tabla.
+     */
     public void cargarDatosTabla(JTable tabla, List<Transaccion> listaTransacciones) {
         DefaultTableModel modelo = new DefaultTableModel();
         tabla.setModel(modelo);
-        
-        modelo.addColumn("ID");
-            modelo.addColumn("Fecha");
-            modelo.addColumn("Monto");
-            modelo.addColumn("Cuenta origen");
-            modelo.addColumn("Tipo");
 
-            for (Transaccion tr : listaTransacciones) {
-                Object[] filas = {
-                    tr.getId_transaccion(),
-                    tr.getFecha_hora(),
-                    tr.getMonto(),
-                    tr.getCuenta_origen(),
-                    tr.getTipo_transaccion()
-                };
-                modelo.addRow(filas);
-            }
+        modelo.addColumn("ID");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Monto");
+        modelo.addColumn("Cuenta origen");
+        modelo.addColumn("Tipo");
+
+        for (Transaccion tr : listaTransacciones) {
+            Object[] filas = {
+                tr.getId_transaccion(),
+                tr.getFecha_hora(),
+                tr.getMonto(),
+                tr.getCuenta_origen(),
+                tr.getTipo_transaccion()
+            };
+            modelo.addRow(filas);
+        }
     }
-    
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscarBtn;
     private com.toedter.calendar.JDateChooser fechaFinDate;
     private com.toedter.calendar.JDateChooser fechaInicioDate;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel inicio;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> operacionComboBox;
+    private javax.swing.JLabel regresar;
     private javax.swing.JTable tablaOperaciones;
     // End of variables declaration//GEN-END:variables
 }

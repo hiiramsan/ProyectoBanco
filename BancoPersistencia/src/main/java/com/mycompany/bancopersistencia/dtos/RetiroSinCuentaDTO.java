@@ -6,7 +6,7 @@ package com.mycompany.bancopersistencia.dtos;
 
 /**
  *
- * @author PC
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class RetiroSinCuentaDTO extends TransaccionDTO {
 

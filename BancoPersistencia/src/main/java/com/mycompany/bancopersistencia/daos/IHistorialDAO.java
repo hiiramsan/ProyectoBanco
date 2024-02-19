@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public interface IHistorialDAO {
 

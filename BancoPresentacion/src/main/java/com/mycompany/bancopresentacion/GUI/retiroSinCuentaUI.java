@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author carlo
+ * @author Armenta Baca Jose Maria, Carlos Hiram Sanchez Meneses
  */
 public class retiroSinCuentaUI extends javax.swing.JFrame {
 
@@ -172,35 +172,45 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Método ejecutado cuando se hace clic en el botón "Regresar". Cierra la
+     * ventana actual y abre la ventana index.
+     *
+     * @param evt El evento de clic del mouse asociado al botón "Regresar".
+     */
     private void regresarBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regresarBtnMouseClicked
         // TODO add your handling code here:
         index i = new index();
         i.setVisible(true);
         dispose();
     }//GEN-LAST:event_regresarBtnMouseClicked
-
+    /**
+     * Método ejecutado cuando se hace clic en el botón "Retirar". Intenta
+     * cobrar un retiro sin tarjeta utilizando el folio y la contraseña
+     * ingresados.
+     *
+     * @param evt El evento de acción asociado al clic del botón "Retirar".
+     */
     private void retirarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirarBotonActionPerformed
         try {
             // Obtener la cuenta de origen seleccionada
             int folio = Integer.parseInt(folioTxt.getText());
             String contra = contraTxt.getText();
-            
+
             boolean cobroExitoso = cn.cobrarRetiroSinCuenta(folio, contra);
-            
+
             if (cobroExitoso) {
-            JOptionPane.showMessageDialog(this, "Cobro exitoso.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Ocurrio un error al cobrar el monto.");
-        }
-            
+                JOptionPane.showMessageDialog(this, "Cobro exitoso.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocurrio un error al cobrar el monto.");
+            }
 
             dispose();
 
             // Abrir la ventana clienteUI
             index index = new index();
             index.setVisible(true);
-        }  catch (PersistenciaException ex) {
+        } catch (PersistenciaException ex) {
             JOptionPane.showMessageDialog(this, "Error al realizar el retiro.");
         }
     }//GEN-LAST:event_retirarBotonActionPerformed
