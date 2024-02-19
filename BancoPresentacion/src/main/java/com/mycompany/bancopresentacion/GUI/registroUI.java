@@ -344,17 +344,19 @@ public class registroUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void crearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBtnActionPerformed
-        
+
         if (!validarCampos()) {
             JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             return; // Sale del método si los campos no están llenos
         }
-        
-        if(!validarContra()) {
-         contraAviso.setText("Las contraseñas no coinciden");
-         return;
+
+        if (!validarContra()) {
+            contraAviso.setText("Las contraseñas no coinciden");
+            return;
         }
+
         
+
         String nombre = nombreTxt.getText();
         String apellidoPaterno = apellidoPaternoTxt.getText();
         String apellidoMaterno = apellidoMaternoTxt.getText();
@@ -369,12 +371,15 @@ public class registroUI extends javax.swing.JFrame {
         Date fecha = fechaSelected.getDate();
         String fechaNacimiento = (fecha != null) ? new SimpleDateFormat("yyyy-MM-dd").format(fecha) : "Fecha no seleccionada";
         
+        if (!validarEdad(fecha)) 
+        {
+            JOptionPane.showMessageDialog(this, "Es necesario que la persona sea mayor de edad para continuar con el registro.", "Menor de edad", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
         try {
-            ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
+            ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, usuario, contra, codigoPostal, ciudad, calle, colonia, numero);
             Cliente clienteAgregado = controladorNegocio.agregarCliente(cliente);
-            
-           
 
             if (clienteAgregado != null) {
                 JOptionPane.showMessageDialog(null, "El cliente y su cuenta inicial ha sido registrado correctamente.");
@@ -386,7 +391,7 @@ public class registroUI extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo registrar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } catch (PersistenciaException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al agregar el cliente o al agregar la cuenta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -394,39 +399,51 @@ public class registroUI extends javax.swing.JFrame {
     }//GEN-LAST:event_crearBtnActionPerformed
 
     public boolean validarCampos() {
-       // Validamos que ningún campo esté vacío o contenga solo espacios en blanco
-    if (nombreTxt.getText().isBlank() || 
-        apellidoPaternoTxt.getText().isBlank() || 
-        apellidoMaternoTxt.getText().isBlank() || 
-        codigoPostalTxt.getText().isBlank() || 
-        ciudadTxt.getText().isBlank() || 
-        coloniaTxt.getText().isBlank() || 
-        calleTxt.getText().isBlank() || 
-        numeroTxt.getText().isBlank() || 
-        usuarioTxt.getText().isBlank()||
-        contraTxt.getText().isBlank() || 
-        confirmarContraTxt.getText().isBlank() || 
-        fechaSelected == null) {
-        // Si algún campo está vacío o solo contiene espacios en blanco, retorna falso
-        return false;
+        // Validamos que ningún campo esté vacío o contenga solo espacios en blanco
+        if (nombreTxt.getText().isBlank()
+                || apellidoPaternoTxt.getText().isBlank()
+                || apellidoMaternoTxt.getText().isBlank()
+                || codigoPostalTxt.getText().isBlank()
+                || ciudadTxt.getText().isBlank()
+                || coloniaTxt.getText().isBlank()
+                || calleTxt.getText().isBlank()
+                || numeroTxt.getText().isBlank()
+                || usuarioTxt.getText().isBlank()
+                || contraTxt.getText().isBlank()
+                || confirmarContraTxt.getText().isBlank()
+                || fechaSelected == null) {
+            // Si algún campo está vacío o solo contiene espacios en blanco, retorna falso
+            return false;
+        }
+        // Si todos los campos tienen algún valor, retorna verdadero
+        return true;
     }
-    // Si todos los campos tienen algún valor, retorna verdadero
-    return true;
-    }
-    
+
     public boolean validarContra() {
-        
+
         String pwd = new String(contraTxt.getPassword());
         String confirmPwd = new String(confirmarContraTxt.getPassword());
-        
-        if(!pwd.equals(confirmPwd)) {
+
+        if (!pwd.equals(confirmPwd)) {
             return false; //Las contraseñas no coinciden
         }
         return true;
-        
+
         //Las contraseñas coinciden
     }
-    
+
+    public boolean validarEdad(Date fechaNacimiento) {
+        Date fechaActual = new Date();
+        int edad = calcularEdad(fechaNacimiento, fechaActual);
+        return edad >= 18;
+    }
+
+    private int calcularEdad(Date fechaNacimiento, Date fechaActual) {
+        long milisegundosFechaNacimiento = fechaNacimiento.getTime();
+        long milisegundosFechaActual = fechaActual.getTime();
+        long diferencia = milisegundosFechaActual - milisegundosFechaNacimiento;
+        return (int) (diferencia / 1000 / 60 / 60 / 24 / 365.25);
+    }
 
     public void limpiarCampos() {
         // Limpiamos el contenido de cada campo de texto
@@ -500,7 +517,4 @@ public class registroUI extends javax.swing.JFrame {
     private javax.swing.JTextField usuarioTxt;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    
 }
