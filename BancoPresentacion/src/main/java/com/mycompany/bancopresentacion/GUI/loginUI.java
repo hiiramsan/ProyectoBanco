@@ -179,6 +179,11 @@ public class loginUI extends javax.swing.JFrame {
      */
     private void iniciarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarBtnActionPerformed
         // TODO add your handling code here:
+        if (!validarCampos()) {
+            JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+            return; // Sale del método si los campos no están llenos
+        }
+        
         String usuario = usuarioTxt.getText();
         String contra = new String(contraTxt.getPassword());
 
@@ -210,7 +215,22 @@ public class loginUI extends javax.swing.JFrame {
         i.setVisible(true);
         dispose();
     }//GEN-LAST:event_inicioMouseClicked
-
+/**
+     * Método para validar si todos los campos del formulario de registro están
+     * llenos.
+     *
+     * @return true si todos los campos están llenos, false de lo contrario.
+     */
+    public boolean validarCampos() {
+        // Validamos que ningún campo esté vacío o contenga solo espacios en blanco
+        if (usuarioTxt.getText().isBlank()
+                || contraTxt.getText().isBlank()) {
+            // Si algún campo está vacío o solo contiene espacios en blanco, retorna falso
+            return false;
+        }
+        // Si todos los campos tienen algún valor, retorna verdadero
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel avisoCredenciales;

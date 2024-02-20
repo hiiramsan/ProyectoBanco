@@ -72,12 +72,22 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
         jLabel1.setText("Folio");
 
         folioTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        folioTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                folioTxtKeyTyped(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Contraseña");
 
         contraTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        contraTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                contraTxtKeyTyped(evt);
+            }
+        });
 
         retirarBoton.setText("Retirar");
         retirarBoton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -200,9 +210,9 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
             boolean cobroExitoso = cn.cobrarRetiroSinCuenta(folio, contra);
 
             if (cobroExitoso) {
-                JOptionPane.showMessageDialog(this, "Cobro exitoso.");
+                JOptionPane.showMessageDialog(this, "Cobro exitoso.","Folio Invalido",JOptionPane.WARNING_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Ocurrio un error al cobrar el monto.");
+                JOptionPane.showMessageDialog(this, "Ocurrio un error al cobrar el monto. Revise su folio y contraseña.");
             }
 
             dispose();
@@ -210,10 +220,33 @@ public class retiroSinCuentaUI extends javax.swing.JFrame {
             // Abrir la ventana clienteUI
             index index = new index();
             index.setVisible(true);
+        }catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de Folio invalido.");
         } catch (PersistenciaException ex) {
             JOptionPane.showMessageDialog(this, "Error al realizar el retiro.");
         }
     }//GEN-LAST:event_retirarBotonActionPerformed
+
+    private void contraTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contraTxtKeyTyped
+        // Obtener el caracter tecleado
+                char caracter = evt.getKeyChar();
+                
+                // Verificar si el caracter no es un número o si el texto tiene más de 8 caracteres
+                if (!Character.isDigit(caracter) || contraTxt.getText().length() >= 8) {
+                    // Consumir el evento para evitar que se añada el caracter al campo de texto
+                    evt.consume();
+                }
+    }//GEN-LAST:event_contraTxtKeyTyped
+
+    private void folioTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_folioTxtKeyTyped
+       char caracter = evt.getKeyChar();
+                
+                // Verificar si el caracter no es un número o si el texto tiene más de 8 caracteres
+                if (!Character.isDigit(caracter)) {
+                    // Consumir el evento para evitar que se añada el caracter al campo de texto
+                    evt.consume();
+                }
+    }//GEN-LAST:event_folioTxtKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField contraTxt;
