@@ -23,4 +23,25 @@
         <maven.compiler.target>20</maven.compiler.target>
         <exec.mainClass>com.mycompany.bancopresentacion.BancoPresentacion</exec.mainClass>
     </properties>
+    <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.3.0</version> <!-- O la versión más reciente -->
+            <configuration>
+                <additionalparam>-Xdoclint:none</additionalparam> <!-- Opcional: para desactivar la validación de javadoc -->
+            </configuration>
+            <executions>
+                <execution>
+                    <id>generate-javadoc</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>javadoc</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 </project>
