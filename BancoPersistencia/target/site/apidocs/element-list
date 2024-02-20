@@ -1,0 +1,5 @@
+com.mycompany.bancopersistencia.conexion
+com.mycompany.bancopersistencia.controlador
+com.mycompany.bancopersistencia.daos
+com.mycompany.bancopersistencia.dtos
+com.mycompany.bancopersistencia.persistencia

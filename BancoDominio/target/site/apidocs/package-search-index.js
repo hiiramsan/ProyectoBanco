@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"bancoblue.bancodominio"},{"l":"bancoblue.bancodominio.excepciones"}];updateSearchResults();
