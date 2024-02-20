@@ -134,6 +134,49 @@ public class CuentaDAO implements ICuentaDAO {
     }
 
     /**
+     * Obtiene las cuentas canceladas asociadas a un cliente.
+     *
+     * @param id_cliente El ID del cliente.
+     * @return Una lista de cadenas que representan las cuentas canceladas del cliente con
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    @Override
+    public List<String> obtenerCuentasCanceladas(String id_cliente) throws PersistenciaException {
+        List<String> listaCuentas = new ArrayList<>();
+        String sentenciaSQL = "select num_cuenta, saldo from Cuentas where id_cliente = ? and estado = 'Cancelada'";
+        try (
+                // recursos
+                Connection conexion = this.conexion.crearConexion(); // establecemos la conexion con la bd
+                // Crear el statement o el comando donde ejecutamos la sentencia
+                 PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS); // mandamos la sentencia y obtenemos de regreso la llave generada o el ID
+                ) {
+
+            comandoSQL.setString(1, id_cliente);
+
+            ResultSet resultado = comandoSQL.executeQuery();
+
+            listaCuentas.clear();
+            while (resultado.next()) {
+                int cuenta = resultado.getInt("num_cuenta");
+                int saldo = resultado.getInt("saldo");
+
+                String cuentaConSaldo = String.format("#%d     Saldo: %d", cuenta, saldo);
+                listaCuentas.add(cuentaConSaldo);
+            }
+
+            return listaCuentas;
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Error", e);
+            throw new PersistenciaException("Error", e);
+        }
+
+    }
+    
+    
+    
+    
+    /**
      * Obtiene una cuenta de la base de datos por su número de cuenta.
      *
      * @param numeroCuenta El número de cuenta.
@@ -236,6 +279,35 @@ public class CuentaDAO implements ICuentaDAO {
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Error al cancelar la cuenta con id_cuenta " + idCuenta, e);
             throw new PersistenciaException("No se pudo cancelar la cuenta", e);
+        }
+    }
+    
+    /**
+     * Activa una cuenta en la base de datos.
+     *
+     * @param idCuenta El ID de la cuenta a activar.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    @Override
+    public void activarCuentaPorId(int idCuenta) throws PersistenciaException {
+        String sentenciaSQL = "UPDATE Cuentas SET estado = 'Activa' WHERE id_cuenta = ?";
+
+        try (
+                Connection conexion = this.conexion.crearConexion(); PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL);) {
+            comandoSQL.setInt(1, idCuenta);
+
+            int registrosModificados = comandoSQL.executeUpdate();
+
+            if (registrosModificados == 0) {
+                throw new PersistenciaException("No se encontró la cuenta con id_cuenta: " + idCuenta);
+            }
+
+            LOG.log(Level.INFO, "Se activo con éxito la cuenta con id_cuenta {0}", idCuenta);
+
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Error al activar la cuenta con id_cuenta " + idCuenta, e);
+            throw new PersistenciaException("No se pudo activar la cuenta", e);
         }
     }
 

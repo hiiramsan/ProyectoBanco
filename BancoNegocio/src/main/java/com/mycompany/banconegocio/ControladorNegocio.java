@@ -96,6 +96,18 @@ public class ControladorNegocio {
     }
 
     /**
+     * Obtiene las cuentas canceladas asociadas a un cliente.
+     *
+     * @param id_cliente El ID del cliente.
+     * @return Una lista de cadenas que representan las cuentas canceladas del cliente con
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    public List<String> obtenerCuentasCanceladas(String id_cliente) throws PersistenciaException {
+        return controladorPersistencia.obtenerCuentasCanceladas(id_cliente);
+    }
+    
+    /**
      * Busca un cliente por su identificador.
      *
      * @param idCliente El identificador del cliente.
@@ -221,6 +233,16 @@ public class ControladorNegocio {
             return true;
         }
 
+    }
+
+    /**
+     * Cancela una cuenta por su identificador.
+     *
+     * @param idCuenta El identificador de la cuenta a cancelar.
+     * @throws PersistenciaException Si ocurre un error durante la persistencia.
+     */
+    public void activarCuentaPorId(int idCuenta) throws PersistenciaException {
+        controladorPersistencia.activarCuentaPorId(idCuenta);
     }
 
     /**

@@ -102,6 +102,18 @@ public class ControladorPersistencia {
     public List<String> obtenerCuentas(String id_cliente) throws PersistenciaException {
         return this.cuentaDAO.obtenerCuentas(id_cliente);
     }
+    
+    /**
+     * Obtiene las cuentas canceladas asociadas a un cliente.
+     *
+     * @param id_cliente El ID del cliente.
+     * @return Una lista de cadenas que representan las cuentas canceladas del cliente con
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    public List<String> obtenerCuentasCanceladas(String id_cliente) throws PersistenciaException {
+        return this.cuentaDAO.obtenerCuentasCanceladas(id_cliente);
+    }
 
     /**
      * Obtiene el identificador de cliente asociado a un usuario.
@@ -226,6 +238,17 @@ public class ControladorPersistencia {
         this.cuentaDAO.cancelarCuentaPorId(idCuenta);
     }
 
+    /**
+     * Activa una cuenta en la base de datos por su ID.
+     *
+     * @param idCuenta El ID de la cuenta que se desea activas.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    public void activarCuentaPorId(int idCuenta) throws PersistenciaException {
+        this.cuentaDAO.activarCuentaPorId(idCuenta);
+    }
+    
     /**
      * Obtiene el historial de transacciones de acuerdo a ciertos criterios.
      *

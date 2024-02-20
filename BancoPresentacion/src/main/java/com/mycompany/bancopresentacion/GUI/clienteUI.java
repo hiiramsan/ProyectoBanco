@@ -59,7 +59,7 @@ public class clienteUI extends javax.swing.JFrame {
             Cliente clienteActual = cn.buscarClientePorId(idClienteInt);
             nombreCliente.setText(clienteActual.getNombre());
         } catch (PersistenciaException | NumberFormatException ex) {
-            System.out.println("AQUI ESTA EL ERROR");
+            // something went wrong
         }
 
     }
@@ -109,7 +109,7 @@ public class clienteUI extends javax.swing.JFrame {
 
         transferirBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         transferirBtn.setForeground(new java.awt.Color(22, 66, 91));
-        transferirBtn.setText("Transferir");
+        transferirBtn.setText("Cuentas");
         transferirBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         transferirBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -145,6 +145,12 @@ public class clienteUI extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(22, 66, 91));
         jLabel6.setText("Mis cuentas");
+        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(22, 66, 91));
@@ -500,6 +506,7 @@ public class clienteUI extends javax.swing.JFrame {
     private void cerrarSesionBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionBtnMouseClicked
         // TODO add your handling code here:
         Sesion.setUsuario(null);
+        Sesion.setIdCliente(null);
         index i = new index();
         i.setVisible(true);
         dispose();
@@ -641,8 +648,8 @@ public class clienteUI extends javax.swing.JFrame {
      */
     private void transferirBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transferirBtnMouseClicked
         // TODO add your handling code here:
-        transferenciaUI tUI = new transferenciaUI();
-        tUI.setVisible(true);
+        MisCuentasUI mcui = new MisCuentasUI();
+        mcui.setVisible(true);
         dispose();
     }//GEN-LAST:event_transferirBtnMouseClicked
     /**
@@ -657,6 +664,13 @@ public class clienteUI extends javax.swing.JFrame {
         hUI.setVisible(true);
         dispose();
     }//GEN-LAST:event_historialBtnMouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        MisCuentasUI mcui = new MisCuentasUI();
+        mcui.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jLabel6MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

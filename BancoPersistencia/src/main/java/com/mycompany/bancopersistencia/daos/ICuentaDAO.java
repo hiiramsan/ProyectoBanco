@@ -45,6 +45,17 @@ public interface ICuentaDAO {
      */
     public Cuenta obtenerCuentaPorNumCuentas(String numeroCuenta) throws PersistenciaException;
 
+    
+    /**
+     * Obtiene las cuentas canceladas asociadas a un cliente.
+     *
+     * @param id_cliente El ID del cliente.
+     * @return Una lista de cadenas que representan las cuentas canceladas del cliente con
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    public List<String> obtenerCuentasCanceladas(String id_cliente) throws PersistenciaException;
+    
     /**
      * Modifica el saldo de una cuenta en la base de datos por su ID.
      *
@@ -64,6 +75,15 @@ public interface ICuentaDAO {
      */
     public void cancelarCuentaPorId(int idCuenta) throws PersistenciaException;
 
+    /**
+     * Activa una cuenta en la base de datos por su ID.
+     *
+     * @param idCuenta El ID de la cuenta que se desea activar.
+     * @throws PersistenciaException Si ocurre un error durante la operación de
+     * persistencia.
+     */
+    public void activarCuentaPorId(int idCuenta) throws PersistenciaException;
+    
     /**
      * Valida si un número de cuenta dado está activo en la base de datos.
      *

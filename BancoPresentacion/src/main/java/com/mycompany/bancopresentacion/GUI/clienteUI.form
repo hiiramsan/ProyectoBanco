@@ -213,7 +213,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="5b" green="42" red="16" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Transferir"/>
+            <Property name="text" type="java.lang.String" value="Cuentas"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>
@@ -280,7 +280,13 @@
               <Color blue="5b" green="42" red="16" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Mis cuentas"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel6MouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel17">
           <Properties>
